@@ -12,6 +12,34 @@ function check_pass(event){
         document.getElementById('pass error').innerHTML = '';
     }
 }
+function check_phone(event){
+    let phone = document.getElementById('telefon').value;
+    if(phone === ''){
+        document.getElementById('tel error').innerHTML = 'Popunite polje';
+        event.preventDefault();
+    }
+    else if(/^\+381[0-9]{8,9}$/.test(phone) == false){
+        document.getElementById('tel error').innerHTML = 'Pogresan format'
+        event.preventDefault();
+    }
+    else{ 
+        document.getElementById('tel error').innerHTML = '';
+    }
+}
+function check_pib(event){
+    let pib= document.getElementById('pib').value;
+    if(pib === ''){
+        document.getElementById('pib error').innerHTML = 'Popunite polje';
+        event.preventDefault();
+    }
+    else if(/^[0-9]{9}$/.test(pib) == false){
+        document.getElementById('pib error').innerHTML = 'Pogresan format'
+        event.preventDefault();
+    }
+    else{ 
+        document.getElementById('pib error').innerHTML = '';
+    }
+}
 function check_confirm_pass(event){
     let pass = document.getElementById('lozinka').value;
     let confirm_pass = document.getElementById('potvrdiLozinku').value; 
@@ -80,7 +108,7 @@ function check_date(event){
         document.getElementById('date error').innerHTML = '';
     }
 }
-function addListener(){ 
+function addListeners (){ 
     let btn = document.getElementById('confirm btn');
     btn.addEventListener('click',check_pass);
     btn.addEventListener('click',check_confirm_pass);
@@ -88,4 +116,6 @@ function addListener(){
     btn.addEventListener('click',check_lastname);
     btn.addEventListener('click',check_name); 
     btn.addEventListener('click',check_date);
+    btn.addEventListener('click',check_phone)
+    btn.addEventListener('click',check_pib);
 }
