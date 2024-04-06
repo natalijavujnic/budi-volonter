@@ -7,6 +7,9 @@
     font-family:"Inter"; 
     color: #37401C;
 }
+.error{
+    color : red
+}
 .dugme {
     padding: 10px 20px;
     font-size: 15px;
