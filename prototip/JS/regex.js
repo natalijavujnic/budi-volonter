@@ -18,7 +18,7 @@ function check_phone(event){
         document.getElementById('tel error').innerHTML = 'Popunite polje';
         event.preventDefault();
     }
-    else if(/^\+381[0-9]{8,9}$/.test(phone) == false){
+    else if(/^\+[0-9]+$/.test(phone) == false){
         document.getElementById('tel error').innerHTML = 'Pogresan format'
         event.preventDefault();
     }
