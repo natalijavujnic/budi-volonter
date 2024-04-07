@@ -31,6 +31,13 @@ function check_pib(event){
     if(pib === ''){
         document.getElementById('pib error').innerHTML = 'Popunite polje';
         event.preventDefault();
+        return;
+    }
+    let num = pib.substring(0,8);
+    num = parseInt(num);
+    if(num < 10000001){
+    document.getElementById('pib error').innerHTML = 'Pogresan format'
+    event.preventDefault();
     }
     else if(/^[0-9]{9}$/.test(pib) == false){
         document.getElementById('pib error').innerHTML = 'Pogresan format'
