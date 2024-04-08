@@ -1,0 +1,7 @@
+8.4.2024:
+-promenjen SSU autorizacija korisnika, vise info u pdfu
+-dodata html stranica gde korisnik bira da li zeli pretragu volontera ili org, posto je to jedno dugme u navbaru(pretraga korisnika)
+-dodat js file koji omogucava da se promeni stranica kada se klikne dugme
+	*sada na klik pretraga i ostalih buttona, stranica se menja na odgovarajucu
+	*dugme za inbox i moj profil nisu impl jer nisam sig sta tu sve treba
+	

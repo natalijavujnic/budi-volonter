@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BV Registracija Organizacija</title>
+    <title>BV Registracija Organizacije</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="./main_page.css" rel="stylesheet">
     <link href="./reg_org.css" rel="stylesheet">
     <script src="./JS/regex.js"></script>
+    <script src="./JS/switchPage.js"></script>
 </head>
 <body style="background-color:#FCFDFA" onload="addListeners()">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C2DA91;">
@@ -21,12 +22,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <button class="searchButton btn rounded-circle" type="submit"><i class="bi bi-people-fill" style="color: #37401C;" title="Pretraga korisnika"></i></button>
+                      <button onclick = "switchPage('choose_search.html')"class="searchButton btn rounded-circle" type="submit"><i class="bi bi-people-fill" style="color: #37401C;" title="Pretraga korisnika"></i></button>
+      
                     </li>
-                    <li class="nav-item">
-                        <button class="searchButton btn rounded-circle" type="submit"><i class="bi bi-flag-fill" style="color: #37401C;" title="Pretraga aktivnosti"></i></button>
+                    <li class="nav-item" >
+                      <button onclick="switchPage('search_act.html')" class="searchButton btn rounded-circle" type="submit"><i class="bi bi-flag-fill" style="color: #37401C;" title="Pretraga aktivnosti"></i></button>
                     </li>
-                </ul>
+                  </ul>
                 <div class="d-flex flex-column">
                     <a style="color:#5C7C2F"  href="login.html">Uloguj se</a>
                     <a style="color:#5C7C2F" href="reg_choose.html">Registruj se</a>
@@ -38,7 +40,7 @@
     <div class="container-fluid" style="color: #37401C;">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="col-md-6" style="padding-top: 20px;">
-                <h2 class="text-center mb-4">Registracija Organizacija</h2>
+                <h2 class="text-center mb-4">Registracija Organizacije</h2>
                 <form id="registrationForm">
                     <div class="form-group">
                         <div class = 'name error' id = 'name error'></div>
