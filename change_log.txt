@@ -4,4 +4,4 @@
 -dodat js file koji omogucava da se promeni stranica kada se klikne dugme
 	*sada na klik pretraga i ostalih buttona, stranica se menja na odgovarajucu
 	*dugme za inbox i moj profil nisu impl jer nisam sig sta tu sve treba
-	
+	*dugmici za izbor da li se pretrazuje vol ili org nisu impl 
