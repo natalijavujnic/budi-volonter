@@ -70,6 +70,7 @@ CREATE TABLE `korisnik` (
   `pib` int DEFAULT NULL,
   `telefon` varchar(14) DEFAULT NULL,
   `tip` char(1) NOT NULL,
+  `datumRodj` date DEFAULT NULL,
   PRIMARY KEY (`idKor`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `PIB_UNIQUE` (`pib`),
@@ -320,4 +321,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-09 20:04:14
+-- Dump completed on 2024-04-11 18:36:40
