@@ -6,3 +6,12 @@
 	*dugme za inbox i moj profil nisu impl jer nisam sig sta tu sve treba
 	*dugmici za izbor da li se pretrazuje vol ili org nisu impl 
 -dodat slobodan unos za vestine/zahteve prilikom otvaranja aktivnosti 
+
+9.5.2024 , Kosta Novokmet:
+-napravljen django projekat
+	-conf folder -> konfiguracioni fajlovi,izmeniti password(port) za database connection u settings.py
+	-templates -> lokacija svih html fajlova
+	-sve otale faze premestene u folder phase0_1_2_3 radi preglednosti
+	-u .gitignore dodato da se ignorisu pycache i venv folderi
+	-req.txt sadrzi sve potrebne module -> pokreuti pip install -r req.txt	
+	-budivolonter -> nasa aplikacija (mada bi trebalo da breakdownujemo funkcionalnosti na vise aplikacija)
