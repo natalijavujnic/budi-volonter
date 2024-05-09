@@ -15,3 +15,5 @@
 	-u .gitignore dodato da se ignorisu pycache i venv folderi
 	-req.txt sadrzi sve potrebne module -> pokreuti pip install -r req.txt	
 	-budivolonter -> nasa aplikacija (mada bi trebalo da breakdownujemo funkcionalnosti na vise aplikacija)
+	-svi css fajlovi dodati u CSS folder
+	-izgenerisani modeli za bazu
