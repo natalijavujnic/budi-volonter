@@ -17,3 +17,8 @@
 	-budivolonter -> nasa aplikacija (mada bi trebalo da breakdownujemo funkcionalnosti na vise aplikacija)
 	-svi css fajlovi dodati u CSS folder
 	-izgenerisani modeli za bazu
+10.5.2024, Kosta Novokmet:
+	-kompozitni primarni kljuc u tabelama:
+		lokacija, aktivnost
+	promenjen na samo jedan primarni kljuc( zbog ovoga su morale da se menjaju i druge tabele)
+	promenjena slika, dokument i .sql skripta

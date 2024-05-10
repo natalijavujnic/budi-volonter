@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `budivolonter` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `budivolonter`;
--- MySQL dump 10.13  Distrib 8.0.34, for macos13 (arm64)
+-- MySQL dump 10.13  Distrib 8.0.36, for macos14 (arm64)
 --
 -- Host: 127.0.0.1    Database: budivolonter
 -- ------------------------------------------------------
@@ -26,22 +26,20 @@ DROP TABLE IF EXISTS `aktivnost`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `aktivnost` (
   `idOrg` int NOT NULL,
-  `brAkt` int NOT NULL,
+  `idAkt` int NOT NULL AUTO_INCREMENT,
   `naziv` varchar(256) NOT NULL,
   `brMesta` int NOT NULL,
   `datumOd` date NOT NULL,
   `datumDo` date NOT NULL,
   `datumRok` date NOT NULL,
   `mesto` varchar(256) NOT NULL DEFAULT 'nije navedeno',
-  `drzava` varchar(256) NOT NULL,
-  `kontinent` varchar(256) NOT NULL,
-  PRIMARY KEY (`idOrg`,`brAkt`),
-  KEY `FK_konitnent_idx` (`kontinent`),
-  KEY `FK_drzava_idx` (`drzava`),
-  KEY `idx_brakt` (`brAkt`),
-  CONSTRAINT `FK_drzava` FOREIGN KEY (`drzava`) REFERENCES `lokacija` (`drzava`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_kontinent` FOREIGN KEY (`kontinent`) REFERENCES `lokacija` (`kontinent`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_korisnik_aktivnost` FOREIGN KEY (`idOrg`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE
+  `lokacija` int NOT NULL,
+  PRIMARY KEY (`idAkt`),
+  KEY `idx_brakt` (`idAkt`),
+  KEY `FK_lokacija_idx` (`lokacija`),
+  KEY `FK_korisnik_aktivnost_idx` (`idOrg`),
+  CONSTRAINT `FK_korisnik_aktivnost` FOREIGN KEY (`idOrg`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_lokacija` FOREIGN KEY (`lokacija`) REFERENCES `lokacija` (`idLok`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -97,7 +95,8 @@ DROP TABLE IF EXISTS `lokacija`;
 CREATE TABLE `lokacija` (
   `drzava` varchar(256) NOT NULL,
   `kontinent` varchar(256) NOT NULL,
-  PRIMARY KEY (`drzava`,`kontinent`),
+  `idLok` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idLok`),
   KEY `idx_kontinent` (`kontinent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -201,8 +200,7 @@ DROP TABLE IF EXISTS `prijava`;
 CREATE TABLE `prijava` (
   `idPri` int NOT NULL,
   `idVol` int NOT NULL,
-  `idOrg` int NOT NULL,
-  `brAkt` int NOT NULL,
+  `idAkt` int NOT NULL,
   `pismo` varchar(2000) NOT NULL,
   `rezime` blob,
   `status` char(1) NOT NULL,
@@ -212,10 +210,8 @@ CREATE TABLE `prijava` (
   `komOrg` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`idPri`),
   KEY `FK_kor_prijava_idx` (`idVol`),
-  KEY `FK_aktOrg_prijava_idx` (`idOrg`),
-  KEY `FK_aktbrakt_prijava_idx` (`brAkt`),
-  CONSTRAINT `FK_aktbrakt_prijava` FOREIGN KEY (`brAkt`) REFERENCES `aktivnost` (`brAkt`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_aktOrg_prijava` FOREIGN KEY (`idOrg`) REFERENCES `aktivnost` (`idOrg`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `FK_akt_prijava_idx` (`idAkt`),
+  CONSTRAINT `FK_akt_prijava` FOREIGN KEY (`idAkt`) REFERENCES `aktivnost` (`idAkt`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_kor_prijava` FOREIGN KEY (`idVol`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -237,14 +233,11 @@ DROP TABLE IF EXISTS `pripada`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pripada` (
-  `idOrg` int NOT NULL,
-  `brAkt` int NOT NULL,
+  `idAkt` int NOT NULL,
   `oblast` varchar(256) NOT NULL,
-  PRIMARY KEY (`idOrg`,`brAkt`,`oblast`),
-  KEY `FK_aktivnostbrakt_pripada_idx` (`brAkt`),
+  PRIMARY KEY (`idAkt`,`oblast`),
   KEY `FK_oblast_idx` (`oblast`),
-  CONSTRAINT `FK_aktivnostbrakt_pripada` FOREIGN KEY (`brAkt`) REFERENCES `aktivnost` (`brAkt`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_aktivnostOrg_pripada` FOREIGN KEY (`idOrg`) REFERENCES `aktivnost` (`idOrg`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_akt_pripada` FOREIGN KEY (`idAkt`) REFERENCES `aktivnost` (`idAkt`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_oblast` FOREIGN KEY (`oblast`) REFERENCES `oblast` (`oblast`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -266,14 +259,12 @@ DROP TABLE IF EXISTS `vestina`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vestina` (
-  `idOrg` int NOT NULL,
-  `brAkt` int NOT NULL,
+  `idAkt` int NOT NULL,
   `redBr` int NOT NULL,
   `opis` varchar(256) NOT NULL,
-  PRIMARY KEY (`idOrg`,`brAkt`,`redBr`),
-  KEY `FK_aktivnostBrAkt_vestina_idx` (`brAkt`),
-  CONSTRAINT `FK_aktivnostBrAkt_vestina` FOREIGN KEY (`brAkt`) REFERENCES `aktivnost` (`brAkt`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_aktivnostOrg_vestina` FOREIGN KEY (`idOrg`) REFERENCES `aktivnost` (`idOrg`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`idAkt`,`redBr`),
+  KEY `FK_aktivnostBrAkt_vestina_idx` (`idAkt`),
+  CONSTRAINT `FK_akt_vestina` FOREIGN KEY (`idAkt`) REFERENCES `aktivnost` (`idAkt`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -321,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-11 18:36:40
+-- Dump completed on 2024-05-10 23:16:00
