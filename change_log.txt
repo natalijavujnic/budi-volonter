@@ -22,3 +22,6 @@
 		lokacija, aktivnost
 	promenjen na samo jedan primarni kljuc( zbog ovoga su morale da se menjaju i druge tabele)
 	promenjena slika, dokument i .sql skripta
+11.5.2024. Kosta Novokmet:
+	-dodat budivolonter.urls
+	-dodat fajl models_func.py gde su funkcije za rad sa bazom
