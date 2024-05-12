@@ -9,6 +9,8 @@ class Aktivnost(models.Model):
     datumrok = models.DateField(db_column='datumRok')  # Field name made lowercase.
     mesto = models.CharField(max_length=256)
     lokacija = models.ForeignKey('Lokacija', models.DO_NOTHING, db_column='lokacija')
+    opis = models.CharField(max_length=3000, blank=True, null=True)
+    oblasti = models.ManyToManyField('Oblast',through='Pripada')
 
     class Meta:
         managed = False
@@ -25,6 +27,7 @@ class Korisnik(models.Model):
     telefon = models.CharField(unique=True, max_length=14, blank=True, null=True)
     tip = models.CharField(max_length=1)
     datumrodj = models.DateField(db_column='datumRodj', blank=True, null=True)  # Field name made lowercase.
+    oblasti = models.ManyToManyField('Oblast',through='ZanimaGa')
 
     class Meta:
         managed = False
@@ -42,7 +45,11 @@ class Lokacija(models.Model):
 
 
 class Oblast(models.Model):
-    oblast = models.CharField(primary_key=True, max_length=256)
+    oblast = models.CharField(max_length=256)
+    idobl = models.AutoField(db_column='idObl', primary_key=True)  # Field name made lowercase.
+    aktivnosti = models.ManyToManyField(Aktivnost,through='Pripada')
+    korisnici =  models.ManyToManyField(Korisnik,through='ZanimaGa')
+
 
     class Meta:
         managed = False
@@ -91,32 +98,29 @@ class Prijava(models.Model):
 
 
 class Pripada(models.Model):
-    idakt = models.OneToOneField(Aktivnost, models.DO_NOTHING, db_column='idAkt', primary_key=True)  # Field name made lowercase. The composite primary key (idAkt, oblast) found, that is not supported. The first column is selected.
-    oblast = models.ForeignKey(Oblast, models.DO_NOTHING, db_column='oblast')
-
+    idobl = models.ForeignKey(Oblast,on_delete=models.CASCADE, db_column='idObl')  # Field name made lowercase.
+    idakt = models.ForeignKey(Aktivnost,on_delete=models.CASCADE, db_column='idAkt')  
     class Meta:
         managed = False
         db_table = 'pripada'
-        unique_together = (('idakt', 'oblast'),)
+        unique_together = (('idakt', 'idobl'),)
 
 
 class Vestina(models.Model):
-    idakt = models.OneToOneField(Aktivnost, models.DO_NOTHING, db_column='idAkt', primary_key=True)  # Field name made lowercase. The composite primary key (idAkt, redBr) found, that is not supported. The first column is selected.
-    redbr = models.IntegerField(db_column='redBr')  # Field name made lowercase.
+    idakt = models.ForeignKey(Aktivnost, models.DO_NOTHING, db_column='idAkt')  # Field name made lowercase.
+    idves = models.AutoField(db_column='idVes', primary_key=True)  # Field name made lowercase.
     opis = models.CharField(max_length=256)
 
     class Meta:
         managed = False
         db_table = 'vestina'
-        unique_together = (('idakt', 'redbr'),)
 
 
 class ZanimaGa(models.Model):
-    idkor = models.OneToOneField(Korisnik, models.DO_NOTHING, db_column='idKor', primary_key=True)  # Field name made lowercase. The composite primary key (idKor, oblast) found, that is not supported. The first column is selected.
-    oblast = models.ForeignKey(Oblast, models.DO_NOTHING, db_column='oblast')
-
+    idkor = models.ForeignKey(Korisnik,on_delete=models.CASCADE, db_column='idKor')
+    idobl = models.ForeignKey(Oblast,on_delete=models.CASCADE, db_column='idObl')  # Field name made lowercase.
     class Meta:
         managed = False
         db_table = 'zanima_ga'
-        unique_together = (('idkor', 'oblast'),)
+        unique_together = (('idkor', 'idobl'),)
 

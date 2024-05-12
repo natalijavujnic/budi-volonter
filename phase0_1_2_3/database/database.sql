@@ -34,13 +34,14 @@ CREATE TABLE `aktivnost` (
   `datumRok` date NOT NULL,
   `mesto` varchar(256) NOT NULL DEFAULT 'nije navedeno',
   `lokacija` int NOT NULL,
+  `opis` varchar(3000) DEFAULT NULL,
   PRIMARY KEY (`idAkt`),
   KEY `idx_brakt` (`idAkt`),
   KEY `FK_lokacija_idx` (`lokacija`),
   KEY `FK_korisnik_aktivnost_idx` (`idOrg`),
   CONSTRAINT `FK_korisnik_aktivnost` FOREIGN KEY (`idOrg`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_lokacija` FOREIGN KEY (`lokacija`) REFERENCES `lokacija` (`idLok`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +50,7 @@ CREATE TABLE `aktivnost` (
 
 LOCK TABLES `aktivnost` WRITE;
 /*!40000 ALTER TABLE `aktivnost` DISABLE KEYS */;
+INSERT INTO `aktivnost` VALUES (1,22,'test akt',5,'2024-05-05','2024-05-30','2024-05-01','test mesto',1,'test opis'),(1,23,'test akt',5,'2024-05-05','2024-05-30','2024-05-01','test mesto',1,'test opis');
 /*!40000 ALTER TABLE `aktivnost` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +75,7 @@ CREATE TABLE `korisnik` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `PIB_UNIQUE` (`pib`),
   UNIQUE KEY `telefon_UNIQUE` (`telefon`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,6 +84,7 @@ CREATE TABLE `korisnik` (
 
 LOCK TABLES `korisnik` WRITE;
 /*!40000 ALTER TABLE `korisnik` DISABLE KEYS */;
+INSERT INTO `korisnik` VALUES (1,'kosta012001@gmail.com','123','kosta','novokmet',NULL,NULL,'k','2014-12-20');
 /*!40000 ALTER TABLE `korisnik` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +101,7 @@ CREATE TABLE `lokacija` (
   `idLok` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idLok`),
   KEY `idx_kontinent` (`kontinent`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,6 +110,7 @@ CREATE TABLE `lokacija` (
 
 LOCK TABLES `lokacija` WRITE;
 /*!40000 ALTER TABLE `lokacija` DISABLE KEYS */;
+INSERT INTO `lokacija` VALUES ('Afghanistan','Asia',1);
 /*!40000 ALTER TABLE `lokacija` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,8 +123,9 @@ DROP TABLE IF EXISTS `oblast`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oblast` (
   `oblast` varchar(256) NOT NULL,
-  PRIMARY KEY (`oblast`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `idObl` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idObl`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,6 +134,7 @@ CREATE TABLE `oblast` (
 
 LOCK TABLES `oblast` WRITE;
 /*!40000 ALTER TABLE `oblast` DISABLE KEYS */;
+INSERT INTO `oblast` VALUES ('rad sa decom',3),('ekologija',4);
 /*!40000 ALTER TABLE `oblast` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,11 +240,11 @@ DROP TABLE IF EXISTS `pripada`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pripada` (
   `idAkt` int NOT NULL,
-  `oblast` varchar(256) NOT NULL,
-  PRIMARY KEY (`idAkt`,`oblast`),
-  KEY `FK_oblast_idx` (`oblast`),
+  `idObl` int NOT NULL,
+  PRIMARY KEY (`idAkt`,`idObl`),
+  KEY `FK_oblast_pripada_idx` (`idObl`),
   CONSTRAINT `FK_akt_pripada` FOREIGN KEY (`idAkt`) REFERENCES `aktivnost` (`idAkt`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_oblast` FOREIGN KEY (`oblast`) REFERENCES `oblast` (`oblast`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_oblast_pripada` FOREIGN KEY (`idObl`) REFERENCES `oblast` (`idObl`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -248,6 +254,7 @@ CREATE TABLE `pripada` (
 
 LOCK TABLES `pripada` WRITE;
 /*!40000 ALTER TABLE `pripada` DISABLE KEYS */;
+INSERT INTO `pripada` VALUES (22,3),(23,3),(22,4),(23,4);
 /*!40000 ALTER TABLE `pripada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,12 +267,12 @@ DROP TABLE IF EXISTS `vestina`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vestina` (
   `idAkt` int NOT NULL,
-  `redBr` int NOT NULL,
+  `idVes` int NOT NULL AUTO_INCREMENT,
   `opis` varchar(256) NOT NULL,
-  PRIMARY KEY (`idAkt`,`redBr`),
+  PRIMARY KEY (`idVes`),
   KEY `FK_aktivnostBrAkt_vestina_idx` (`idAkt`),
   CONSTRAINT `FK_akt_vestina` FOREIGN KEY (`idAkt`) REFERENCES `aktivnost` (`idAkt`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,6 +281,7 @@ CREATE TABLE `vestina` (
 
 LOCK TABLES `vestina` WRITE;
 /*!40000 ALTER TABLE `vestina` DISABLE KEYS */;
+INSERT INTO `vestina` VALUES (22,39,'zah1'),(22,40,'zah2'),(23,41,'zah1'),(23,42,'zah2');
 /*!40000 ALTER TABLE `vestina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,11 +294,11 @@ DROP TABLE IF EXISTS `zanima_ga`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `zanima_ga` (
   `idKor` int NOT NULL,
-  `oblast` varchar(256) NOT NULL,
-  PRIMARY KEY (`idKor`,`oblast`),
-  KEY `FK_oblast_zanima_ga_idx` (`oblast`),
+  `idObl` int NOT NULL,
+  PRIMARY KEY (`idKor`,`idObl`),
+  KEY `FK_oblast_zanima_ga_idx` (`idObl`),
   CONSTRAINT `FK_korisnik_zanimga_ga` FOREIGN KEY (`idKor`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_oblast_zanima_ga` FOREIGN KEY (`oblast`) REFERENCES `oblast` (`oblast`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_oblast_zanima_ga` FOREIGN KEY (`idObl`) REFERENCES `oblast` (`idObl`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -312,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-10 23:16:00
+-- Dump completed on 2024-05-12 20:24:48
