@@ -22,6 +22,27 @@
 		lokacija, aktivnost
 	promenjen na samo jedan primarni kljuc( zbog ovoga su morale da se menjaju i druge tabele)
 	promenjena slika, dokument i .sql skripta
-11.5.2024. Kosta Novokmet:
+11.5.2024 , Kosta Novokmet:
 	-dodat budivolonter.urls
 	-dodat fajl models_func.py gde su funkcije za rad sa bazom
+12.5.2024, Kosta Novokmet:
+	-izmenjena baza, pogledati SpecifikacjaBaze.docx changelog
+		-izmenjena slika i .sql skripta
+	-dodat locations.py
+		-tu imamo listu svih drzava i recnik kontinent:[drzave]
+			-treba meni za otvaranje akt a vrv i Anji za pretragu
+	-dodat utils.py
+		-tu pisemo neke pomocne fje koje se ne uklapaju nigde drugde
+	-na svim stranicama dodat {% load static %}
+		-to znaci da ce znati staticke rute
+			-u settings.py, ispod static_url... dodati:
+				STATICFILES_DIRS = [
+					BASE_DIR/'templates'/'CSS',
+					BASE_DIR/'templates'/'JS'
+					]
+
+		-na svakoj stranici na kojoj radite uraditi sledece:
+			- promeniti putanju sa npr ./CSS/ex.css u {% static 'CSS/ex.css' %}
+	-promenjen models.py kako bi podrzao manyToMany relationships
+	-implementiran SSU 7
+
