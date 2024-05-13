@@ -42,3 +42,23 @@ def open_activity(request:HttpRequest):
                 }
         return render(request,'open_activity.html',context)
 
+#Natalija Vujnic
+#funcija za prikaz sopstvenog profila
+def display_my_profile(request):
+    #ulogovan=request.user.is_authenticated
+    ulogovan=1
+    if ulogovan:
+        korisnik=getCurrentUser()
+        tipKorisnika=korisnik.tip
+        print(tipKorisnika)
+        if tipKorisnika=='o':
+            stranica='org_profile.html'
+            return render(request, 'org_profile.html', {'korisnik': korisnik})
+        elif tipKorisnika=='v':
+            stranica='vol_profile.html'
+            interesi=model_funcs.getInterests(korisnik.idkor)
+            return render(request, 'volonteer_profile.html', {'korisnik': korisnik, 'interesi': interesi})
+        elif tipKorisnika=='a':
+            stranica='admin_start.html'
+    return render(request, 'login.html')
+

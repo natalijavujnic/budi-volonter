@@ -44,3 +44,7 @@ def getCategoryNames():
 def getCategoryObject(name):
     return models.Oblast.objects.filter(oblast=name).first()
 
+#Natalija Vujnic
+#funkcija vraca interesovanja korisnika
+def getInterests(id):
+    return models.ZanimaGa.objects.filter(idkor_id=id).values_list('idobl__oblast', flat=True)

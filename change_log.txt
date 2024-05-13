@@ -37,8 +37,7 @@
 		-to znaci da ce znati staticke rute
 			-u settings.py, ispod static_url... dodati:
 				STATICFILES_DIRS = [
-					BASE_DIR/'templates'/'CSS',
-					BASE_DIR/'templates'/'JS'
+					BASE_DIR/'templates'
 					]
 
 		-na svakoj stranici na kojoj radite uraditi sledece:

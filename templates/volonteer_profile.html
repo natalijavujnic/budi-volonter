@@ -8,16 +8,19 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="{% static './CSS/main_page.css' %}" rel="stylesheet">
-    <link href="{% static './CSS/org_profile.css' %}" rel="stylesheet">
-    <link href="{% static './CSS/volonteer_profile.css' %}" rel="stylesheet">
+    <link href="{% static 'CSS/main_page.css'%}" rel="stylesheet">
+	<link href="{% static 'CSS/org_profile.css'%}" rel="stylesheet">
+    <link href="{% static 'CSS/volonteer_profile.css'%}" rel="stylesheet">
     <title>Moj profil</title>
-    <script src="{% static './JS/switchPage.js' %}"></script>
+    <script src="{% static 'JS/switchPage.js'%}"></script>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C2DA91;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="main_page.html"><img src="{% static './resources/bvp5.png' %}" height="60px" width="60px"></a>
+
+            <a class="navbar-brand" href="main_page.html"><img src="{% static 'resources/bvp5.png'%}" height="60px" width="60px"></a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -50,7 +53,7 @@
             <!--Informacije o profilu-->
             <div class="col-sm-4" style="background-color: #F2FAFB;">
                 <div class="d-flex justify-content-end" style="padding: 15px;">
-                    <a href="{% static './vol_edit.html">
+                    <a href="{% static './vol_edit.html'%}">
                         <div id="EDIT" class="btn" title="Uredi profil"><i class="bi bi-pen-fill"></i></div>
                     </a>
                 </div>
@@ -58,34 +61,32 @@
                     <table class ="table" id="user-info">
                     <tr>
                         <td>Ime: </td>
-                        <td>Petar</td>
+                        <td>{{korisnik.ime}}</td>
                     </tr>
                     <tr>
                         <td>Prezime: </td>
-                        <td>Petrovic</td>
+                        <td>{{korisnik.prezime}}</td>
                     </tr>
                     <tr>
                         <td>Datum rođenja: </td>
-                        <td>1.1.2001.</td>
+                        <td>{{korisnik.telefon}}</td>
                     </tr>
                     <tr>
                         <td>E-mail: </td>
-                        <td>petar@petrovic.rs</td>
+                        <td>{{korisnik.email}}</td>
                     </tr>
                     </table>
                 </div>
                 <div id="user-int" style="margin: 10px;">
                     Interesovanja:
                     <ul style="padding-left: 25px; ">
-                        <li type="square" style="margin: 5px;">Lorem ipsum dolor sit amet</li>   
-                        <li type="square" style="margin: 5px;">Lorem ipsum dolor sit amet</li>   
-                        <li type="square" style="margin: 5px;">Lorem ipsum dolor sit amet</li>   
-                        <li type="square" style="margin: 5px;">Lorem ipsum dolor sit amet</li>   
-                        <li type="square" style="margin: 5px;">Lorem ipsum dolor sit amet</li>   
-                    </ul>
+                        {% for interes in interesi %}
+                            <li type="square" style="margin: 5px;">{{ interes }}</li>
+                        {% endfor %}
+                        </ul>
                 </div>
                 <div class="d-flex justify-content-center" style="padding: 15px;">
-                    <a href="{% static './vol_review_org.html">
+                    <a href="{% static './vol_review_org.html'%}">
                         <div class="btn ostavi-rec">Ostavi recenzije</div>
                     </a>
                 </div>

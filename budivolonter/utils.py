@@ -3,7 +3,7 @@
 def getCurrentUser():
     from .model_funcs import getUsers
     #ovo je samo za testiranje ovako napisano, inace treba stvarno da se vidi ko je logovan
-    return getUsers()[0]
+    return getUsers()[1]
 
 
 #Kosta Novokmet
