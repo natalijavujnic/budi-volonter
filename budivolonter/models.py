@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 class Aktivnost(models.Model):
     idorg = models.ForeignKey('Korisnik', models.DO_NOTHING, db_column='idOrg')  # Field name made lowercase.
     idakt = models.AutoField(db_column='idAkt', primary_key=True)  # Field name made lowercase.
@@ -17,7 +18,7 @@ class Aktivnost(models.Model):
         db_table = 'aktivnost'
 
 
-class Korisnik(models.Model):
+class Korisnik(AbstractBaseUser):
     idkor = models.AutoField(db_column='idKor', primary_key=True)  # Field name made lowercase.
     email = models.CharField(unique=True, max_length=256)
     password = models.CharField(max_length=256)
@@ -32,6 +33,9 @@ class Korisnik(models.Model):
     class Meta:
         managed = False
         db_table = 'korisnik'
+
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
 
 
 class Lokacija(models.Model):

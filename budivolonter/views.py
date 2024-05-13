@@ -1,6 +1,7 @@
 from .utils import getCurrentUser
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import redirect, render,HttpResponse
 from django.http import HttpRequest
+from django.contrib.auth import login
 from . import models
 from . import model_funcs
 from datetime import datetime
@@ -130,3 +131,20 @@ def reg_vol(request: HttpRequest):
 
     return render(request, 'reg_vol.html', context)
 
+#Djordje Sarovic
+#funkcija za prikaz stranice za login
+def login_page(request:HttpRequest):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    else:
+        email = request.POST['email']
+        password = request.POST['password']
+        user = models.Korisnik.objects.filter(email=email).first()
+        if user:
+            if user.check_password(password):
+                login(request, user)
+                return redirect('my_profile')
+            else:
+                return render(request, 'login.html', {'errorPassword':'Pogresna sifra'})
+        else:
+            return render(request, 'login.html', {'errorEmail':'Pogresan email'})

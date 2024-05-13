@@ -42,20 +42,31 @@
       </nav>
       <div class="container d-flex justify-content-center">
         <div class="w-100 d-flex justify-content-center" style="background-color: #F8FAF3; min-height: 100%; height: 88vh;">
-            <form class="p-5">
+            <form class="p-5" method="post">
+                {% csrf_token %}
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="peraperic@primer.com">
+                    {% if errorEmail %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ errorEmail }}
+                        </div>
+                    {% endif %}
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="peraperic@primer.com">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Lozinka</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="veoma_jaka_lozinka">
+                    {% if errorPassword %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ errorPassword }}
+                        </div>
+                    {% endif %}
+                    <label for="password">Lozinka</label>
+                    <input type="password" class="form-control" name="password" placeholder="veoma_jaka_lozinka">
                 </div>
                 <div class="d-flex">
                     <button type="submit" class="btn" style="background-color: #BDEE63;">Prijavi se</button>
                 </div>
                 <small id="emailHelp" class="form-text text-muted p-3">Niste postojeći korisnik? <a href="reg_choose.html" style="color: #5C7C2F;">Registrujte se</a></small>
-              </form>
+            </form>
         </div>
       </div>
 </body>
