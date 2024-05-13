@@ -33,9 +33,9 @@ function check_pib(event){
         event.preventDefault();
         return;
     }
-    let num = pib.substring(0,8);
+    let num = pib.substring(0,9);
     num = parseInt(num);
-    if(num < 10000001){
+    if(num < 100000001){
     document.getElementById('pib error').innerHTML = 'Pogresan format'
     event.preventDefault();
     }
@@ -68,7 +68,7 @@ function check_email(event){
         document.getElementById('email error').innerHTML = 'Popunite polje';
         event.preventDefault();
     }
-    else if(/^[a-zA-Z]\w*@[a-zA-Z]+\.[a-z]{2,3}$/.test(email) == false){
+    else if(/^[a-zA-Z][\w-\.]*@[a-zA-Z]+\.[a-z]{2,3}$/.test(email) == false){
         document.getElementById('email error').innerHTML = 'Pogresan format';
         event.preventDefault();
     }

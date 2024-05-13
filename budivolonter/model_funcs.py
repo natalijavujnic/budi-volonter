@@ -44,7 +44,26 @@ def getCategoryNames():
 def getCategoryObject(name):
     return models.Oblast.objects.filter(oblast=name).first()
 
+
 #Natalija Vujnic
 #funkcija vraca interesovanja korisnika
 def getInterests(id):
     return models.ZanimaGa.objects.filter(idkor_id=id).values_list('idobl__oblast', flat=True)
+    
+#Anja Mihajlov
+#U bazu unosi novog korisnika koji je tipa O, tj. organizacija
+def insertOrganization(ime,pib,telefon,email,lozinka):
+    with transaction.atomic():
+        ogranizacija = models.Korisnik(ime = ime, password = lozinka, email = email, pib = pib, telefon = telefon, tip = 'O')
+        ogranizacija.save()
+       
+#Anja Mihajlov
+#U bazu unosi novog korisnika tipa V, tj. volontera, radi insert u zanimaga
+def insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats):
+    with transaction.atomic():
+        volonter = models.Korisnik (ime = ime, prezime = prezime, datumrodj = datumRodj, password = lozinka, email = email, tip ='V')
+        volonter.save()
+        for cat in cats:
+            unos = models.ZanimaGa(idkor = volonter, idobl = getCategoryObject(cat))
+            unos.save()
+

@@ -3,6 +3,7 @@ from django.shortcuts import render,HttpResponse
 from django.http import HttpRequest
 from . import models
 from . import model_funcs
+from datetime import datetime
 
 #Kosta Novokmet
 #renderuje welcome page
@@ -61,4 +62,71 @@ def display_my_profile(request):
         elif tipKorisnika=='a':
             stranica='admin_start.html'
     return render(request, 'login.html')
+#Anja Mihajlov
+#Koristi se za insert nove organizacije u bazu
+def reg_org(request: HttpRequest):
+    if(request.method == 'POST'):
+        parametri = request.POST
+        ime = parametri['nazivOrganizacije']
+        pib  = parametri['pib']
+        telefon = parametri['telefon']
+        email = parametri['email']
+        lozinka = parametri['lozinka']
+
+        if models.Korisnik.objects.filter(telefon =telefon).exists() or models.Korisnik.objects.filter(pib = pib).exists() or  models.Korisnik.objects.filter(email = email).exists() :
+            poruka = "Već postoji korisnik sa datim telefonom, PIB-om ili e-mailom."
+
+        else:
+            poruka = "Organizacija je uspešno registrovana."
+            model_funcs.insertOrganization(ime,pib,telefon,email,lozinka)
+
+        from . import utils
+        return render(request,'reg_org.html', {'poruka': poruka})
+
+    return render(request, 'reg_org.html')
+
+
+#Anja Mihajlov
+#Registracija volontera
+def reg_vol(request: HttpRequest):
+    context = {
+                'cats': model_funcs.getCategoryNames()
+                }
+    if(request.method == 'POST'):
+        parametri = request.POST
+        ime = parametri['ime']
+        prezime = parametri['prezime']
+        datumRodj = parametri['datumRodjenja']
+        email = parametri['email']
+        lozinka = parametri['lozinka']
+        cats = parametri.getlist('categories')
+
+        #provera za godine
+        datum_rodjenja = datetime.strptime(datumRodj, "%Y-%m-%d")
+        danas = datetime.now()
+        godine = danas.year - datum_rodjenja.year - ((danas.month, danas.day) < (datum_rodjenja.month, datum_rodjenja.day))
+
+
+        if models.Korisnik.objects.filter(email = email).exists() :
+            context = {
+                'poruka': "Već postoji korisnik sa datim e-mailom.",
+                'cats': model_funcs.getCategoryNames()
+                }
+        elif godine<16 or godine>100:
+            context = {
+                'poruka': "Ne spadate u starosnu grupu za volontiranje",
+                'cats': model_funcs.getCategoryNames()
+                }
+
+        else:
+            model_funcs.insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats)
+            context = {
+                'poruka' :"Volonter je uspešno registrovan.",
+                'cats': model_funcs.getCategoryNames()
+                }
+
+        from . import utils
+        return render(request,'reg_vol.html', context)
+
+    return render(request, 'reg_vol.html', context)
 
