@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout, activity_form
+from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout, activity_form, view_applications
 
 urlpatterns = [
     path('welcome',welcome, name='welcome'),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('login', login_page, name='login'),
     path('logout', do_logout, name='logout'),
     path('api/', include('budivolonter.api')),
-    path('activity_form', activity_form , name='activity_form')
+    path('activity_form', activity_form , name='activity_form'),
+    path('view_applications', view_applications, name='view_applications')
 ]
