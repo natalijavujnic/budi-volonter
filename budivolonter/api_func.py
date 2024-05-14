@@ -14,7 +14,7 @@ def fetch_activities(request):
     print (reviews)
     return JsonResponse({'active_activities':active_activities_list,'archived_activities':archived_activities_list})
 #kosta novokmet
-#updatuje slobodna mesta aktivnosto
+#updatuje slobodna mesta aktivnosti
 def update_free_spaces(request:HttpRequest):
     import json
     json_data = json.loads(request.body.decode('utf-8'))

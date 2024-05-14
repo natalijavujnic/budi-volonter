@@ -1,3 +1,6 @@
+//kosta novokmet
+//proverava ispravnost podataka, ispisuje gresku na samoj stranici u suprtonom
+//prevent default sprecava da se forma submituje
 function check_pass(event){
     let pass = document.getElementById('lozinka').value;
     if(pass === ''){

@@ -108,6 +108,8 @@ def getApplicationsForAct(actID):
                 }
             for app in apps if utils.datePassed(app.idakt.datumdo)
             ]
+#Kosta Novokmet
+#updatuje u bazi broj slob mesta za akktivnost actID na new_val
 def updateFreeSpaces(new_val,actID):
     print(f'called with val{new_val} id{actID}')
     act = models.Aktivnost.objects.get(idakt = actID);

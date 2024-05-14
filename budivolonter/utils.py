@@ -58,4 +58,4 @@ def loadActivities(acts):
         act_data['kontinent'] = act.lokacija.kontinent
         act_data['org'] = act.idorg.ime
         act_list.append(act_data)
-    return act_list 
+    return act_list
