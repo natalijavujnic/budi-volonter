@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `budivolonter` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `budivolonter`;
--- MySQL dump 10.13  Distrib 8.0.36, for macos14 (arm64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: budivolonter
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,6 +53,58 @@ INSERT INTO `aktivnost` VALUES (1,22,'test akt',5,'2024-05-05','2024-05-30','202
 UNLOCK TABLES;
 
 --
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_migrations` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'sessions','0001_initial','2024-05-14 00:25:32.235804');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('c88m9ezx73ekvudlj5m20hrek2cv5cu8','.eJxVjDkOwjAUBe_iGll4SWxT0ucM1t-CA8iR4qRC3B0ipYD2zcx7qQzbWvLWZMkTq4uy6vS7IdBD6g74DvU2a5rrukyod0UftOlhZnleD_fvoEAr39oH5E5SbxnBpq4P7FMIBsgZISMuEhgkHi2OECEaR9F5hiR0loQhqvcH-aM4yg:1s6fzg:MgNLWfg5JrwPl6W1RMdjaXJ6KGUHDmEZEG_ckQtdjv0','2024-05-28 00:26:12.409776');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `korisnik`
 --
 
@@ -71,11 +121,13 @@ CREATE TABLE `korisnik` (
   `telefon` varchar(14) DEFAULT NULL,
   `tip` char(1) NOT NULL,
   `datumRodj` date DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `is_active` tinyint DEFAULT NULL,
   PRIMARY KEY (`idKor`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `PIB_UNIQUE` (`pib`),
   UNIQUE KEY `telefon_UNIQUE` (`telefon`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +136,7 @@ CREATE TABLE `korisnik` (
 
 LOCK TABLES `korisnik` WRITE;
 /*!40000 ALTER TABLE `korisnik` DISABLE KEYS */;
-INSERT INTO `korisnik` VALUES (1,'kosta012001@gmail.com','123','kosta','novokmet',NULL,NULL,'k','2014-12-20');
+INSERT INTO `korisnik` VALUES (1,'kosta012001@gmail.com','123','kosta','novokmet',NULL,NULL,'k','2014-12-20',NULL,NULL),(2,'theonlydjboss@gmail.com','pbkdf2_sha256$720000$RV54qMwMAYX6JrTBzqsMrl$/Zlhg1UgAlt64RQJIrtm+iuNblN+Zl3OyiwYOO0g8pA=','Djordje','Sarovic',NULL,NULL,'V','2001-03-09','2024-05-14 00:26:12',NULL);
 /*!40000 ALTER TABLE `korisnik` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,6 +360,7 @@ CREATE TABLE `zanima_ga` (
 
 LOCK TABLES `zanima_ga` WRITE;
 /*!40000 ALTER TABLE `zanima_ga` DISABLE KEYS */;
+INSERT INTO `zanima_ga` VALUES (2,4);
 /*!40000 ALTER TABLE `zanima_ga` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -320,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-12 20:24:48
+-- Dump completed on 2024-05-14  2:28:12

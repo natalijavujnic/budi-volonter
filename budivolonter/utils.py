@@ -1,9 +1,13 @@
 #Kosta Novokmet
 #uzima trenutnog korisnika koji je logovan na sistem
-def getCurrentUser():
-    from .model_funcs import getUsers
-    #ovo je samo za testiranje ovako napisano, inace treba stvarno da se vidi ko je logovan
-    return getUsers()[1]
+from django.http import HttpRequest
+
+from budivolonter import models
+from budivolonter.models import Korisnik
+
+
+def getCurrentUser(request:HttpRequest):
+    return models.Korisnik.objects.filter(email=request.user.get_username()).first()
 
 
 #Kosta Novokmet

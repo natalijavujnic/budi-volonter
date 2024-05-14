@@ -1,7 +1,7 @@
 from .utils import getCurrentUser
 from django.shortcuts import redirect, render,HttpResponse
 from django.http import HttpRequest
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from . import models
 from . import model_funcs
 from datetime import datetime
@@ -26,7 +26,7 @@ def open_activity(request:HttpRequest):
         deadlineDate = parameters['deadlineDate']
         country = parameters['country']
         city = parameters['city']
-        user = getCurrentUser()
+        user = getCurrentUser(request)
         model_funcs.insertActivity(user,name,desc,spots,startDate,endDate,deadlineDate,cats,country,city,reqs)
         from . import utils
         context = {
@@ -46,23 +46,21 @@ def open_activity(request:HttpRequest):
 
 #Natalija Vujnic
 #funcija za prikaz sopstvenog profila
-def display_my_profile(request):
-    #ulogovan=request.user.is_authenticated
-    ulogovan=1
+def display_my_profile(request:HttpRequest):
+    ulogovan=request.user.is_authenticated
     if ulogovan:
-        korisnik=getCurrentUser()
+        korisnik=getCurrentUser(request)
         tipKorisnika=korisnik.tip
         print(tipKorisnika)
-        if tipKorisnika=='o':
-            stranica='org_profile.html'
+        if tipKorisnika=='O':
             return render(request, 'org_profile.html', {'korisnik': korisnik})
-        elif tipKorisnika=='v':
-            stranica='vol_profile.html'
+        elif tipKorisnika=='V':
             interesi=model_funcs.getInterests(korisnik.idkor)
             return render(request, 'volonteer_profile.html', {'korisnik': korisnik, 'interesi': interesi})
-        elif tipKorisnika=='a':
+        elif tipKorisnika=='A':
             stranica='admin_start.html'
-    return render(request, 'login.html')
+            return render(request, stranica)
+    return redirect('login')
 #Anja Mihajlov
 #Koristi se za insert nove organizacije u bazu
 def reg_org(request: HttpRequest):
@@ -148,3 +146,7 @@ def login_page(request:HttpRequest):
                 return render(request, 'login.html', {'errorPassword':'Pogresna sifra'})
         else:
             return render(request, 'login.html', {'errorEmail':'Pogresan email'})
+        
+def do_logout(request):
+    logout(request)
+    return redirect('login')
