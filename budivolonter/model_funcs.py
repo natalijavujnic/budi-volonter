@@ -152,3 +152,10 @@ def updateFreeSpaces(new_val,actID):
     act = models.Aktivnost.objects.get(idakt = actID);
     act.brmesta = new_val
     act.save()
+
+
+#Kosta Novokmet
+#vraca user id na osnovu email-a
+def IdFromEmail(target_email):
+    usr = models.Korisnik.objects.filter(email=target_email).first()
+    return usr.idkor

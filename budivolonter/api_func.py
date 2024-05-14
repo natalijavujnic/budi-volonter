@@ -1,12 +1,13 @@
 from . import model_funcs
 from django.http import JsonResponse,HttpRequest
 #kosta novokmet
-#vraca sve aktivnosti organizacije koja je logovana kao listu recnika
-def fetch_activities_org(request):
+#vraca sve aktivnosti organizacije 
+#org = ona ciji se profil gleda
+def fetch_activities_org(request:HttpRequest):
     from . import utils
-    logged_usr = utils.getCurrentUser(request)
-    active_activities = model_funcs.getActiveActivitiesOrg(logged_usr.idkor)
-    archived_activities= model_funcs.getArchivedActivitiesOrg(logged_usr.idkor)
+    idkor = model_funcs.IdFromEmail(request.GET.get('email'))
+    active_activities = model_funcs.getActiveActivitiesOrg(idkor)
+    archived_activities= model_funcs.getArchivedActivitiesOrg(idkor)
     active_activities_list = utils.loadActivities(active_activities)
     archived_activities_list = utils.loadActivities(archived_activities)
     for act in archived_activities_list:
@@ -17,14 +18,15 @@ def fetch_activities_org(request):
 
 
 #kosta novokmet
-#vraca sve aktivnosti na kojima je volonter koji je logovan ucestvovao
+#vraca sve aktivnosti na kojima je volonter 
+#volonter = onaj ciji se profil gleda
 def fetch_activities_vol(request):
     from . import utils
-    logged_usr = utils.getCurrentUser(request)
-    activities = model_funcs.getActivitiesVol(logged_usr.idkor)
+    idkor = model_funcs.IdFromEmail(request.GET.get('email'))
+    activities = model_funcs.getActivitiesVol(idkor)
     activities_list = utils.loadActivities(activities)
     for act in activities_list:
-        review = model_funcs.getApplicationsForActVol(act.get('id'),logged_usr.idkor)
+        review = model_funcs.getApplicationsForActVol(act.get('id'),idkor)
         if review is None: act['review'] = 'null'
         else : act['review'] = review
     return JsonResponse({'archived_activities':activities_list})
