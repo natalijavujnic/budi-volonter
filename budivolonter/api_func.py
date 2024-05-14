@@ -11,7 +11,7 @@ def fetch_activities_org(request:HttpRequest):
     active_activities_list = utils.loadActivities(active_activities)
     archived_activities_list = utils.loadActivities(archived_activities)
     for act in archived_activities_list:
-        reviews = model_funcs.getApplicationsForAct(act.get('id'))
+        reviews = model_funcs.getApplicationsForAct(idakt=act.get('id'),finished=True,status='A')
         act['reviews'] = reviews
     print (reviews)
     return JsonResponse({'active_activities':active_activities_list,'archived_activities':archived_activities_list})
@@ -26,7 +26,7 @@ def fetch_activities_vol(request):
     activities = model_funcs.getActivitiesVol(idkor)
     activities_list = utils.loadActivities(activities)
     for act in activities_list:
-        review = model_funcs.getApplicationsForActVol(act.get('id'),idkor)
+        review = model_funcs.getApplicationsForActVol(idakt=act.get('id'),idkor=idkor,finished=True)
         if review is None: act['review'] = 'null'
         else : act['review'] = review
     return JsonResponse({'archived_activities':activities_list})

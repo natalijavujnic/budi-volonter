@@ -101,10 +101,17 @@ def getActivityReqs(actID):
 
 #Kosta Novokmet
 #vraca sve prijave za odredjenu aktivnost u vidu liste recnika
-def getApplicationsForAct(actID):
-    apps = list(models.Prijava.objects.filter(idakt=actID).all())
+# opciono se prosledi status prijava koje hocemo i da li je ta aktivnost prosla
+#finished=True ako jeste i status='O/R/A'
+#mora se proslediti idact=..
+def getApplicationsForAct(**kwargs):
+    app_status = kwargs.get('status','O')
+    passed = kwargs.get('finished',False)
+    actID = kwargs['idakt']
+    apps = list(models.Prijava.objects.filter(idakt=actID,status=app_status).all())
     from . import utils
-    return [
+    if(passed == True ):
+        return [
                 {
                     'preporukavol' :app.preporukavol,
                     'preporukaorg' :app.preporukaorg,
@@ -116,32 +123,76 @@ def getApplicationsForAct(actID):
                     'idvol'        : app.idvol.idkor,
                     'volname'      : app.idvol.ime,
                     'vollastname'  : app.idvol.prezime,
-                    'pismo'        : app.pismo
-                }
-            for app in apps if utils.datePassed(app.idakt.datumdo)
-            ]
+                    'pismo'        : app.pismo,
+                    'rezime'       : app.rezime
+                    }
+                for app in apps if utils.datePassed(app.idakt.datumdo)
+                ]
+
+    else:
+        return [
+                {
+                    'preporukavol' :app.preporukavol,
+                    'preporukaorg' :app.preporukaorg,
+                    'komvol'       : app.komvol,
+                    'komorg'       : app.komorg,
+                    'status'       : app.status,
+                    'idpri'        : app.idpri,
+                    'idakt'        : app.idakt.idakt,
+                    'idvol'        : app.idvol.idkor,
+                    'volname'      : app.idvol.ime,
+                    'vollastname'  : app.idvol.prezime,
+                    'pismo'        : app.pismo,
+                    'rezime'       : app.rezime
+                    }
+                for app in apps
+                ]
 
 #Kosta Novokmet
 #vraca prijavu odredjenog volontera za odredjenu aktivnost kao recnik, ako nema vraca None
-def getApplicationsForActVol(actID, korID):
+#opciono finished=True ako hocemo prijavu samo ako je ta akt prosla
+#idakt i idkor moraju da se stave kao key val pair u pozivu fje
+def getApplicationsForActVol(**kwargs):
+    passed = kwargs.get('finished',False)
+    actID = kwargs['idakt']
+    korID = kwargs['idkor']
     app = models.Prijava.objects.filter(idakt=actID, idvol=korID).first()
-    from . import utils
-    if app and utils.datePassed(app.idakt.datumdo):
-        return {
-                'preporukavol': app.preporukavol,
-                'preporukaorg': app.preporukaorg,
-                'komvol': app.komvol,
-                'komorg': app.komorg,
-                'status': app.status,
-                'idpri': app.idpri,
-                'idakt': app.idakt.idakt,
-                'idvol': app.idvol.idkor,
-                'volname': app.idvol.ime,
-                'vollastname': app.idvol.prezime,
-                'pismo': app.pismo
-                }
+    if passed == True:
+        from . import utils
+        if app and utils.datePassed(app.idakt.datumdo):
+            return {
+                    'preporukavol': app.preporukavol,
+                    'preporukaorg': app.preporukaorg,
+                    'komvol': app.komvol,
+                    'komorg': app.komorg,
+                    'status': app.status,
+                    'idpri': app.idpri,
+                    'idakt': app.idakt.idakt,
+                    'idvol': app.idvol.idkor,
+                    'volname': app.idvol.ime,
+                    'vollastname': app.idvol.prezime,
+                    'pismo':app.pismo,
+                    'rezime' : app.rezime
+                    }
+
+        else: return None
     else:
-        return None
+        if app:
+            return {
+                    'preporukavol': app.preporukavol,
+                    'preporukaorg': app.preporukaorg,
+                    'komvol': app.komvol,
+                    'komorg': app.komorg,
+                    'status': app.status,
+                    'idpri': app.idpri,
+                    'idakt': app.idakt.idakt,
+                    'idvol': app.idvol.idkor,
+                    'volname': app.idvol.ime,
+                    'vollastname': app.idvol.prezime,
+                    'pismo': app.pismo,
+                    'rezime': app.rezime
+                    }
+        else: return None
 
             
 
