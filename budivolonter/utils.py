@@ -45,6 +45,7 @@ def loadActivities(acts):
         act_data = {}
         oblasti = list(act.oblasti.all().values_list(flat=True))
         zahtevi = model_funcs.getActivityReqs(act.idakt)
+        act_data['id'] = act.idakt
         act_data['naziv'] = act.naziv
         act_data['opis'] = act.opis
         act_data['oblasti'] = oblasti

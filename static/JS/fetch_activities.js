@@ -1,4 +1,5 @@
 function fetch_activities() {
+	var acts;
 	$.get('http://localhost:8000/budivolonter/api/get_activities', function(response) {
 		console.log(response);
 		acts = response['active_activities'];
@@ -12,11 +13,11 @@ function fetch_activities() {
 				<div class="col-sm-8">
 				<h2 class="mr-3 mb-0">${act.naziv}</h2>
 				<a style="color:#00A2C7" href="#" data-toggle="modal" data-target="#exampleModal${index}">Opis aktivnosti</a>
-				<div class="modal fade" id="exampleModal${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModal${index}" aria-hidden="true">
+				<div class="modal fade" id="exampleModal${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel${index}" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 				<div class="modal-header">
-				<h5 class="modal-title">${act.naziv}</h5>
+				<h5 class="modal-title" id="exampleModalLabel${index}">${act.naziv} </h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
@@ -51,10 +52,10 @@ function fetch_activities() {
 				</div>
 				<div class="col-sm-4">
 				<div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px;">
-				<div class="mr-2">Broj preostalih mesta: <span id="peopleCount">${act.brmesta}</span></div>
+				<div class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>
 				<div class="plus-minus">
-				<button class="btn btn-primary btn-sm" onclick="increaseCount()">+</button>
-				<button class="btn btn-primary btn-sm" onclick="decreaseCount()">-</button>
+				<button id="inc${index}" class="btn btn-primary btn-sm"">+</button>
+				<button id="dec${index}" class="btn btn-primary btn-sm"">-</button>
 				</div>
 				</div>
 				<div class="prijave d-flex justify-content-end">
@@ -68,24 +69,32 @@ function fetch_activities() {
 		}
 		acts = response['archived_activities'];
 		let str2 = '';
-		index = 0;
 		for(let act of acts){
+			index++;
+			let reviews = act.reviews;
+			let cntP = 0;
+			let cntN = 0;
+			for(let rev of reviews){
+				if (rev.preporukavol == 'P') cntP++;
+				else cntN++;
+
+			}
 			str2 += `
 				<div class="aktivnost">
 				<div class="row align-items-center">
 				<div class="col-sm-8">
 				<div class="d-flex align-items-center">
 				<h2 class="mr-3 mb-0">${act.naziv}</h2>
-				<div class="mr-3"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;12</div>
-				<div class="mr-3"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;4</div>
+				<div class="mr-3"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;${cntP}</div>
+				<div class="mr-3"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;${cntN}</div>
 				<button type="button" class="recenzije btn btn-secondary btn-sm">Recenzije <i class="bi bi-chevron-down"></i></button>
 				</div>
-				<a style="color:#00A2C7" href="#" data-toggle="modal" data-target="#example5Modal">Opis aktivnosti</a>
-				<div class="modal fade" id="example5Modal" tabindex="-1" role="dialog" aria-labelledby="example5ModalLabel" aria-hidden="true">
+				<a style="color:#00A2C7" href="#" data-toggle="modal" data-target="#exampleModal${index}">Opis aktivnosti</a>
+				<div class="modal fade" id="exampleModal${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel${index}" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 				<div class="modal-header">
-				<h5 class="modal-title" id="example5ModalLabel">${act.naziv}</h5>
+				<h5 class="modal-title" id="exampleModalLabel${index}">${act.naziv}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
@@ -127,13 +136,11 @@ function fetch_activities() {
 				</div>
 				<div class="recenzije_sekcija container-fluid" style="margin-top: 15px;">
 				`;
-			let reviews = act.recenzije;
-			let n = 2;
-			for(let i = 0;i < n;i++){
+			for(let rev of reviews){
 				str2 += `
 					<div class="dobar row">
-					<div class="col-sm-3 ">Ime Prezime: </div>
-					<div class="col-sm-9">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis voluptas officiis error. Veniam, eligendi delectus deserunt tempora modi doloremque similique.</div>
+					<div class="col-sm-3 ">Ime Prezime:${rev.volname} ${rev.vollastname} </div>
+					<div class="col-sm-9">Komentar:${rev.komvol}</div>
 					</div>
 					`
 			}
@@ -145,5 +152,56 @@ function fetch_activities() {
 		// Append str to a container or use it as needed
 		$('#otvorene_akt').html(str1);
 		$('#arhivirane_akt').html(str2);
+		var debouncer;
+		acts = response['active_activities'];
+		for(let i = 1; i <= acts.length;i++){
+			$('#inc'+i).on('click',function(){
+				clearTimeout(debouncer);
+				debouncer = setTimeout(() => {
+					$.ajax({
+						url: 'http://localhost:8000/budivolonter/api/update_free_spaces',
+						type: 'PUT',
+						contentType: 'application/json',
+						data: JSON.stringify({
+							val: parseInt($('#peopleCount'+i).text()) + 1,
+							idakt: acts[i-1]['id']
+						}),
+						success: function(response) {
+							let n = $('#peopleCount'+i).text();
+							n = parseInt(n);
+							n++;
+							$('#peopleCount' + i).text(n);
+						},
+						error: function(xhr, status, error) {
+							console.error(xhr.responseText);
+						}
+					});
+				}, 300);
+			});
+
+			$('#dec'+i).on('click',function(){
+				clearTimeout(debouncer);
+				debouncer = setTimeout(() => {
+					$.ajax({
+						url: 'http://localhost:8000/budivolonter/api/update_free_spaces',
+						type: 'PUT',
+						contentType: 'application/json',
+						data: JSON.stringify({
+							val: parseInt($('#peopleCount'+i).text()) - 1,
+							idakt: acts[i-1]['id']
+						}),
+						success: function(response) {
+							let n = $('#peopleCount'+i).text();
+							n = parseInt(n);
+							n--;
+							$('#peopleCount' + i).text(n);
+						},
+						error: function(xhr, status, error) {
+							console.error(xhr.responseText);
+						}
+					});
+				}, 300);
+			});
+		}
 	});
 }

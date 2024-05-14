@@ -75,15 +75,41 @@ def getActiveActivities():
     acts = list(models.Aktivnost.objects.all())
     from . import utils
     return [act for act in acts if not utils.datePassed(act.datumdo)]
-#Kosta Novokmet
-#vraca sve arhivirane akt iz baze
+
+#Kosta Novokmet 
+#vraca sve aktivnosti iz baze koje su se zavrsile
 def getArchivedActivities():
     acts = list(models.Aktivnost.objects.all())
     from . import utils
     return [act for act in acts if utils.datePassed(act.datumdo)]
-
-
 #Kosta Novokmet
 #vraca sve zahteve aktivnosti
 def getActivityReqs(actID):
     return  list(models.Vestina.objects.filter(idakt=actID).all().values_list('opis',flat=True))
+
+#Kosta Novokmet
+#vraca sve prijave za odredjenu aktivnost u vidu liste recnika
+def getApplicationsForAct(actID):
+    apps = list(models.Prijava.objects.filter(idakt=actID).all())
+    from . import utils
+    return [
+                {
+                    'preporukavol' :app.preporukavol,
+                    'preporukaorg' :app.preporukaorg,
+                    'komvol'       : app.komvol,
+                    'komorg'       : app.komorg,
+                    'status'       : app.status,
+                    'idpri'        : app.idpri,
+                    'idakt'        : app.idakt.idakt,
+                    'idvol'        : app.idvol.idkor,
+                    'volname'      : app.idvol.ime,
+                    'vollastname'  : app.idvol.prezime,
+                    'pismo'        : app.pismo
+                }
+            for app in apps if utils.datePassed(app.idakt.datumdo)
+            ]
+def updateFreeSpaces(new_val,actID):
+    print(f'called with val{new_val} id{actID}')
+    act = models.Aktivnost.objects.get(idakt = actID);
+    act.brmesta = new_val
+    act.save()
