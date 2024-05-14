@@ -11,18 +11,17 @@ from datetime import datetime
 def welcome(request):
     from . import utils
     context = {}
-    usr = utils.getCurrentUser(request)
-    if(usr is None):
-        print('usr is none')
-        context['navbar'] = utils.getNavbar('UNR')
-    else:
-        tip = usr.tip
-        context['navbar'] = utils.getNavbar(tip)
-    return render(request,'main_page.html') 
+    context['navbar'] = utils.getNavbar(request)
+    return render(request,'main_page.html',context) 
 
 #Kosta Novokmet
 #Poziva se prilikom poziva endpoint-a sa istim imenom. Treba da ubaci novu aktivnost u bazu
 def open_activity(request:HttpRequest):
+    from . import utils
+    if utils.getCurrentUser(request) is None:
+        return redirect('login')
+    elif utils.getCurrentUser(request).tip == 'V':
+        return redirect('welcome') #todo redirect to error 404 page
     if(request.method == 'POST'):
         parameters = request.POST
         cats = parameters.getlist('categories')
@@ -42,7 +41,7 @@ def open_activity(request:HttpRequest):
                 'countries':utils.getCountries,
                 'status':'USPESNO DODATA AKTIVNOST!',
                 'cats': model_funcs.getCategoryNames(),
-                'navbar' : utils.getNavbar(utils.getCurrentUser(request).tip)
+                'navbar' : utils.getNavbar(request)
                 }
         return render(request,'open_activity.html',context)
     else:
@@ -51,7 +50,7 @@ def open_activity(request:HttpRequest):
                 'countries':utils.getCountries,
                 'status':'',
                 'cats':model_funcs.getCategoryNames(),
-                'navbar' : utils.getNavbar(utils.getCurrentUser(request).tip)
+                'navbar' : utils.getNavbar(request)
                 }
         return render(request,'open_activity.html',context)
 
@@ -67,27 +66,30 @@ def display_my_profile(request:HttpRequest):
         if tipKorisnika=='O':
             context = {
                     'korisnik':korisnik,
-                    'navbar':utils.getNavbar(korisnik.tip)
+                    'navbar':utils.getNavbar(request)
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
             interesi=model_funcs.getInterests(korisnik.idkor)
             context = {
                     'korisnik':korisnik,
-                    'navbar':utils.getNavbar(korisnik.tip),
+                    'navbar':utils.getNavbar(request),
                     'interesi': interesi
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':
             stranica='admin_start.html'
-            return render(request, stranica)
+            return render(request, stranica,{'navbar':utils.getNavbar(request)})
     return redirect('login')
 #Anja Mihajlov
 #Koristi se za insert nove organizacije u bazu
 def reg_org(request: HttpRequest):
     from . import utils
+    if utils.getCurrentUser(request) is not None:
+        return redirect('welcome')
+    from . import utils
     context = {
-            'navbar': utils.getNavbar('UNR')
+            'navbar': utils.getNavbar(request)
             }
     if(request.method == 'POST'):
         parametri = request.POST
@@ -113,9 +115,11 @@ def reg_org(request: HttpRequest):
 #Anja Mihajlov
 #Registracija volontera
 def reg_vol(request: HttpRequest):
+    if utils.getCurrentUser(request) is not None:
+        return redirect('welcome')
     context = {
                 'cats': model_funcs.getCategoryNames(),
-                'navbar':utils.getNavbar('UNR')
+                'navbar':utils.getNavbar(request)
                 }
     if(request.method == 'POST'):
         parametri = request.POST
@@ -141,7 +145,7 @@ def reg_vol(request: HttpRequest):
             context = {
                 'poruka': "Ne spadate u starosnu grupu za volontiranje",
                 'cats': model_funcs.getCategoryNames(),
-                'navbar':utils.getNavbar('UNR')
+                'navbar':utils.getNavbar(request)
                 }
 
         else:
@@ -149,7 +153,7 @@ def reg_vol(request: HttpRequest):
             context = {
                 'poruka' :"Volonter je uspešno registrovan.",
                 'cats': model_funcs.getCategoryNames(),
-                'navbar':utils.getNavbar('UNR')
+                'navbar':utils.getNavbar(request)
                 }
 
         from . import utils
@@ -160,9 +164,11 @@ def reg_vol(request: HttpRequest):
 #Djordje Sarovic
 #funkcija za prikaz stranice za login
 def login_page(request:HttpRequest):
+    from . import utils
+    if utils.getCurrentUser(request) is not None:
+        return redirect('welcome')
     if request.method == 'GET':
-        from . import utils
-        return render(request, 'login.html',{'navbar': utils.getNavbar('UNR')})
+        return render(request, 'login.html',{'navbar': utils.getNavbar(request)})
     else:
         email = request.POST['email']
         password = request.POST['password']
@@ -172,9 +178,9 @@ def login_page(request:HttpRequest):
                 login(request, user)
                 return redirect('my_profile')
             else:
-                return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar('UNR')})
+                return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar(request)})
         else:
-            return render(request, 'login.html', {'errorEmail':'Pogresan email','navbar': utils.getNavbar('UNR')})
+            return render(request, 'login.html', {'errorEmail':'Pogresan email','navbar': utils.getNavbar(request)})
 #Djordje Sarovic
 def do_logout(request):
     logout(request)
@@ -197,7 +203,7 @@ def activity_form(request:HttpRequest):
         'datumOd': aktivnost.datumod,
         'datumDo': aktivnost.datumdo,
         'organizacija_ime':organizacija.ime,
-        'navbar': utils.getNavbar('V')
+        'navbar': utils.getNavbar(request)
     }
     if request.method == 'GET':
         return render(request, 'activity_form.html', context)

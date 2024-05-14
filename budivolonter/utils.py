@@ -3,13 +3,9 @@ from budivolonter import models
 from budivolonter.models import Korisnik
 
 #Djordje Sarovic
-<<<<<<< HEAD
 def getCurrentUser(request:HttpRequest):
     if request.user.is_anonymous:
         return None
-=======
-def getCurrentUser(request:HttpRequest) -> models.Korisnik:
->>>>>>> 4cc861f (added dynamic navbar)
     return models.Korisnik.objects.filter(email=request.user.get_username()).first()
 
 
@@ -68,7 +64,12 @@ def loadActivities(acts) -> list:
 
 
 #Kosta Novokmet
-def getNavbar(user_type) -> str:
+def getNavbar(request) -> str:
+    usr = getCurrentUser(request)
+    if usr is None:
+        user_type= 'UNR'
+    else:
+        user_type = usr.tip
     if(user_type == 'O'):
         with open('./budivolonter/html/navbar_org.html','r') as file:
             return file.read()
