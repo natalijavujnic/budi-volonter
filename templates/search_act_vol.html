@@ -18,37 +18,7 @@
     <title>Pretraga aktivnosti volonter</title>
     <script src="{% static './JS/switchPage.js' %}"></script>
 </head>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #C2DA91;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="main_page.html"><img src="{% static './resources/bvp5.png' %}" height="60px" width="60px"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <button onclick = "switchPage('choose_search.html')"class="searchButton btn rounded-circle" type="submit"><i class="bi bi-people-fill" style="color: #37401C;" title="Pretraga korisnika"></i></button>
-  
-                </li>
-                <li class="nav-item" >
-                  <button onclick="switchPage('search_act.html')" class="searchButton btn rounded-circle" type="submit"><i class="bi bi-flag-fill" style="color: #37401C;" title="Pretraga aktivnosti"></i></button>
-                </li>
-              </ul>
-        
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-right">
-        
-            
-        </ul>
-
-        <div class="d-flex">
-            <button class="searchButton btn" type="submit">MojProfil</button>
-            <div id = "inbox" class="btn" style="color:#37401C;background-color:#D3E7A6;">Prepiske
-                &nbsp;<span class="badge bg-danger">7</span>
-            </div>
-        </div>  
-      </div>
-    </div>
-  </nav>
+	{{navbar|safe}}
   <div class="container-fluid">
     <div class="row">
         <div class = "col-sm-4" style="background-color: #eef6d6; padding-top: 15px;">

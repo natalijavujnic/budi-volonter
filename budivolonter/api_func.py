@@ -29,7 +29,7 @@ def fetch_activities_vol(request):
         review = model_funcs.getApplicationsForActVol(idakt=act.get('id'),idkor=idkor,finished=True)
         if review is None: act['review'] = 'null'
         else : act['review'] = review
-    return JsonResponse({'archived_activities':activities_list})
+    return JsonResponse({'activities':activities_list})
 
 
 #kosta novokmet

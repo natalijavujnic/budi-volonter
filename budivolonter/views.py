@@ -9,7 +9,16 @@ from datetime import datetime
 #Kosta Novokmet
 #renderuje welcome page
 def welcome(request):
-   return render(request,'main_page.html') 
+    from . import utils
+    context = {}
+    usr = utils.getCurrentUser(request)
+    if(usr is None):
+        print('usr is none')
+        context['navbar'] = utils.getNavbar('UNR')
+    else:
+        tip = usr.tip
+        context['navbar'] = utils.getNavbar(tip)
+    return render(request,'main_page.html') 
 
 #Kosta Novokmet
 #Poziva se prilikom poziva endpoint-a sa istim imenom. Treba da ubaci novu aktivnost u bazu
@@ -32,7 +41,8 @@ def open_activity(request:HttpRequest):
         context = {
                 'countries':utils.getCountries,
                 'status':'USPESNO DODATA AKTIVNOST!',
-                'cats': model_funcs.getCategoryNames()
+                'cats': model_funcs.getCategoryNames(),
+                'navbar' : utils.getNavbar(utils.getCurrentUser(request).tip)
                 }
         return render(request,'open_activity.html',context)
     else:
@@ -40,7 +50,8 @@ def open_activity(request:HttpRequest):
         context = {
                 'countries':utils.getCountries,
                 'status':'',
-                'cats':model_funcs.getCategoryNames()
+                'cats':model_funcs.getCategoryNames(),
+                'navbar' : utils.getNavbar(utils.getCurrentUser(request).tip)
                 }
         return render(request,'open_activity.html',context)
 
@@ -49,14 +60,24 @@ def open_activity(request:HttpRequest):
 def display_my_profile(request:HttpRequest):
     ulogovan=request.user.is_authenticated
     if ulogovan:
+        from . import utils
         korisnik=getCurrentUser(request)
         tipKorisnika=korisnik.tip
         print(tipKorisnika)
         if tipKorisnika=='O':
-            return render(request, 'org_profile.html', {'korisnik': korisnik})
+            context = {
+                    'korisnik':korisnik,
+                    'navbar':utils.getNavbar(korisnik.tip)
+                    }
+            return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
             interesi=model_funcs.getInterests(korisnik.idkor)
-            return render(request, 'volonteer_profile.html', {'korisnik': korisnik, 'interesi': interesi})
+            context = {
+                    'korisnik':korisnik,
+                    'navbar':utils.getNavbar(korisnik.tip),
+                    'interesi': interesi
+                    }
+            return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':
             stranica='admin_start.html'
             return render(request, stranica)
@@ -64,6 +85,10 @@ def display_my_profile(request:HttpRequest):
 #Anja Mihajlov
 #Koristi se za insert nove organizacije u bazu
 def reg_org(request: HttpRequest):
+    from . import utils
+    context = {
+            'navbar': utils.getNavbar('UNR')
+            }
     if(request.method == 'POST'):
         parametri = request.POST
         ime = parametri['nazivOrganizacije']
@@ -78,18 +103,19 @@ def reg_org(request: HttpRequest):
         else:
             poruka = "Organizacija je uspešno registrovana."
             model_funcs.insertOrganization(ime,pib,telefon,email,lozinka)
+        context['poruka'] = poruka
 
-        from . import utils
-        return render(request,'reg_org.html', {'poruka': poruka})
+        return render(request,'reg_org.html', context)
 
-    return render(request, 'reg_org.html')
+    return render(request, 'reg_org.html',context)
 
 
 #Anja Mihajlov
 #Registracija volontera
 def reg_vol(request: HttpRequest):
     context = {
-                'cats': model_funcs.getCategoryNames()
+                'cats': model_funcs.getCategoryNames(),
+                'navbar':utils.getNavbar('UNR')
                 }
     if(request.method == 'POST'):
         parametri = request.POST
@@ -114,14 +140,16 @@ def reg_vol(request: HttpRequest):
         elif godine<16 or godine>100:
             context = {
                 'poruka': "Ne spadate u starosnu grupu za volontiranje",
-                'cats': model_funcs.getCategoryNames()
+                'cats': model_funcs.getCategoryNames(),
+                'navbar':utils.getNavbar('UNR')
                 }
 
         else:
             model_funcs.insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats)
             context = {
                 'poruka' :"Volonter je uspešno registrovan.",
-                'cats': model_funcs.getCategoryNames()
+                'cats': model_funcs.getCategoryNames(),
+                'navbar':utils.getNavbar('UNR')
                 }
 
         from . import utils
@@ -133,7 +161,8 @@ def reg_vol(request: HttpRequest):
 #funkcija za prikaz stranice za login
 def login_page(request:HttpRequest):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        from . import utils
+        return render(request, 'login.html',{'navbar': utils.getNavbar('UNR')})
     else:
         email = request.POST['email']
         password = request.POST['password']
@@ -143,9 +172,9 @@ def login_page(request:HttpRequest):
                 login(request, user)
                 return redirect('my_profile')
             else:
-                return render(request, 'login.html', {'errorPassword':'Pogresna sifra'})
+                return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar('UNR')})
         else:
-            return render(request, 'login.html', {'errorEmail':'Pogresan email'})
+            return render(request, 'login.html', {'errorEmail':'Pogresan email','navbar': utils.getNavbar('UNR')})
 #Djordje Sarovic
 def do_logout(request):
     logout(request)
@@ -157,6 +186,7 @@ def activity_form(request:HttpRequest):
         return redirect('login')
     elif getCurrentUser(request).tip == 'O':
         return redirect('welcome') #todo redirect to error 404 page
+    from . import utils
     idAkt = request.GET.get('id', None)
     if idAkt is None:
         return redirect('welcome') #todo redirect to error 404 page
@@ -166,7 +196,8 @@ def activity_form(request:HttpRequest):
         'naziv':aktivnost.naziv,
         'datumOd': aktivnost.datumod,
         'datumDo': aktivnost.datumdo,
-        'organizacija_ime':organizacija.ime
+        'organizacija_ime':organizacija.ime,
+        'navbar': utils.getNavbar('V')
     }
     if request.method == 'GET':
         return render(request, 'activity_form.html', context)

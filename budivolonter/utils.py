@@ -3,15 +3,19 @@ from budivolonter import models
 from budivolonter.models import Korisnik
 
 #Djordje Sarovic
+<<<<<<< HEAD
 def getCurrentUser(request:HttpRequest):
     if request.user.is_anonymous:
         return None
+=======
+def getCurrentUser(request:HttpRequest) -> models.Korisnik:
+>>>>>>> 4cc861f (added dynamic navbar)
     return models.Korisnik.objects.filter(email=request.user.get_username()).first()
 
 
 #Kosta Novokmet
 #vraca na kom kontinentu je neka drzava 
-def getContinent(country):
+def getContinent(country) -> dict:
     from .locations import countries,continents
     for contient,countries in continents.items():
         if country in countries: return contient
@@ -21,7 +25,7 @@ def getContinent(country):
 #Kosta Novokmet
 #vraca listu svih drzava na svetu
 #za potrebe biranja drzava kada se pravi aktivnost
-def getCountries():
+def getCountries() -> tuple:
     from .locations import countries
     return countries
 
@@ -30,7 +34,7 @@ def getCountries():
 #proverava da li je datum prosao 
 #ako je datum prosao, vraca true 
 from datetime import date 
-def datePassed(date:date):
+def datePassed(date:date) -> bool:
     curr_date = date.today()
     if (curr_date > date): 
        return True
@@ -40,7 +44,7 @@ def datePassed(date:date):
 
 #Kosta Novokmet
 #pravi listu aktivnosti, svaka aktivnost je recnik
-def loadActivities(acts):
+def loadActivities(acts) -> list:
     from . import model_funcs
     act_list= []
     for act in acts:
@@ -61,3 +65,19 @@ def loadActivities(acts):
         act_data['org'] = act.idorg.ime
         act_list.append(act_data)
     return act_list
+
+
+#Kosta Novokmet
+def getNavbar(user_type) -> str:
+    if(user_type == 'O'):
+        with open('./budivolonter/html/navbar_org.html','r') as file:
+            return file.read()
+    elif (user_type == 'V'):
+        with open('./budivolonter/html/navbar_vol.html','r') as file:
+            return file.read()
+    elif (user_type == 'A'):
+        with open('./budivolonter/html/navbar_admin.html','r') as file:
+            return file.read()
+    elif(user_type == 'UNR'):
+        with open('./budivolonter/html/navbar_unreg.html','r') as file:
+            return file.read()
