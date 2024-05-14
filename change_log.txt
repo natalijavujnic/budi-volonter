@@ -44,4 +44,10 @@
 			- promeniti putanju sa npr ./CSS/ex.css u {% static 'CSS/ex.css' %}
 	-promenjen models.py kako bi podrzao manyToMany relationships
 	-implementiran SSU 7
+13/14.5.2024 , Kosta Novokmet:
+	-Gotov prikaz aktivnih i arhiviranih atkivnosti za profil organizacije(ukljucujuci i detaljan opis sa recenzijama)
+	-Gotova funkionalnost update-ovanja broja slob mesta neke aktivnosti
+		-za oba ova se koristio AJAX
+			-zato sam dodao api.py koja sluzi za rutiranje ajax endpoint-ova
+			-api_func obradjuju api zahteve, komuniciraju sa bazom preko models_func
 
