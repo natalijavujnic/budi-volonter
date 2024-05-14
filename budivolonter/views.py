@@ -153,6 +153,10 @@ def do_logout(request):
 
 #Djordje Sarovic
 def activity_form(request:HttpRequest):
+    if getCurrentUser(request) is None:
+        return redirect('login')
+    elif getCurrentUser(request).tip == 'O':
+        return redirect('welcome') #todo redirect to error 404 page
     idAkt = request.GET.get('id', None)
     if idAkt is None:
         return redirect('welcome') #todo redirect to error 404 page

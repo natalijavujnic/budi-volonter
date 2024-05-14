@@ -4,6 +4,8 @@ from budivolonter.models import Korisnik
 
 #Djordje Sarovic
 def getCurrentUser(request:HttpRequest):
+    if request.user.is_anonymous:
+        return None
     return models.Korisnik.objects.filter(email=request.user.get_username()).first()
 
 
