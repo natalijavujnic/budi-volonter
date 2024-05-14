@@ -8,7 +8,7 @@ from datetime import datetime
 
 #Kosta Novokmet
 #renderuje welcome page
-def welcome(request):
+def welcome(request) -> HttpResponse:
     from . import utils
     context = {}
     context['navbar'] = utils.getNavbar(request)
@@ -16,7 +16,7 @@ def welcome(request):
 
 #Kosta Novokmet
 #Poziva se prilikom poziva endpoint-a sa istim imenom. Treba da ubaci novu aktivnost u bazu
-def open_activity(request:HttpRequest):
+def open_activity(request:HttpRequest)-> HttpResponse:
     from . import utils
     if utils.getCurrentUser(request) is None:
         return redirect('login')
@@ -56,7 +56,7 @@ def open_activity(request:HttpRequest):
 
 #Natalija Vujnic
 #funcija za prikaz sopstvenog profila
-def display_my_profile(request:HttpRequest):
+def display_my_profile(request:HttpRequest)-> HttpResponse:
     ulogovan=request.user.is_authenticated
     if ulogovan:
         from . import utils
@@ -83,7 +83,7 @@ def display_my_profile(request:HttpRequest):
     return redirect('login')
 #Anja Mihajlov
 #Koristi se za insert nove organizacije u bazu
-def reg_org(request: HttpRequest):
+def reg_org(request: HttpRequest)-> HttpResponse:
     from . import utils
     if utils.getCurrentUser(request) is not None:
         return redirect('welcome')
@@ -114,7 +114,7 @@ def reg_org(request: HttpRequest):
 
 #Anja Mihajlov
 #Registracija volontera
-def reg_vol(request: HttpRequest):
+def reg_vol(request: HttpRequest)-> HttpResponse:
     if utils.getCurrentUser(request) is not None:
         return redirect('welcome')
     context = {
@@ -163,7 +163,7 @@ def reg_vol(request: HttpRequest):
 
 #Djordje Sarovic
 #funkcija za prikaz stranice za login
-def login_page(request:HttpRequest):
+def login_page(request:HttpRequest)-> HttpResponse:
     from . import utils
     if utils.getCurrentUser(request) is not None:
         return redirect('welcome')
@@ -182,12 +182,12 @@ def login_page(request:HttpRequest):
         else:
             return render(request, 'login.html', {'errorEmail':'Pogresan email','navbar': utils.getNavbar(request)})
 #Djordje Sarovic
-def do_logout(request):
+def do_logout(request)-> HttpResponse:
     logout(request)
     return redirect('login')
 
 #Djordje Sarovic
-def activity_form(request:HttpRequest):
+def activity_form(request:HttpRequest)-> HttpResponse:
     if getCurrentUser(request) is None:
         return redirect('login')
     elif getCurrentUser(request).tip == 'O':

@@ -7,7 +7,7 @@ def getUsers():
 
 #Kosta Novokmet
 #u bazu ubacuje novu aktivnost kao i sve propratne veze
-def insertActivity(org,name,desc,spots,startD,endD,deadline,categories,country,city,reqs):
+def insertActivity(org,name,desc,spots,startD,endD,deadline,categories,country,city,reqs) -> None:
     with transaction.atomic():
         location = getLocation(country)
         activity = models.Aktivnost(idorg=org,naziv=name,opis=desc,brmesta=spots,datumod=startD,
@@ -23,7 +23,7 @@ def insertActivity(org,name,desc,spots,startD,endD,deadline,categories,country,c
             belongs.save()
 #Kosta Novokmet
 #vraca objekat Lokacija na osnovu drzave
-def getLocation(country):
+def getLocation(country) -> models.Lokacija:
     result = models.Lokacija.objects.filter(drzava = country).first()
     if not result:
         from . import utils
@@ -35,24 +35,24 @@ def getLocation(country):
 #Kosta Novokmet
 #vraca listu imena svih kategorija
 #potrebno za html ispis
-def getCategoryNames():
+def getCategoryNames() -> list:
     return list(models.Oblast.objects.all().values_list('oblast',flat=True))
     
 #kosta Novokmet
 #vraca objekat Oblasti na osnovu naziva Oblasti
 #potrebno prilikom ubacivanja u bazu
-def getCategoryObject(name):
+def getCategoryObject(name) -> models.Oblast:
     return models.Oblast.objects.filter(oblast=name).first()
 
 
 #Natalija Vujnic
 #funkcija vraca interesovanja korisnika
-def getInterests(id):
+def getInterests(id) -> list:
     return models.ZanimaGa.objects.filter(idkor_id=id).values_list('idobl__oblast', flat=True)
     
 #Anja Mihajlov
 #U bazu unosi novog korisnika koji je tipa O, tj. organizacija
-def insertOrganization(ime,pib,telefon,email,lozinka):
+def insertOrganization(ime,pib,telefon,email,lozinka) -> None:
     with transaction.atomic():
         organizacija = models.Korisnik(ime = ime, password = lozinka, email = email, pib = pib, telefon = telefon, tip = 'O')
         organizacija.set_password(lozinka)
@@ -60,7 +60,7 @@ def insertOrganization(ime,pib,telefon,email,lozinka):
        
 #Anja Mihajlov
 #U bazu unosi novog korisnika tipa V, tj. volontera, radi insert u zanimaga
-def insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats):
+def insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats) -> None:
     with transaction.atomic():
         volonter = models.Korisnik (ime = ime, prezime = prezime, datumrodj = datumRodj, password = lozinka, email = email, tip ='V')
         volonter.set_password(lozinka)
@@ -71,14 +71,14 @@ def insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats):
 
 #Kosta Novokmet 
 #vraca sve aktivnosti iz baze koje se nisu zavrsile za odredjenu organizaciju
-def getActiveActivitiesOrg(korID):
+def getActiveActivitiesOrg(korID) -> list:
     acts = list(models.Aktivnost.objects.all())
     from . import utils
     return [act for act in acts if not utils.datePassed(act.datumdo) and act.idorg.idkor == korID]
 
 #Kosta Novokmet 
 #vraca sve aktivnosti iz baze koje su se zavrsile za odredjenu organizaciju
-def getArchivedActivitiesOrg(korID):
+def getArchivedActivitiesOrg(korID) -> list:
     acts = list(models.Aktivnost.objects.filter().all())
     from . import utils
     return [act for act in acts if utils.datePassed(act.datumdo) and act.idorg.idkor == korID]
@@ -86,7 +86,7 @@ def getArchivedActivitiesOrg(korID):
 
 #Kosta Novokmet 
 #vraca sve aktivnosti na kojima je volonter ucestvovao
-def getActivitiesVol(korID):
+def getActivitiesVol(korID) -> list:
     acts = list(models.Prijava.objects.all())
     from . import utils
     return [act.idakt for act in acts if utils.datePassed(act.idakt.datumdo) and act.idvol.idkor == korID]
@@ -96,7 +96,7 @@ def getActivitiesVol(korID):
 
 #Kosta Novokmet
 #vraca sve zahteve aktivnosti
-def getActivityReqs(actID):
+def getActivityReqs(actID) -> list:
     return  list(models.Vestina.objects.filter(idakt=actID).all().values_list('opis',flat=True))
 
 #Kosta Novokmet
@@ -104,7 +104,7 @@ def getActivityReqs(actID):
 # opciono se prosledi status prijava koje hocemo i da li je ta aktivnost prosla
 #finished=True ako jeste i status='O/R/A'
 #mora se proslediti idact=..
-def getApplicationsForAct(**kwargs):
+def getApplicationsForAct(**kwargs) -> list[dict]:
     app_status = kwargs.get('status','O')
     passed = kwargs.get('finished',False)
     actID = kwargs['idakt']
@@ -152,7 +152,7 @@ def getApplicationsForAct(**kwargs):
 #vraca prijavu odredjenog volontera za odredjenu aktivnost kao recnik, ako nema vraca None
 #opciono finished=True ako hocemo prijavu samo ako je ta akt prosla
 #idakt i idkor moraju da se stave kao key val pair u pozivu fje
-def getApplicationsForActVol(**kwargs):
+def getApplicationsForActVol(**kwargs) -> dict:
     passed = kwargs.get('finished',False)
     actID = kwargs['idakt']
     korID = kwargs['idkor']
@@ -198,7 +198,7 @@ def getApplicationsForActVol(**kwargs):
 
 #Kosta Novokmet
 #updatuje u bazi broj slob mesta za akktivnost actID na new_val
-def updateFreeSpaces(new_val,actID):
+def updateFreeSpaces(new_val,actID) -> None:
     print(f'called with val{new_val} id{actID}')
     act = models.Aktivnost.objects.get(idakt = actID);
     act.brmesta = new_val
@@ -207,6 +207,6 @@ def updateFreeSpaces(new_val,actID):
 
 #Kosta Novokmet
 #vraca user id na osnovu email-a
-def IdFromEmail(target_email):
+def IdFromEmail(target_email) -> int:
     usr = models.Korisnik.objects.filter(email=target_email).first()
     return usr.idkor

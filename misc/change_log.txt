@@ -51,3 +51,8 @@
 			-zato sam dodao api.py koja sluzi za rutiranje ajax endpoint-ova
 			-api_func obradjuju api zahteve, komuniciraju sa bazom preko models_func
 
+15.5.2024 , Kosta Novokmet:
+	-Popravljeno da sada AJAX zahtev salje mejl korisnika za koga se traze aktivnosti
+		-posle iz mejla vadi id i trazi aktivnosti po tom id itd
+		-ovo znaci da ce sad moci da trazi i aktivnosti za nekog korisnika kome gleda profil
+	-dodat dinamicki navbar
