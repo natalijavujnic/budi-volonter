@@ -49,15 +49,25 @@
   </nav>
       <div class="container d-flex justify-content-center">
         <div class="w-100 d-flex justify-content-center" style="background-color: #F8FAF3; min-height: 100%; height: 88vh;">
-            <form class="p-5">
+            <form class="p-5" method="POST">
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label"><h2>Aktivnost: Veseli Vrtovi</h2>Organizacija: Zelena Inicijativa<br>Detalji: Od 12.5.2024. do 22.5.2024. <br><br>Motivaciono pismo:</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                    <label for="exampleFormControlTextarea1" class="form-label"><h2>{{ naziv }}</h2>Organizacija: {{ organizacija_ime }}<br>Detalji: Od {{ datumOd }} do {{ datumDo }} <br><br>Motivaciono pismo:</label>
+                    <textarea class="form-control" name="pismo" id="exampleFormControlTextarea1" rows="6"></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Dodajte pdf dokument:</label>
-                    <input class="form-control" type="file" id="formFile">
+                    <input class="form-control" type="file"  name="rezime" id="formFile">
                 </div>
+                {% if success %}
+                    <div class="alert alert-success" role="alert">
+                        {{ success }}
+                    </div>
+                {% endif %}
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
                 <div class="d-flex">
                     <button type="submit" class="btn" style="background-color: #BDEE63;">Prijavi me</button>
                 </div>

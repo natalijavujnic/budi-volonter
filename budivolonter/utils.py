@@ -29,9 +29,10 @@ def getCountries():
 #ako je datum prosao, vraca true 
 from datetime import date 
 def datePassed(date:date):
-   curr_date = date.today();
-   if (curr_date > date): return True
-   return False
+    curr_date = date.today()
+    if (curr_date > date): 
+       return True
+    return False
 
 
 

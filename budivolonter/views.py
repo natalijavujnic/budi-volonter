@@ -150,3 +150,25 @@ def login_page(request:HttpRequest):
 def do_logout(request):
     logout(request)
     return redirect('login')
+
+#Djordje Sarovic
+def activity_form(request:HttpRequest):
+    idAkt = request.GET.get('id', None)
+    if idAkt is None:
+        return redirect('welcome') #todo redirect to error 404 page
+    aktivnost = models.Aktivnost.objects.filter(idakt=idAkt).first()
+    organizacija = models.Korisnik.objects.filter(idkor=aktivnost.idorg_id).first()
+    if request.method == 'GET':
+        return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime})
+    else:
+        user = getCurrentUser(request)
+        if models.Prijava.objects.filter(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=request.GET.get('id')).first()).exists():
+            return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime, 'error':'Vec ste se prijavili na ovu aktivnost'})
+        pismo = request.POST['pismo']
+        if pismo == '':
+            return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime, 'error':'Morate uneti pismo'})
+        rezime = request.POST['rezime']
+        status = 'O'
+        prijava = models.Prijava(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=request.GET.get('id')).first(), pismo=pismo, rezime=rezime, status=status)
+        prijava.save()
+        return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime, 'success':'Uspesno ste se prijavili na aktivnost'})

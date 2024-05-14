@@ -89,7 +89,7 @@ class Prijava(models.Model):
     idvol = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idVol')  # Field name made lowercase.
     idakt = models.ForeignKey(Aktivnost, models.DO_NOTHING, db_column='idAkt')  # Field name made lowercase.
     pismo = models.CharField(max_length=2000)
-    rezime = models.TextField(blank=True, null=True)
+    rezime = models.FileField(blank=True, null=True)
     status = models.CharField(max_length=1)
     preporukavol = models.CharField(db_column='preporukaVol', max_length=1, blank=True, null=True)  # Field name made lowercase.
     preporukaorg = models.CharField(db_column='preporukaOrg', max_length=1, blank=True, null=True)  # Field name made lowercase.
