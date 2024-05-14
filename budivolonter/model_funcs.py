@@ -68,3 +68,22 @@ def insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats):
         for cat in cats:
             unos = models.ZanimaGa(idkor = volonter, idobl = getCategoryObject(cat))
             unos.save()
+
+#Kosta Novokmet 
+#vraca sve aktivnosti iz baze koje se nisu zavrsile
+def getActiveActivities():
+    acts = list(models.Aktivnost.objects.all())
+    from . import utils
+    return [act for act in acts if not utils.datePassed(act.datumdo)]
+#Kosta Novokmet
+#vraca sve arhivirane akt iz baze
+def getArchivedActivities():
+    acts = list(models.Aktivnost.objects.all())
+    from . import utils
+    return [act for act in acts if utils.datePassed(act.datumdo)]
+
+
+#Kosta Novokmet
+#vraca sve zahteve aktivnosti
+def getActivityReqs(actID):
+    return  list(models.Vestina.objects.filter(idakt=actID).all().values_list('opis',flat=True))

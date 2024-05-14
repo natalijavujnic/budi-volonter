@@ -1,6 +1,6 @@
 from .utils import getCurrentUser
 from django.shortcuts import redirect, render,HttpResponse
-from django.http import HttpRequest
+from django.http import HttpRequest,JsonResponse
 from django.contrib.auth import login, logout
 from . import models
 from . import model_funcs
@@ -146,7 +146,7 @@ def login_page(request:HttpRequest):
                 return render(request, 'login.html', {'errorPassword':'Pogresna sifra'})
         else:
             return render(request, 'login.html', {'errorEmail':'Pogresan email'})
-        
+#Djordje Sarovic
 def do_logout(request):
     logout(request)
     return redirect('login')
