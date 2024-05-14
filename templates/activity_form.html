@@ -49,14 +49,14 @@
   </nav>
       <div class="container d-flex justify-content-center">
         <div class="w-100 d-flex justify-content-center" style="background-color: #F8FAF3; min-height: 100%; height: 88vh;">
-            <form class="p-5" method="POST">
+            <form class="p-5" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label"><h2>{{ naziv }}</h2>Organizacija: {{ organizacija_ime }}<br>Detalji: Od {{ datumOd }} do {{ datumDo }} <br><br>Motivaciono pismo:</label>
                     <textarea class="form-control" name="pismo" id="exampleFormControlTextarea1" rows="6"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">Dodajte pdf dokument:</label>
-                    <input class="form-control" type="file"  name="rezime" id="formFile">
+                    <label for="formFile" class="form-label">Dodajte rezime u obliku pdf dokumenta: (do 16MB)</label>
+                    <input class="form-control" type="file"  name="rezime" id="formFile" accept=".pdf">
                 </div>
                 {% if success %}
                     <div class="alert alert-success" role="alert">

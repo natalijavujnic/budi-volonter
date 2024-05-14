@@ -158,17 +158,25 @@ def activity_form(request:HttpRequest):
         return redirect('welcome') #todo redirect to error 404 page
     aktivnost = models.Aktivnost.objects.filter(idakt=idAkt).first()
     organizacija = models.Korisnik.objects.filter(idkor=aktivnost.idorg_id).first()
+    context = {
+        'naziv':aktivnost.naziv,
+        'datumOd': aktivnost.datumod,
+        'datumDo': aktivnost.datumdo,
+        'organizacija_ime':organizacija.ime
+    }
     if request.method == 'GET':
-        return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime})
+        return render(request, 'activity_form.html', context)
     else:
         user = getCurrentUser(request)
-        if models.Prijava.objects.filter(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=request.GET.get('id')).first()).exists():
-            return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime, 'error':'Vec ste se prijavili na ovu aktivnost'})
+        if models.Prijava.objects.filter(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=idAkt).first()).exists():
+            context['error'] = 'Vec ste se prijavili na ovu aktivnost'
+            return render(request, 'activity_form.html', context)
         pismo = request.POST['pismo']
         if pismo == '':
-            return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime, 'error':'Morate uneti pismo'})
-        rezime = request.POST['rezime']
-        status = 'O'
-        prijava = models.Prijava(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=request.GET.get('id')).first(), pismo=pismo, rezime=rezime, status=status)
+            context['error'] = 'Morate uneti pismo'
+            return render(request, 'activity_form.html', context)
+        rezimeFile = request.FILES.get('rezime', None)
+        prijava = models.Prijava(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=idAkt).first(), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
         prijava.save()
-        return render(request, 'activity_form.html', {'naziv':aktivnost.naziv, 'datumOd': aktivnost.datumod, 'datumDo': aktivnost.datumdo, 'organizacija_ime':organizacija.ime, 'success':'Uspesno ste se prijavili na aktivnost'})
+        context['success'] = 'Uspesno ste se prijavili na aktivnost'
+        return render(request, 'activity_form.html', context)
