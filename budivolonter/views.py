@@ -221,3 +221,26 @@ def activity_form(request:HttpRequest)-> HttpResponse:
         prijava.save()
         context['success'] = 'Uspesno ste se prijavili na aktivnost'
         return render(request, 'activity_form.html', context)
+
+#Djordje Sarovic
+def view_applications(request:HttpRequest):
+    if getCurrentUser(request) is None:
+        return redirect('login')
+    elif getCurrentUser(request).tip == 'V':
+        return redirect('welcome') #todo redirect to error 403 forbidden page
+    from . import utils
+    idAkt = request.GET.get('id', None)
+    if idAkt is None:
+        return redirect('welcome') #todo redirect to error 404 page
+    aktivnost = models.Aktivnost.objects.filter(idakt=idAkt).first()
+    if aktivnost is None:
+        return redirect('welcome') #todo redirect to error 404 page
+    if aktivnost.idorg_id != getCurrentUser(request).idkor:
+        return redirect('welcome') #todo redirect to error 403 forbidden page
+    prijave = model_funcs.getApplicationsForAct(idakt=idAkt)
+    context = {
+        'naziv':aktivnost.naziv,
+        'prijave': prijave,
+        'navbar': utils.getNavbar(request)
+    }
+    return render(request, 'applications_view.html', context)

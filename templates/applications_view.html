@@ -17,18 +17,20 @@
 	{{navbar|safe}}
       <div class="container d-flex justify-content-center">
         <div class="w-100 d-flex flex-column justify-content-start" style="background-color: #F8FAF3; min-height: 88vh;">
+            
             <form class="p-5">
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label"><h2>Aktivnost: Veseli Vrtovi</h2></label>
+                    <label for="exampleFormControlTextarea1" class="form-label"><h2>Aktivnost: {{naziv}}</h2></label>
                 </div>
             </form>
+            {% for prijava in prijave %}
             <div class="pl-5 pr-5 pb-5">
                 <div class="card w-100">
                     <div class="card-body p-5 d-flex justify-content-between">
                         <div>
-                            <h5 class="card-title"><a href="#" style="color: #5C7C2F;">Pera Peric</a></h5>
-                            <h6 class="card-subtitle mb-2 text-muted"><a href="#" style="color: #C2DA91;"><i class="bi bi-paperclip"></i>perapericrezime.pdf</a></h6>
-                            <p class="card-text w-75">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit temporibus assumenda optio veniam recusandae nulla? Rerum corporis quam dolore aspernatur, autem eum ipsum commodi sed molestiae, officia quia, laboriosam fugiat.</p>
+                            <h5 class="card-title"><a href="#" style="color: #5C7C2F;">{{prijava.volname}} {{prijava.vollastname}}</a></h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><a href="#" style="color: #C2DA91;"><i class="bi bi-paperclip"></i>rezime.pdf</a></h6>
+                            <p class="card-text w-75">{{prijava.pismo}}</p>
                         </div>
                         <div class="d-flex align-items-end">
                             <button type="button" class="btn btn-success m-1">Prihvati</button>
@@ -37,35 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="pl-5 pr-5 pb-5">
-                <div class="card w-100">
-                    <div class="card-body p-5 d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title"><a href="#" style="color: #5C7C2F;">Mika Mikic</a></h5>
-                            <p class="card-text w-75">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, ducimus dolorem tempora vero inventore ratione quam quis, expedita quaerat reiciendis nulla veritatis quod excepturi rerum possimus omnis et, ad quas.</p>
-                        </div>
-                        <div class="d-flex align-items-end">
-                            <button type="button" class="btn btn-success m-1">Prihvati</button>
-                            <button type="button" class="btn btn-danger m-1">Odbij</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pl-5 pr-5 pb-5">
-                <div class="card w-100">
-                    <div class="card-body p-5 d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title"><a href="#" style="color: #5C7C2F;">Stefan Stefanovic</a></h5>
-                            <h6 class="card-subtitle mb-2 text-muted"><a href="#" style="color: #C2DA91;"><i class="bi bi-paperclip"></i>stefirezi.pdf</a></h6>
-                            <p class="card-text w-75">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus dignissimos fugiat soluta quam dolorum incidunt, quis iure placeat suscipit doloribus officiis, labore vitae molestias atque excepturi repellendus omnis quasi ad!</p>
-                        </div>
-                        <div class="d-flex align-items-end">
-                            <button type="button" class="btn btn-success m-1">Prihvati</button>
-                            <button type="button" class="btn btn-danger m-1">Odbij</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
       </div>
 </body>
