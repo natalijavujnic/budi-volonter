@@ -218,7 +218,7 @@ def activity_form(request:HttpRequest)-> HttpResponse:
             context['error'] = 'Morate uneti pismo'
             return render(request, 'activity_form.html', context)
         rezimeFile = request.FILES.get('rezime', None)
-        model_funcs.insertApplication(idvol=user, idakt=idAkt, pismo=pismo, rezimeFile=rezimeFile, status='O')
+        model_funcs.insertApplication(idvol=user, idakt=idAkt, pismo=pismo, rezimeFile=rezimeFile)
         context['success'] = 'Uspesno ste se prijavili na aktivnost'
         return render(request, 'activity_form.html', context)
 

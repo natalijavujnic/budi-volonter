@@ -52,7 +52,7 @@ def resolveApplication(request:HttpRequest) -> HttpResponse:
         return HttpResponse('Method not allowed', status=405)
     id = request.POST.get('id', None)
     status = request.POST.get('status', None)
-    prijava = model_funcs.getPrijavaById(id)
+    prijava = model_funcs.getApplicationById(id)
     prijava.status = status
     prijava.save()
     return HttpResponse('OK')
@@ -68,7 +68,7 @@ def download(request:HttpRequest) -> HttpResponse:
     idPri = request.GET.get('id', None)
     if idPri is None:
         return redirect('welcome') #todo redirect to error 404 page
-    prijava = model_funcs.getPrijavaById(idPri)
+    prijava = model_funcs.getApplicationById(idPri)
     if prijava is None:
         return redirect('welcome') #todo redirect to error 404 page
     if prijava.idakt.idorg_id != getCurrentUser(request).idkor:
