@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse,HttpRequest
 #org = ona ciji se profil gleda
 def fetch_activities_org(request:HttpRequest) -> JsonResponse:
     from . import utils
-    idkor = model_funcs.IdFromEmail(request.GET.get('email'))
+    idkor = model_funcs.UsrFromEmail(email=(request.GET.get('email')),id=True)
     active_activities = model_funcs.getActiveActivitiesOrg(idkor)
     archived_activities= model_funcs.getArchivedActivitiesOrg(idkor)
     active_activities_list = utils.loadActivities(active_activities)
@@ -25,7 +25,7 @@ def fetch_activities_org(request:HttpRequest) -> JsonResponse:
 #volonter = onaj ciji se profil gleda
 def fetch_activities_vol(request) -> JsonResponse:
     from . import utils
-    idkor = model_funcs.IdFromEmail(request.GET.get('email'))
+    idkor = model_funcs.UsrFromEmail(email=request.GET.get('email'),id=True)
     activities = model_funcs.getActivitiesVol(idkor)
     activities_list = utils.loadActivities(activities)
     for act in activities_list:

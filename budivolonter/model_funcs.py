@@ -21,6 +21,9 @@ def insertActivity(org,name,desc,spots,startD,endD,deadline,categories,country,c
             print(cat_obj.oblast,cat_obj.idobl)
             belongs = models.Pripada(idakt=activity,idobl=cat_obj)
             belongs.save()
+
+
+
 #Kosta Novokmet
 #vraca objekat Lokacija na osnovu drzave
 def getLocation(country) -> models.Lokacija:
@@ -168,7 +171,8 @@ def getApplicationsForActVol(**kwargs) -> dict:
     passed = kwargs.get('finished',False)
     actID = kwargs['idakt']
     korID = kwargs['idkor']
-    app = models.Prijava.objects.filter(idakt=actID, idvol=korID).first()
+    exists = kwargs.get('exists',False)
+    if exists == True :return models.Prijava.objects.filter(idakt=actID, idvol=korID).exists()
     if passed == True:
         from . import utils
         if app and utils.datePassed(app.idakt.datumdo):
@@ -218,12 +222,47 @@ def updateFreeSpaces(new_val,actID) -> None:
 
 
 #Kosta Novokmet
-#vraca user id na osnovu email-a
-def IdFromEmail(target_email) -> int:
+#vraca user id ili user obj na osnovu email-a
+def UsrFromEmail(**kwargs):
+    target_email = kwargs['email']
+    id = kwargs.get('id',False)
+    exists = kwargs.get('exists',False)
+    if exists == True :return models.Korisnik.objects.filter(email=target_email).exists()
     usr = models.Korisnik.objects.filter(email=target_email).first()
-    return usr.idkor
+    if id: return usr.idkor
+    else: return usr
+#Kosta Novokmet
+#vraca usera na osnovu pib-a
+def UsrFromPib(**kwargs):
+    target_pib = kwargs['pib']
+    exists = kwargs.get('exists',False)
+    if exists == True: return models.Korisnik.objects.filter(pib=target_pib).exists()
+    usr = models.Korisnik.objects.filter(pib=target_pib).first()
+    return usr
 
+#Kosta Novokmet
+#vraca usera na osnovu pib-a
+def UsrFromTel(**kwargs):
+    target_tel = kwargs['tel']
+    exists = kwargs.get('exists',False)
+    if exists == True: return models.Korisnik.objects.filter(telefon=target_tel).exists()
+    usr = models.Korisnik.objects.filter(telefon=target_tel).first()
+    return usr
 
-
-def getPrijavaById(idPri) -> models.Prijava:
+def getApplicationById(idPri) -> models.Prijava:
     return models.Prijava.objects.filter(idpri=idPri).first()
+
+#Kosta Novokmet
+def getActivityById(idAkt) -> models.Aktivnost:
+    return models.Aktivnost.objects.filter(idakt=idAkt).first()
+
+
+#Kosta Novokmet
+def getUsrById(id) -> models.Korisnik:
+    return models.Korisnik.objects.filter(idkor=id).first()
+
+
+def insertApplication(pismo,rezimeFile,idvol,idakt) -> None:
+    with transaction.atomic():
+        prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idakt=idakt).first(), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
+        prijava.save()

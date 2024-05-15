@@ -1,3 +1,5 @@
 django
 mysqlclient
 channels[daphne]
+django-cors-headers 
+

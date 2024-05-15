@@ -99,7 +99,7 @@ def reg_org(request: HttpRequest)-> HttpResponse:
         email = parametri['email']
         lozinka = parametri['lozinka']
 
-        if models.Korisnik.objects.filter(telefon =telefon).exists() or models.Korisnik.objects.filter(pib = pib).exists() or  models.Korisnik.objects.filter(email = email).exists() :
+        if  model_funcs.UsrFromTel(tel=telefon,exists=True) or model_funcs.UsrFromPib(pib = pib,exists=True) or  model_funcs.UsrFromEmail(email=email,exists=True):
             poruka = "Već postoji korisnik sa datim telefonom, PIB-om ili e-mailom."
 
         else:
@@ -136,7 +136,7 @@ def reg_vol(request: HttpRequest)-> HttpResponse:
         godine = danas.year - datum_rodjenja.year - ((danas.month, danas.day) < (datum_rodjenja.month, datum_rodjenja.day))
 
 
-        if models.Korisnik.objects.filter(email = email).exists() :
+        if model_funcs.UsrFromEmail(email=email,exists=True):
             context = {
                 'poruka': "Već postoji korisnik sa datim e-mailom.",
                 'cats': model_funcs.getCategoryNames()
@@ -172,7 +172,7 @@ def login_page(request:HttpRequest)-> HttpResponse:
     else:
         email = request.POST['email']
         password = request.POST['password']
-        user = models.Korisnik.objects.filter(email=email).first()
+        user = model_funcs.UsrFromEmail(email=email)
         if user:
             if user.check_password(password):
                 login(request, user)
@@ -196,8 +196,8 @@ def activity_form(request:HttpRequest)-> HttpResponse:
     idAkt = request.GET.get('id', None)
     if idAkt is None:
         return redirect('welcome') #todo redirect to error 404 page
-    aktivnost = models.Aktivnost.objects.filter(idakt=idAkt).first()
-    organizacija = models.Korisnik.objects.filter(idkor=aktivnost.idorg_id).first()
+    aktivnost = model_funcs.getActivityById(idAkt)
+    organizacija =model_funcs.getUsrById(aktivnost.idorg_id)
     context = {
         'naziv':aktivnost.naziv,
         'datumOd': aktivnost.datumod,
@@ -209,7 +209,8 @@ def activity_form(request:HttpRequest)-> HttpResponse:
         return render(request, 'activity_form.html', context)
     else:
         user = getCurrentUser(request)
-        if models.Prijava.objects.filter(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=idAkt).first()).exists():
+        aktivnost = model_funcs.getActivityById(idAkt)
+        if model_funcs.getApplicationsForActVol(idkor=user, idakt=aktivnost.idakt,exists=True):
             context['error'] = 'Vec ste se prijavili na ovu aktivnost'
             return render(request, 'activity_form.html', context)
         pismo = request.POST['pismo']
@@ -217,8 +218,7 @@ def activity_form(request:HttpRequest)-> HttpResponse:
             context['error'] = 'Morate uneti pismo'
             return render(request, 'activity_form.html', context)
         rezimeFile = request.FILES.get('rezime', None)
-        prijava = models.Prijava(idvol=user, idakt=models.Aktivnost.objects.filter(idakt=idAkt).first(), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
-        prijava.save()
+        model_funcs.insertApplication(idvol=user, idakt=idAkt, pismo=pismo, rezimeFile=rezimeFile, status='O')
         context['success'] = 'Uspesno ste se prijavili na aktivnost'
         return render(request, 'activity_form.html', context)
 
@@ -232,7 +232,7 @@ def view_applications(request:HttpRequest):
     idAkt = request.GET.get('id', None)
     if idAkt is None:
         return redirect('welcome') #todo redirect to error 404 page
-    aktivnost = models.Aktivnost.objects.filter(idakt=idAkt).first()
+    aktivnost = model_funcs.getActivityById(idAkt)
     if aktivnost is None:
         return redirect('welcome') #todo redirect to error 404 page
     if aktivnost.idorg_id != getCurrentUser(request).idkor:

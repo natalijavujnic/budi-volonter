@@ -56,3 +56,16 @@
 		-posle iz mejla vadi id i trazi aktivnosti po tom id itd
 		-ovo znaci da ce sad moci da trazi i aktivnosti za nekog korisnika kome gleda profil
 	-dodat dinamicki navbar
+	-promenjen asgi da podrzava kanale
+		-u settings.py dodati:
+			-u installed aps:
+				'daphne',
+				'corsheaders'
+			-bilo gde:
+				CORS_ALLOWED_ORIGINS = [
+				    'http://localhost:8000',
+				]
+				ASGI_APPLICATION = "conf.asgi.application"
+	-req.txt i change_log pomereni u misc folder
+		-pip install -r misc/req.txt treba da se pokrene opet
+	-na dosta funkc dodato sta vraca(to se ne proverava cisto dokumentaciono)
