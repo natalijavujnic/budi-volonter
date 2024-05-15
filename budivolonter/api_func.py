@@ -47,12 +47,12 @@ def update_free_spaces(request:HttpRequest) -> JsonResponse:
 
 #Djordje Sarovic
 #prihvata ili odbija prijavu
-def resolveApplication(request:HttpRequest):
+def resolveApplication(request:HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return HttpResponse('Method not allowed', status=405)
     id = request.POST.get('id', None)
     status = request.POST.get('status', None)
-    prijava = models.Prijava.objects.filter(idpri=id).first()
+    prijava = model_funcs.getPrijavaById(id)
     prijava.status = status
     prijava.save()
     return HttpResponse('OK')
@@ -60,7 +60,7 @@ def resolveApplication(request:HttpRequest):
 
 #Djordje Sarovic
 #servira rezime prijave
-def download(request:HttpRequest):
+def download(request:HttpRequest) -> HttpResponse:
     if getCurrentUser(request) is None:
         return redirect('login')
     elif getCurrentUser(request).tip == 'V':
@@ -68,7 +68,7 @@ def download(request:HttpRequest):
     idPri = request.GET.get('id', None)
     if idPri is None:
         return redirect('welcome') #todo redirect to error 404 page
-    prijava = models.Prijava.objects.filter(idpri=idPri).first()
+    prijava = model_funcs.getPrijavaById(idPri)
     if prijava is None:
         return redirect('welcome') #todo redirect to error 404 page
     if prijava.idakt.idorg_id != getCurrentUser(request).idkor:

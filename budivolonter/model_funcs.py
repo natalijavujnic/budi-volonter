@@ -69,17 +69,29 @@ def insertVolunteer(ime,prezime,datumRodj,email,lozinka,cats) -> None:
             unos = models.ZanimaGa(idkor = volonter, idobl = getCategoryObject(cat))
             unos.save()
 
+#Kosta Novokmet
+#vraca sve aktivnosti kao listu
+def getAllActivities() -> list[models.Aktivnost]:
+
+    return list(models.Aktivnost.objects.all())
+
+#Kosta Novokmet
+#vraca sve prijave kao listu
+def getAllApplications() -> list[models.Aktivnost]:
+
+    return list(models.Prijava.objects.all())
 #Kosta Novokmet 
 #vraca sve aktivnosti iz baze koje se nisu zavrsile za odredjenu organizaciju
 def getActiveActivitiesOrg(korID) -> list:
-    acts = list(models.Aktivnost.objects.all())
+    acts = getAllActivities()
     from . import utils
+
     return [act for act in acts if not utils.datePassed(act.datumdo) and act.idorg.idkor == korID]
 
 #Kosta Novokmet 
 #vraca sve aktivnosti iz baze koje su se zavrsile za odredjenu organizaciju
 def getArchivedActivitiesOrg(korID) -> list:
-    acts = list(models.Aktivnost.objects.filter().all())
+    acts = getAllActivities()
     from . import utils
     return [act for act in acts if utils.datePassed(act.datumdo) and act.idorg.idkor == korID]
 
@@ -87,7 +99,7 @@ def getArchivedActivitiesOrg(korID) -> list:
 #Kosta Novokmet 
 #vraca sve aktivnosti na kojima je volonter ucestvovao
 def getActivitiesVol(korID) -> list:
-    acts = list(models.Prijava.objects.all())
+    acts = getAllApplications()
     from . import utils
     return [act.idakt for act in acts if utils.datePassed(act.idakt.datumdo) and act.idvol.idkor == korID]
 
@@ -210,3 +222,8 @@ def updateFreeSpaces(new_val,actID) -> None:
 def IdFromEmail(target_email) -> int:
     usr = models.Korisnik.objects.filter(email=target_email).first()
     return usr.idkor
+
+
+
+def getPrijavaById(idPri) -> models.Prijava:
+    return models.Prijava.objects.filter(idpri=idPri).first()
