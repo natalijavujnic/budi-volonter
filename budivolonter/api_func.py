@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse,HttpRequest
 #kosta novokmet
 #vraca sve aktivnosti organizacije 
 #org = ona ciji se profil gleda
-def fetch_activities_org(request:HttpRequest):
+def fetch_activities_org(request:HttpRequest) -> JsonResponse:
     from . import utils
     idkor = model_funcs.IdFromEmail(request.GET.get('email'))
     active_activities = model_funcs.getActiveActivitiesOrg(idkor)
@@ -23,7 +23,7 @@ def fetch_activities_org(request:HttpRequest):
 #kosta novokmet
 #vraca sve aktivnosti na kojima je volonter 
 #volonter = onaj ciji se profil gleda
-def fetch_activities_vol(request):
+def fetch_activities_vol(request) -> JsonResponse:
     from . import utils
     idkor = model_funcs.IdFromEmail(request.GET.get('email'))
     activities = model_funcs.getActivitiesVol(idkor)
@@ -37,7 +37,7 @@ def fetch_activities_vol(request):
 
 #kosta novokmet
 #updatuje slobodna mesta aktivnosti
-def update_free_spaces(request:HttpRequest):
+def update_free_spaces(request:HttpRequest) -> JsonResponse:
     import json
     json_data = json.loads(request.body.decode('utf-8'))
     val = json_data['val']
