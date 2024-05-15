@@ -14,6 +14,14 @@ def welcome(request) -> HttpResponse:
     context['navbar'] = utils.getNavbar(request)
     return render(request,'main_page.html',context) 
 
+def register_choice(request):
+    from . import utils
+    context = {}
+    context['navbar'] = utils.getNavbar(request)
+    return render(request,'reg_choose.html',context) 
+
+
+
 #Kosta Novokmet
 #Poziva se prilikom poziva endpoint-a sa istim imenom. Treba da ubaci novu aktivnost u bazu
 def open_activity(request:HttpRequest)-> HttpResponse:
@@ -100,7 +108,7 @@ def reg_org(request: HttpRequest)-> HttpResponse:
         lozinka = parametri['lozinka']
 
         if  model_funcs.UsrFromTel(tel=telefon,exists=True) or model_funcs.UsrFromPib(pib = pib,exists=True) or  model_funcs.UsrFromEmail(email=email,exists=True):
-            poruka = "Već postoji korisnik sa datim telefonom, PIB-om ili e-mailom."
+                poruka = "Već postoji korisnik sa datim telefonom, PIB-om ili e-mailom."
 
         else:
             poruka = "Organizacija je uspešno registrovana."
@@ -115,6 +123,7 @@ def reg_org(request: HttpRequest)-> HttpResponse:
 #Anja Mihajlov
 #Registracija volontera
 def reg_vol(request: HttpRequest)-> HttpResponse:
+    from . import utils
     if utils.getCurrentUser(request) is not None:
         return redirect('welcome')
     context = {
