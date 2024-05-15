@@ -16,6 +16,8 @@ def welcome(request) -> HttpResponse:
 
 def register_choice(request):
     from . import utils
+    if utils.getCurrentUser(request) is not None:
+        return HttpResponse('Access Forbidden', status=403)
     context = {}
     context['navbar'] = utils.getNavbar(request)
     return render(request,'reg_choose.html',context) 
