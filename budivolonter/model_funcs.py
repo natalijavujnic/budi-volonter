@@ -172,7 +172,9 @@ def getApplicationsForActVol(**kwargs) -> dict:
     actID = kwargs['idakt']
     korID = kwargs['idkor']
     exists = kwargs.get('exists',False)
-    if exists == True :return models.Prijava.objects.filter(idakt=actID, idvol=korID).exists()
+    if exists == True:
+        return models.Prijava.objects.filter(idakt=actID, idvol=korID).exists()
+    app = models.Prijava.objects.filter(idakt=actID, idvol=korID).first()
     if passed == True:
         from . import utils
         if app and utils.datePassed(app.idakt.datumdo):
