@@ -1,6 +1,6 @@
 from django.http import HttpRequest
 from budivolonter import models
-from budivolonter.models import Korisnik
+from budivolonter.models import Aktivnost, Korisnik
 
 #Djordje Sarovic
 def getCurrentUser(request:HttpRequest) -> Korisnik|None:
@@ -41,7 +41,7 @@ def datePassed(date:date) -> bool:
 
 #Kosta Novokmet
 #pravi listu aktivnosti, svaka aktivnost je recnik
-def loadActivities(acts) -> list:
+def loadActivities(acts:list[Aktivnost]) -> list[dict]:
     from . import model_funcs
     act_list= []
     for act in acts:

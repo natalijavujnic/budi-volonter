@@ -83,7 +83,7 @@ def getAllActivities() -> list[models.Aktivnost]:
 
 #Kosta Novokmet
 #vraca sve prijave kao listu
-def getAllApplications() -> list[models.Aktivnost]:
+def getAllApplications() -> list[models.Prijava]:
 
     return list(models.Prijava.objects.all())
 #Kosta Novokmet 
@@ -104,7 +104,7 @@ def getArchivedActivitiesOrg(korID) -> list:
 
 #Kosta Novokmet 
 #vraca sve aktivnosti na kojima je volonter ucestvovao
-def getActivitiesVol(korID) -> list:
+def getActivitiesVol(korID) -> list[models.Aktivnost]:
     acts = getAllApplications()
     from . import utils
     return [act.idakt for act in acts if utils.datePassed(act.idakt.datumdo) and act.idvol.idkor == korID]
@@ -191,8 +191,7 @@ def getApplicationsForActVol(**kwargs) -> dict:
                     'idvol': app.idvol.idkor,
                     'volname': app.idvol.ime,
                     'vollastname': app.idvol.prezime,
-                    'pismo':app.pismo,
-                    'rezime' : app.rezime
+                    'pismo':app.pismo
                     }
 
         else: return None
@@ -209,8 +208,7 @@ def getApplicationsForActVol(**kwargs) -> dict:
                     'idvol': app.idvol.idkor,
                     'volname': app.idvol.ime,
                     'vollastname': app.idvol.prezime,
-                    'pismo': app.pismo,
-                    'rezime': app.rezime
+                    'pismo': app.pismo
                     }
         else: return None
 
