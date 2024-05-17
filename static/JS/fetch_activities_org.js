@@ -1,11 +1,9 @@
 //Kosta Novokmet
 //dinamicki updatuje html kod ubacujuci aktivnosti i salje backend-u info da treba da menja broj slobodnih mesta kad se klikne
 //komuncira sa bazom, postavlja button listenere na + i -, salje get i put ajax zahteve ka api-ju
-function fetch_activities() {
+function fetch_activities(curr_id,id) {
 	var acts;
-	let email = $('#email').text();
-	console.log(email);
-	$.get('http://localhost:8000/budivolonter/api/get_activities_org?email='+email, function(response) {
+	$.get('http://localhost:8000/budivolonter/api/get_activities_org?id='+id, function(response) {
 		console.log(response);
 		acts = response['active_activities'];
 		let str1 = '';
@@ -13,7 +11,7 @@ function fetch_activities() {
 		for (let act of acts) {
 			index++;
 			str1 +=
-				`<div class="aktivnost">
+				`<div clqss="aktivnost">
 				<div class="row align-items-center">
 				<div class="col-sm-8">
 				<h2 class="mr-3 mb-0">${act.naziv}</h2>
@@ -57,8 +55,11 @@ function fetch_activities() {
 				</div>
 				<div class="col-sm-4">
 				<div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px;">
-				<div class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>
-				<div class="plus-minus">
+				<div class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>`
+
+			if(curr_id == id)
+				str1+=
+			`<div class="plus-minus">
 				<button id="inc${index}" class="btn btn-primary btn-sm"">+</button>
 				<button id="dec${index}" class="btn btn-primary btn-sm"">-</button>
 				</div>
@@ -71,6 +72,16 @@ function fetch_activities() {
 				</div>
 				</div>
 				</div>`;
+			else str+=`
+				<div class="prijave d-flex justify-content-end">
+				<a href="activity_form.html">
+				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Prijavi se</button>
+				</a>
+				</div>
+				</div>
+				</div>
+				</div>
+				`
 		}
 		acts = response['archived_activities'];
 		let str2 = '';
@@ -92,7 +103,7 @@ function fetch_activities() {
 				<h2 class="mr-3 mb-0">${act.naziv}</h2>
 				<div class="mr-3"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;${cntP}</div>
 				<div class="mr-3"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;${cntN}</div>
-				<button type="button" class="recenzije btn btn-secondary btn-sm">Recenzije <i class="bi bi-chevron-down"></i></button>
+				<button onclick="toggleRevs()" type="button" class="recenzije btn btn-secondary btn-sm">Recenzije <i class="bi bi-chevron-down" ></i></button>
 				</div>
 				<a style="color:#00A2C7" href="#" data-toggle="modal" data-target="#exampleModal${index}">Opis aktivnosti</a>
 				<div class="modal fade" id="exampleModal${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel${index}" aria-hidden="true">
@@ -143,7 +154,7 @@ function fetch_activities() {
 				`;
 			for(let rev of reviews){
 				str2 += `
-					<div class="dobar row">
+					<div class="dobar row review">
 					<div class="col-sm-3 ">Ime Prezime:${rev.volname} ${rev.vollastname} </div>
 					<div class="col-sm-9">Komentar:${rev.komvol}</div>
 					</div>
@@ -157,56 +168,61 @@ function fetch_activities() {
 		// Append str to a container or use it as needed
 		$('#otvorene_akt').html(str1);
 		$('#arhivirane_akt').html(str2);
-		var debouncer;
-		acts = response['active_activities'];
-		for(let i = 1; i <= acts.length;i++){
-			$('#inc'+i).on('click',function(){
-				clearTimeout(debouncer);
-				debouncer = setTimeout(() => {
-					$.ajax({
-						url: 'http://localhost:8000/budivolonter/api/update_free_spaces',
-						type: 'PUT',
-						contentType: 'application/json',
-						data: JSON.stringify({
-							val: parseInt($('#peopleCount'+i).text()) + 1,
-							idakt: acts[i-1]['id']
-						}),
-						success: function(response) {
-							let n = $('#peopleCount'+i).text();
-							n = parseInt(n);
-							n++;
-							$('#peopleCount' + i).text(n);
-						},
-						error: function(xhr, status, error) {
-							console.error(xhr.responseText);
-						}
-					});
-				}, 300);
-			});
+		if(curr_id == id){
+			var debouncer;
+			acts = response['active_activities'];
+			for(let i = 1; i <= acts.length;i++){
+				$('#inc'+i).on('click',function(){
+					clearTimeout(debouncer);
+					debouncer = setTimeout(() => {
+						$.ajax({
+							url: 'http://localhost:8000/budivolonter/api/update_free_spaces',
+							type: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								val: parseInt($('#peopleCount'+i).text()) + 1,
+								idakt: acts[i-1]['id']
+							}),
+							success: function(response) {
+								let n = $('#peopleCount'+i).text();
+								n = parseInt(n);
+								n++;
+								$('#peopleCount' + i).text(n);
+							},
+							error: function(xhr, status, error) {
+								console.error(xhr.responseText);
+							}
+						});
+					}, 300);
+				});
 
-			$('#dec'+i).on('click',function(){
-				clearTimeout(debouncer);
-				debouncer = setTimeout(() => {
-					$.ajax({
-						url: 'http://localhost:8000/budivolonter/api/update_free_spaces',
-						type: 'PUT',
-						contentType: 'application/json',
-						data: JSON.stringify({
-							val: parseInt($('#peopleCount'+i).text()) - 1,
-							idakt: acts[i-1]['id']
-						}),
-						success: function(response) {
-							let n = $('#peopleCount'+i).text();
-							n = parseInt(n);
-							n--;
-							$('#peopleCount' + i).text(n);
-						},
-						error: function(xhr, status, error) {
-							console.error(xhr.responseText);
-						}
-					});
-				}, 300);
-			});
+				$('#dec'+i).on('click',function(){
+					clearTimeout(debouncer);
+					debouncer = setTimeout(() => {
+						$.ajax({
+							url: 'http://localhost:8000/budivolonter/api/update_free_spaces',
+							type: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								val: parseInt($('#peopleCount'+i).text()) - 1,
+								idakt: acts[i-1]['id']
+							}),
+							success: function(response) {
+								let n = $('#peopleCount'+i).text();
+								n = parseInt(n);
+								n--;
+								$('#peopleCount' + i).text(n);
+							},
+							error: function(xhr, status, error) {
+								console.error(xhr.responseText);
+							}
+						});
+					}, 300);
+				});
+			}
 		}
 	});
+}
+function toggleRevs(){
+	$('.review').toggle()
 }

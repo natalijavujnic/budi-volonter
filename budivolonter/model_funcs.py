@@ -3,8 +3,11 @@ from django.db import transaction
 #vraca sve korisnike kao listu objekata
 from . import models
 def getUsers():
-    return list(models.Korisnik.objects.all()) 
+    return list(models.Korisnik.objects.all())
 
+
+def getUserId(id):
+    return models.Korisnik.objects.filter(idkor=id).first().idkor
 #Kosta Novokmet
 #u bazu ubacuje novu aktivnost kao i sve propratne veze
 def insertActivity(org,name,desc,spots,startD,endD,deadline,categories,country,city,reqs) -> None:
@@ -172,9 +175,8 @@ def getApplicationsForActVol(**kwargs) -> dict:
     actID = kwargs['idakt']
     korID = kwargs['idkor']
     exists = kwargs.get('exists',False)
-    if exists == True:
-        return models.Prijava.objects.filter(idakt=actID, idvol=korID).exists()
-    app = models.Prijava.objects.filter(idakt=actID, idvol=korID).first()
+    if exists == True :return models.Prijava.objects.filter(idakt=actID, idvol=korID).exists()
+    app =  models.Prijava.objects.filter(idakt=actID, idvol=korID).first()
     if passed == True:
         from . import utils
         if app and utils.datePassed(app.idakt.datumdo):
@@ -212,7 +214,6 @@ def getApplicationsForActVol(**kwargs) -> dict:
                     }
         else: return None
 
-            
 
 #Kosta Novokmet
 #updatuje u bazi broj slob mesta za akktivnost actID na new_val

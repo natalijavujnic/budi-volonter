@@ -66,7 +66,16 @@ def open_activity(request:HttpRequest)-> HttpResponse:
 
 #Natalija Vujnic
 #funcija za prikaz sopstvenog profila
-def display_my_profile(request:HttpRequest)-> HttpResponse:
+def display_my_profile(request):
+    ulogovan=request.user.is_authenticated
+    if ulogovan:
+        id = getCurrentUser(request).idkor
+        return redirect(f'/budivolonter/profile?id={id}')
+    else:
+        return redirect('login')
+
+
+def display_profile(request:HttpRequest)-> HttpResponse:
     ulogovan=request.user.is_authenticated
     if ulogovan:
         from . import utils
@@ -76,7 +85,10 @@ def display_my_profile(request:HttpRequest)-> HttpResponse:
         if tipKorisnika=='O':
             context = {
                     'korisnik':korisnik,
-                    'navbar':utils.getNavbar(request)
+                    'navbar':utils.getNavbar(request),
+                    'id':request.GET['id'], 
+                    'curr_id':getCurrentUser(request).idkor
+
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
@@ -84,7 +96,8 @@ def display_my_profile(request:HttpRequest)-> HttpResponse:
             context = {
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
-                    'interesi': interesi
+                    'interesi': interesi,
+                    'id':request.GET['id']
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':

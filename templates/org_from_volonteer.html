@@ -16,9 +16,8 @@
 		<script src="{% static './JS/switchPage.js' %}"></script>
 		<script src="{% static './JS/fetch_activities_org.js' %}"></script>
 	</head>
-	<!--<body onload='fetch_activity()'> ne brisi ovo-->
-	<body>
-	{{navbar|safe}}
+	<body onload='fetch_activity({{curr_id}},{{id}})'> 
+		{{navbar|safe}}
 		<div class="container-fluid">
 			<div class="row">
 				<!--Informacije o profilu-->
