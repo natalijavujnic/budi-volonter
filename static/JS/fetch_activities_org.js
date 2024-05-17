@@ -55,11 +55,13 @@ function fetch_activities(curr_id,id) {
 				</div>
 				<div class="col-sm-4">
 				<div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px;">
-				<div  class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>`
+				<div  class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>
+				`
 
 			if(curr_id == id)
 				str1+=
-			`<div class="plus-minus">
+			`
+				<div class="plus-minus">
 				<button id="inc${index}" class="btn btn-primary btn-sm"">+</button>
 				<button id="dec${index}" class="btn btn-primary btn-sm"">-</button>
 				</div>
@@ -73,6 +75,7 @@ function fetch_activities(curr_id,id) {
 				</div>
 				</div>`;
 			else str1+=`
+				</div>
 				<div class="prijave d-flex justify-content-end">
 				<a href="activity_form.html">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Prijavi se</button>
