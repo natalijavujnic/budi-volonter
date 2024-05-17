@@ -153,8 +153,16 @@ function fetch_activities(curr_id,id) {
 				<div class="recenzije_sekcija container-fluid" style="margin-top: 15px;">
 				`;
 			for(let rev of reviews){
-				str2 += `
+				if(rev.preporukavol == 'P')
+					str2 += `
 					<div class="dobar row review">
+					<div class="col-sm-3 ">Ime Prezime:${rev.volname} ${rev.vollastname} </div>
+					<div class="col-sm-9">Komentar:${rev.komvol}</div>
+					</div>
+					`
+				else if(rev.preporukavol == 'N')
+					str2 += `
+					<div class="los row review">
 					<div class="col-sm-3 ">Ime Prezime:${rev.volname} ${rev.vollastname} </div>
 					<div class="col-sm-9">Komentar:${rev.komvol}</div>
 					</div>
@@ -162,7 +170,7 @@ function fetch_activities(curr_id,id) {
 			}
 			str2 += `
 				</div>
-				</div>
+				</div></div>
 				`
 		}
 		// Append str to a container or use it as needed
