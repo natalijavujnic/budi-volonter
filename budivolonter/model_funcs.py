@@ -141,8 +141,7 @@ def getApplicationsForAct(**kwargs) -> list[dict]:
                     'idvol'        : app.idvol.idkor,
                     'volname'      : app.idvol.ime,
                     'vollastname'  : app.idvol.prezime,
-                    'pismo'        : app.pismo,
-                    'rezime'       : app.rezime
+                    'pismo'        : app.pismo
                     }
                 for app in apps if utils.datePassed(app.idakt.datumdo)
                 ]
@@ -160,8 +159,7 @@ def getApplicationsForAct(**kwargs) -> list[dict]:
                     'idvol'        : app.idvol.idkor,
                     'volname'      : app.idvol.ime,
                     'vollastname'  : app.idvol.prezime,
-                    'pismo'        : app.pismo,
-                    'rezime'       : app.rezime
+                    'pismo'        : app.pismo
                     }
                 for app in apps
                 ]
