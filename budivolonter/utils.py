@@ -9,6 +9,7 @@ def getCurrentUser(request:HttpRequest) -> Korisnik|None:
     return models.Korisnik.objects.filter(email=request.user.get_username()).first()
 
 
+
 #Kosta Novokmet
 #vraca na kom kontinentu je neka drzava 
 def getContinent(country) -> dict:
