@@ -55,7 +55,7 @@ function fetch_activities(curr_id,id) {
 				</div>
 				<div class="col-sm-4">
 				<div class="d-flex justify-content-end align-items-center" style="margin-bottom: 5px;">
-				<div class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>`
+				<div  class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>`
 
 			if(curr_id == id)
 				str1+=
@@ -64,7 +64,7 @@ function fetch_activities(curr_id,id) {
 				<button id="dec${index}" class="btn btn-primary btn-sm"">-</button>
 				</div>
 				</div>
-				<div class="prijave d-flex justify-content-end">
+				<div class="prijave d-flex  justify-content-end">
 				<a href="#">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pristigle prijave</button>
 				</a>
@@ -72,7 +72,7 @@ function fetch_activities(curr_id,id) {
 				</div>
 				</div>
 				</div>`;
-			else str+=`
+			else str1+=`
 				<div class="prijave d-flex justify-content-end">
 				<a href="activity_form.html">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Prijavi se</button>
@@ -145,11 +145,16 @@ function fetch_activities(curr_id,id) {
 				</div>
 				</div>
 				</div>
+				`
+			if(id == curr_id) str2+=
+				`
 				<div class="oceni-volontere col-sm-4">
 				<a href="./org_review_volonteers.html">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Ostavi recenzije volonterima</button>
 				</a>
 				</div>
+				`
+			str2+=`
 				<div class="recenzije_sekcija container-fluid" style="margin-top: 15px;">
 				`;
 			for(let rev of reviews){
