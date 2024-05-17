@@ -1,6 +1,6 @@
 function fetch_activities(id) {
 	var acts;
-	$.get('http://localhost:8000/budivolonter/api/get_activities_vol?id='+id, function(response) {
+	$.get('api/get_activities_vol?id='+id, function(response) {
 		console.log(response);
 		acts = response['activities'];
 		let str = '';

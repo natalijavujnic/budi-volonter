@@ -3,7 +3,7 @@
 //komuncira sa bazom, postavlja button listenere na + i -, salje get i put ajax zahteve ka api-ju
 function fetch_activities(curr_id,id) {
 	var acts;
-	$.get('http://localhost:8000/budivolonter/api/get_activities_org?id='+id, function(response) {
+	$.get('api/get_activities_org?id='+id, function(response) {
 		console.log(response);
 		acts = response['active_activities'];
 		let str1 = '';
