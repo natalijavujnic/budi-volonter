@@ -127,4 +127,3 @@ class ZanimaGa(models.Model):
         managed = False
         db_table = 'zanima_ga'
         unique_together = (('idkor', 'idobl'),)
-
