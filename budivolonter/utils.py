@@ -83,3 +83,11 @@ def getNavbar(request) -> str:
     elif(user_type == 'UNR'):
         with open('./budivolonter/html/navbar_unreg.html','r') as file:
             return file.read()
+
+#Natalija Vujnic
+def getAge(dateOfBirth) -> int:
+    today=date.today()
+    age=today.year-dateOfBirth.year
+    if(today.month,today.day)<(dateOfBirth.month,dateOfBirth.day):
+        age-=1
+    return age

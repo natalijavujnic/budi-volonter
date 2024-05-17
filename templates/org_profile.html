@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 		<link href="{% static 'CSS/main_page.css'%}" rel="stylesheet">
 		<link href="{% static 'CSS/org_profile.css'%}" rel="stylesheet">
+		<link href="{% static './CSS/org_from_volonteer.css' %}" rel="stylesheet">
 		<title>Moj profil</title>
 		<script src="{% static './JS/switchPage.js' %}"></script>
 		<script src="{% static './JS/fetch_activities_org.js' %}"></script>
@@ -22,12 +23,16 @@
 			<div class="row">
 				<!--Informacije o profilu-->
 				<div class="col-sm-4" style="background-color: #F2FAFB;">
+					{% if id|stringformat:"s" == curr_id|stringformat:"s" %}
 					<div class="d-flex justify-content-end" style="padding: 15px;">
 						<a href="./org_edit.html">
 							<div id="EDIT" class="btn" title="Uredi profil"><i class="bi bi-pen-fill"></i></div>
 						</a>
 					</div>
 					<div id="org-info">
+					{% else %}
+					<div id="org-info" style="margin-top: 60px;">
+					{% endif %}
 						<table class ="table" id="user-info">
 							<tr>
 								<td>Naziv: </td>
@@ -43,10 +48,15 @@
 							</tr>
 							<tr>
 								<td>E-mail: </td>
-								<td id='email'>{{korisnik.email}}</td>
+								<td id = 'email'>{{korisnik.email}}</td>
 							</tr>
 						</table>
 					</div>
+					{% if id|stringformat:"s" != curr_id|stringformat:"s" %}
+					<div class="d-flex justify-content-center" style="padding: 15px;">
+						<div id="posalji_poruku" class="btn" title="Uredi profil">Pošalji poruku</div>
+					</div>
+					{% endif %}
 				</div>
 				<!--Aktivnosti-->
 				<div class="col-sm-8" style="padding: 0px;">
@@ -62,7 +72,6 @@
 						<!--Otvorene aktivnosti-->
 						<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
 							<div class="container" id='otvorene_akt'>
-								<!--Aktivnost-otvorena-->
 							</div>
 						</div>
 						<!--Arhivirane aktivnosti-->

@@ -79,16 +79,15 @@ def display_profile(request:HttpRequest)-> HttpResponse:
     ulogovan=request.user.is_authenticated
     if ulogovan:
         from . import utils
-        korisnik=getCurrentUser(request)
+        id=request.GET['id']
+        korisnik=model_funcs.getUsrById(id)
         tipKorisnika=korisnik.tip
-        print(tipKorisnika)
         if tipKorisnika=='O':
             context = {
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'id':request.GET['id'], 
                     'curr_id':getCurrentUser(request).idkor
-
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
@@ -97,13 +96,17 @@ def display_profile(request:HttpRequest)-> HttpResponse:
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'interesi': interesi,
-                    'id':request.GET['id']
+                    'id':request.GET['id'],
+                    'curr_id':getCurrentUser(request).idkor,
+                    'age':utils.getAge(korisnik.datumrodj)
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':
             stranica='admin_start.html'
             return render(request, stranica,{'navbar':utils.getNavbar(request)})
     return redirect('login')
+
+
 #Anja Mihajlov
 #Koristi se za insert nove organizacije u bazu
 def reg_org(request: HttpRequest)-> HttpResponse:

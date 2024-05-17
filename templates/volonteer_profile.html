@@ -24,12 +24,16 @@
 			<div class="row">
 				<!--Informacije o profilu-->
 				<div class="col-sm-4" style="background-color: #F2FAFB;">
+					{% if id|stringformat:"s" == curr_id|stringformat:"s" %}
 					<div class="d-flex justify-content-end" style="padding: 15px;">
 						<a href="{% static './vol_edit.html'%}">
 							<div id="EDIT" class="btn" title="Uredi profil"><i class="bi bi-pen-fill"></i></div>
 						</a>
 					</div>
 					<div id="user-info">
+					{% else %}
+					<div id="user-info" style="margin-top: 60px;">
+					{% endif %}
 						<table class ="table" id="user-info">
 							<tr>
 								<td>Ime: </td>
@@ -40,13 +44,20 @@
 								<td>{{korisnik.prezime}}</td>
 							</tr>
 							<tr>
+								{% if id|stringformat:"s" == curr_id|stringformat:"s" %}
 								<td>Datum rođenja: </td>
-								<td>{{korisnik.telefon}}</td>
+								<td>{{korisnik.datumrodj}}</td>
+								{% else %}
+								<td>Broj godina </td>
+								<td>{{age}}</td>
+								{% endif %}
 							</tr>
+							{% if id|stringformat:"s" == curr_id|stringformat:"s" %}
 							<tr>
 								<td>E-mail: </td>
 								<td id = 'email'>{{korisnik.email}}</td>
 							</tr>
+							{% endif %}
 						</table>
 					</div>
 					<div id="user-int" style="margin: 10px;">
@@ -57,11 +68,19 @@
 							{% endfor %}
 						</ul>
 					</div>
+					{% if id|stringformat:"s" == curr_id|stringformat:"s" %}
 					<div class="d-flex justify-content-center" style="padding: 15px;">
 						<a href="{% static './vol_review_org.html'%}">
 							<div class="btn ostavi-rec">Ostavi recenzije</div>
 						</a>
 					</div>
+					{% else %}
+					<div class="d-flex justify-content-center" style="padding: 15px;">
+						<a href="prepiske.html">
+							<div class="btn ostavi-rec">Posalji poruku</div>
+						</a>
+					</div>
+					{% endif %}
 				</div>
 				<!--Aktivnosti-->
 				<div class="col-sm-8" style="padding: 0px;">
