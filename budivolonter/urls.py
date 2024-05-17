@@ -14,5 +14,6 @@ urlpatterns = [
         path('logout', do_logout, name='logout'),
         path('api/', include('budivolonter.api')),
         path('activity_form', activity_form , name='activity_form'),
-        path('view_applications', view_applications, name='view_applications')
+        path('view_applications', view_applications, name='view_applications'),
+        path('inbox', include('chat_server.urls'))
         ]

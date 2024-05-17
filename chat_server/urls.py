@@ -3,5 +3,5 @@ from .views import inbox
 
 
 urlpatterns = [
-    path('inbox',inbox)
+    path('/',inbox)
         ]
