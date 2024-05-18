@@ -35,7 +35,7 @@ class ChatConsumer(WebsocketConsumer):
     def disconnect(self, code):
         if self.chat_id:
             async_to_sync(self.channel_layer.group_discard)( #izbacujemo korisnika iz grupe, ako je u nekoj grupi
-                self.chat_id,
+                str(self.chat_id),
                 self.channel_name
             )
         user = self.scope['user']

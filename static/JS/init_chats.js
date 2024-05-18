@@ -18,6 +18,8 @@ function start_websocket(){
 	let list = document.getElementById('chats');
 	list.addEventListener('click', (e)=> {
 		let chatid = parseInt(e.target.getAttribute('name'));
+		let chatUserName = e.target.getAttribute('userChatName');
+		$('#chatUserName').html(chatUserName);
 		console.log(chatid);
 		console.log(e.target.getAttribute('name'));
 		console.log(e.target);
@@ -64,10 +66,10 @@ function get_chats(){
 		console.log(chats)
 		for (let chat of chats){
 			str1 += `
-				<li class="list-group-item d-flex" name="${chat['id']}">
-				<div name="${chat['id']}"> ${chat['user']}</div>`;
+				<li class="list-group-item d-flex" name="${chat['id']}" userChatName="${chat['user']}">
+				<div name="${chat['id']}" userChatName="${chat['user']}"> ${chat['user']}</div>`;
 				if(chat['messages_unread'] > 0){
-				str1 += `<div name="${chat['id']}" class="badge bg-danger ml-auto"> ${chat['messages_unread']} </div>`
+				str1 += `<div name="${chat['id']}" userChatName="${chat['user']}" class="badge bg-danger ml-auto"> ${chat['messages_unread']} </div>`
 				}
 				str1 += `</li>`;
 		}
