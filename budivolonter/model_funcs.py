@@ -265,3 +265,17 @@ def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
     with transaction.atomic():
         prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idAkt=idakt), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
         prijava.save()
+
+
+
+
+#Kosta Novokmet
+def getChats(id):
+    from django.db.models import Q
+    return list(models.Prepiska.objects.filter(Q(idkor1=id)|Q(idkor2=id)).all())
+
+
+
+
+def getMessages(chat_id):
+    return list(models.Poruka.objects.filter(idpre=chat_id).all())

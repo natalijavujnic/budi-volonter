@@ -28,66 +28,69 @@ def register_choice(request):
 #Poziva se prilikom poziva endpoint-a sa istim imenom. Treba da ubaci novu aktivnost u bazu
 def open_activity(request:HttpRequest)-> HttpResponse:
     from . import utils
-    if utils.getCurrentUser(request) is None:
-        return redirect('login')
-    elif utils.getCurrentUser(request).tip == 'V':
-        return redirect('welcome') #todo redirect to error 404 page
-    if(request.method == 'POST'):
-        parameters = request.POST
-        cats = parameters.getlist('categories')
-        reqs = parameters.get('reqs').strip().replace('\r','').split('\n')
-        name = parameters['name'] 
-        desc = parameters['desc']
-        spots =  int(parameters['spots'])
-        startDate = parameters['startDate']
-        endDate = parameters['endDate']
-        deadlineDate = parameters['deadlineDate']
-        country = parameters['country']
-        city = parameters['city']
-        user = getCurrentUser(request)
-        model_funcs.insertActivity(user,name,desc,spots,startDate,endDate,deadlineDate,cats,country,city,reqs)
-        from . import utils
-        context = {
-                'countries':utils.getCountries,
-                'status':'USPESNO DODATA AKTIVNOST!',
-                'cats': model_funcs.getCategoryNames(),
-                'navbar' : utils.getNavbar(request)
-                }
-        return render(request,'open_activity.html',context)
-    else:
-        from . import utils
-        context = {
-                'countries':utils.getCountries,
-                'status':'',
-                'cats':model_funcs.getCategoryNames(),
-                'navbar' : utils.getNavbar(request)
-                }
-        return render(request,'open_activity.html',context)
+    if utils.checkLogin(request):
+        if utils.getCurrentUser(request) is None:
+            return redirect('login')
+        elif utils.getCurrentUser(request).tip == 'V':
+            return redirect('welcome') #todo redirect to error 404 page
+        if(request.method == 'POST'):
+            parameters = request.POST
+            cats = parameters.getlist('categories')
+            reqs = parameters.get('reqs').strip().replace('\r','').split('\n')
+            name = parameters['name'] 
+            desc = parameters['desc']
+            spots =  int(parameters['spots'])
+            startDate = parameters['startDate']
+            endDate = parameters['endDate']
+            deadlineDate = parameters['deadlineDate']
+            country = parameters['country']
+            city = parameters['city']
+            user = getCurrentUser(request)
+            model_funcs.insertActivity(user,name,desc,spots,startDate,endDate,deadlineDate,cats,country,city,reqs)
+            from . import utils
+            context = {
+                    'countries':utils.getCountries,
+                    'status':'USPESNO DODATA AKTIVNOST!',
+                    'cats': model_funcs.getCategoryNames(),
+                    'navbar' : utils.getNavbar(request)
+                    }
+            return render(request,'open_activity.html',context)
+        else:
+            from . import utils
+            context = {
+                    'countries':utils.getCountries,
+                    'status':'',
+                    'cats':model_funcs.getCategoryNames(),
+                    'navbar' : utils.getNavbar(request)
+                    }
+            return render(request,'open_activity.html',context)
+    else:return redirect('login')
 
 #Natalija Vujnic
 #funcija za prikaz sopstvenog profila
 def display_my_profile(request):
-    ulogovan=request.user.is_authenticated
-    if ulogovan:
+    from .utils import checkLogin
+    if checkLogin(request):
         id = getCurrentUser(request).idkor
-        return redirect(f'/budivolonter/profile?id={id}')
+        return redirect(f'/profile?id={id}')
     else:
         return redirect('login')
 
 
 def display_profile(request:HttpRequest)-> HttpResponse:
-    ulogovan=request.user.is_authenticated
-    if ulogovan:
+    from .utils import checkLogin
+    if checkLogin(request):
         from . import utils
-        id=request.GET['id']
-        korisnik=model_funcs.getUsrById(id)
+        korisnik=getCurrentUser(request)
         tipKorisnika=korisnik.tip
+        print(tipKorisnika)
         if tipKorisnika=='O':
             context = {
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'id':request.GET['id'], 
                     'curr_id':getCurrentUser(request).idkor
+
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
@@ -96,17 +99,13 @@ def display_profile(request:HttpRequest)-> HttpResponse:
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'interesi': interesi,
-                    'id':request.GET['id'],
-                    'curr_id':getCurrentUser(request).idkor,
-                    'age':utils.getAge(korisnik.datumrodj)
+                    'id':request.GET['id']
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':
             stranica='admin_start.html'
             return render(request, stranica,{'navbar':utils.getNavbar(request)})
     return redirect('login')
-
-
 #Anja Mihajlov
 #Koristi se za insert nove organizacije u bazu
 def reg_org(request: HttpRequest)-> HttpResponse:
@@ -270,4 +269,17 @@ def view_applications(request:HttpRequest):
         'prijave': prijave,
         'navbar': utils.getNavbar(request)
     }
+
     return render(request, 'applications_view.html', context)
+
+
+
+"""Kosta Novokmet"""
+def inbox(request:HttpRequest):
+    from .utils import checkLogin,getCurrentUser,loadChats
+    if checkLogin(request):
+        id = getCurrentUser(request).idkor
+        chats = model_funcs.getChats(id)
+        return render(request,'prepiske.html')
+    else: return redirect('login')
+    

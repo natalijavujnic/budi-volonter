@@ -14,9 +14,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Document</title>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="{% static './JS/switchPage.js' %}"></script>
+		<script src="{% static './JS/init_chats.js' %}"></script>
 	</head>
-	<body>
+	<body onload = 'get_chats();start_websocket()'>
 		{{navbar|safe}}
 		<div class="container">
 			<div class="row">
@@ -25,25 +27,8 @@
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">PREPISKE</h5>
-							<ul class="list-group">
-								<li class="list-group-item">
-									<div class="d-flex">
-										<div> USER1</div>
-										<div class="badge bg-danger ml-auto"> 3 </div>
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="d-flex">
-										<div> USER2</div>
-										<div class="badge bg-danger ml-auto"> 10 </div>
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="d-flex">
-										<div> USER3</div>
+							<ul id='chats' class="list-group">
 
-									</div> 
-								</li>
 							</ul>
 						</div>
 					</div>
@@ -61,7 +46,7 @@
 							<form>
 								<div class="form-group d-flex">
 									<input type="text" class="form-control" placeholder="Type your message">
-									<button type="submit" class="bi bi-arrow-right rounded-circle"></button>
+									<button id='submit' type="submit" class="bi bi-arrow-right rounded-circle"></button>
 								</div>
 
 							</form>

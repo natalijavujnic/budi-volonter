@@ -8,7 +8,10 @@ def getCurrentUser(request:HttpRequest) -> Korisnik|None:
         return None
     return models.Korisnik.objects.filter(email=request.user.get_username()).first()
 
-
+#Kosta Novokmet
+def checkLogin(request:HttpRequest) -> bool:
+    if request.user.is_authenticated: return True
+    else: return False
 
 #Kosta Novokmet
 #vraca na kom kontinentu je neka drzava 
@@ -63,6 +66,35 @@ def loadActivities(acts:list[Aktivnost]) -> list[dict]:
         act_list.append(act_data)
     return act_list
 
+#Kosta Novokmet
+def loadMessages(messages:list[models.Poruka]) -> list[dict]:
+    from . import model_funcs
+    message_list = []
+    for message in messages:
+        message_data = {}
+        message_data['sender'] = message.idsender_id
+        message_data['text'] = message.tekst
+        message_data['timestamp'] = message.time
+        message_data['status'] = message.status
+        message_data['order'] = message.redbr
+        message_list.append(message_data)
+    return message_list
+
+    
+
+
+#Kosta Novokmet
+def loadChats(chats:list[models.Prepiska],id:int) -> list[dict]:
+    from . import model_funcs
+    chat_list = []
+    for chat in chats:
+        chat_data = {}
+        messages =  loadMessages(model_funcs.getMessages(chat.idpre))
+        chat_data['messages'] = messages
+        chat_data['user'] = f'{chat.idkor2.ime} {chat.idkor2.prezime}' if id == chat.idkor1_id else f'{chat.idkor1.ime} {chat.idkor1.prezime}' #(yes i know its bad)
+        chat_list.append(chat_data)
+
+    return chat_list
 
 #Kosta Novokmet
 def getNavbar(request) -> str:

@@ -77,3 +77,14 @@ def download(request:HttpRequest) -> HttpResponse:
     response = HttpResponse(prijava.rezime, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="rezime_'+prijava.idvol.ime+'_'+prijava.idvol.prezime+'_za_'+prijava.idakt.naziv+'.pdf"'
     return response
+
+
+
+#Kosta Novokmet
+def get_chats(request:HttpRequest) -> JsonResponse:
+    from .utils import checkLogin,getCurrentUser,loadChats
+    id = getCurrentUser(request).idkor
+    chats = loadChats(model_funcs.getChats(id),id)
+    print(chats)
+    return JsonResponse({'chats':chats})
+    
