@@ -277,5 +277,11 @@ def getChats(id):
 
 
 
-def getMessages(chat_id):
-    return list(models.Poruka.objects.filter(idpre=chat_id).all())
+def getMessages(chat_id, id_reader):
+    messages = list(models.Poruka.objects.filter(idpre=chat_id).all())
+    for message in messages:
+        if message.idsender_id != id_reader:
+            message.status = 'R'
+            message.save()
+    print(messages, id_reader)
+    return messages

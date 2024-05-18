@@ -10,9 +10,6 @@
     position: relative;
     text-align: center;
 }
-.chat-box{
-    margin-bottom: 300px;
-}
 .list-group>li{
     background-color: #EEF6D6;
     border: none;

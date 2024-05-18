@@ -88,3 +88,9 @@ def get_chats(request:HttpRequest) -> JsonResponse:
     print(chats)
     return JsonResponse({'chats':chats})
     
+def get_messages(request:HttpRequest) -> JsonResponse:
+    from .utils import loadMessages
+    id = int(request.GET.get('id'))
+    id_reader = getCurrentUser(request).idkor
+    messages = loadMessages(model_funcs.getMessages(id, id_reader))
+    return JsonResponse({'messages':messages})

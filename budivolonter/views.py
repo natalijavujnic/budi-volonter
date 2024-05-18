@@ -72,7 +72,7 @@ def display_my_profile(request):
     from .utils import checkLogin
     if checkLogin(request):
         id = getCurrentUser(request).idkor
-        return redirect(f'/profile?id={id}')
+        return redirect(f'/budivolonter/profile?id={id}')
     else:
         return redirect('login')
 
@@ -274,12 +274,11 @@ def view_applications(request:HttpRequest):
 
 
 
-"""Kosta Novokmet"""
+"""Kosta Novokmet, Djordje Sarovic"""
 def inbox(request:HttpRequest):
-    from .utils import checkLogin,getCurrentUser,loadChats
+    from .utils import checkLogin,getCurrentUser, getNavbar
     if checkLogin(request):
         id = getCurrentUser(request).idkor
-        chats = model_funcs.getChats(id)
-        return render(request,'prepiske.html')
+        return render(request,'prepiske.html', {'navbar':getNavbar(request), 'user_id':id})
     else: return redirect('login')
     
