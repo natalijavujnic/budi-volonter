@@ -282,3 +282,58 @@ def inbox(request:HttpRequest):
         return render(request,'prepiske.html', {'navbar':getNavbar(request), 'user_id':id})
     else: return redirect('login')
     
+
+#Natalija Vujnic
+def edit_profile(request:HttpRequest)-> HttpResponse:
+    ulogovan=request.user.is_authenticated
+    if ulogovan:
+        from . import utils
+        korisnik=utils.getCurrentUser(request)
+        tipKorisnika=korisnik.tip
+        context = {
+                    'korisnik':korisnik,
+                    'navbar':utils.getNavbar(request)
+                    }
+        if request.method=='POST':
+            if tipKorisnika=='O':
+                newIme=request.POST.get('ime')
+                newPib=request.POST.get('pib')
+                newTel=request.POST.get('telefon')
+                if model_funcs.UsrFromTel(tel=newTel,exists=True) and newTel!=korisnik.telefon:
+                    poruka = "Već postoji korisnik sa datim telefonom."
+                    context['poruka'] = poruka
+                elif model_funcs.UsrFromPib(pib=newPib,exists=True) and int(newPib)!=korisnik.pib:
+                    poruka = "Već postoji korisnik sa datim PIB-om."
+                    context['poruka'] = poruka
+                else:
+                    model_funcs.editOrganization(korisnik,newIme,newPib,newTel)
+                    return redirect('my_profile')
+            elif tipKorisnika=='V':
+                newIme=request.POST.get('ime')
+                newPrezime=request.POST.get('prezime')
+                newDatum=request.POST.get('datumRodjenja')
+                newCats = request.POST.getlist('interes')
+                godine=utils.getAge(newDatum)
+                if godine<16 or godine>100:
+                    poruka = "Ne spadate u starosnu grupu za volontiranje."
+                    context['poruka'] = poruka
+                else:
+                    model_funcs.editVolunteer(korisnik,newIme,newPrezime,newDatum,newCats)
+                    return redirect('my_profile')
+        if tipKorisnika=='O':
+            return render(request, 'org_edit.html', context)
+        elif tipKorisnika=='V':
+            sviInteresi=model_funcs.getAllInteresIds()
+            interesiKorisnik=model_funcs.getInterestsIds(korisnik.idkor)
+            interesi=[]
+            for interes in sviInteresi:
+                interesFormat={
+                    'id': interes.idobl,
+                    'name':interes.oblast,
+                    'checked': interes.idobl in interesiKorisnik
+                    }
+                interesi.append(interesFormat)
+            context['interesi']=interesi
+            return render(request, 'vol_edit.html', context)
+    else:
+        return redirect('login')

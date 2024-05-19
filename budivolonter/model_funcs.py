@@ -260,15 +260,6 @@ def getActivityById(idAkt) -> models.Aktivnost:
 def getUsrById(id) -> models.Korisnik:
     return models.Korisnik.objects.filter(idkor=id).first()
 
-
-def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
-    with transaction.atomic():
-        prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idAkt=idakt), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
-        prijava.save()
-
-
-
-
 #Kosta Novokmet
 def getChats(id):
     from django.db.models import Q
@@ -285,3 +276,39 @@ def getMessages(chat_id, id_reader):
             message.save()
     print(messages, id_reader)
     return messages
+#Natalija Vujnic
+def editOrganization(korisnik,newIme,newPib,newTel) -> None:
+    with transaction.atomic():
+        prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idAkt=idakt), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
+        prijava.save()
+        korisnik.ime=newIme
+        korisnik.pib=newPib
+        korisnik.telefon=newTel
+        korisnik.save()
+
+#Natalija Vujnic
+def editVolunteer(korisnik,newIme,newPrezime,newDatum,newCats) -> None:
+    with transaction.atomic():
+        korisnik.ime=newIme
+        korisnik.prezime=newPrezime
+        korisnik.datumrodj=newDatum
+        korisnik.save()
+        models.ZanimaGa.objects.filter(idkor_id=korisnik.idkor).delete()
+        for cat in newCats:
+            category = getCategoryById(cat)
+            if category is not None:
+                unos = models.ZanimaGa(idkor=korisnik, idobl=category)
+                unos.save()
+
+#Natalija Vujnic
+def getAllInteresIds() -> list:
+    return models.Oblast.objects.all()
+
+#Natalija Vujnic
+def getInterestsIds(id) -> list:
+    return models.ZanimaGa.objects.filter(idkor_id=id).values_list('idobl', flat=True)
+
+#Natalija Vujnic
+def getCategoryById(id) -> models.Oblast:
+    return models.Oblast.objects.filter(idobl=id).first()
+>>>>>>> f326b46 (Zavrsen edit profila)

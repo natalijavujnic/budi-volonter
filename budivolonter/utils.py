@@ -119,6 +119,9 @@ def getNavbar(request) -> str:
 
 #Natalija Vujnic
 def getAge(dateOfBirth) -> int:
+    from datetime import datetime
+    if isinstance(dateOfBirth, str):
+        dateOfBirth = datetime.strptime(dateOfBirth, '%Y-%m-%d').date()
     today=date.today()
     age=today.year-dateOfBirth.year
     if(today.month,today.day)<(dateOfBirth.month,dateOfBirth.day):
