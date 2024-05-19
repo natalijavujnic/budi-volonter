@@ -81,7 +81,8 @@ def display_profile(request:HttpRequest)-> HttpResponse:
     from .utils import checkLogin
     if checkLogin(request):
         from . import utils
-        korisnik=getCurrentUser(request)
+        id=request.GET['id']
+        korisnik=model_funcs.getUsrById(id)
         tipKorisnika=korisnik.tip
         print(tipKorisnika)
         if tipKorisnika=='O':
@@ -90,7 +91,6 @@ def display_profile(request:HttpRequest)-> HttpResponse:
                     'navbar':utils.getNavbar(request),
                     'id':request.GET['id'], 
                     'curr_id':getCurrentUser(request).idkor
-
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
