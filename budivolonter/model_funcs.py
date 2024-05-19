@@ -285,8 +285,6 @@ def getMessages(chat_id, id_reader):
 #Natalija Vujnic
 def editOrganization(korisnik,newIme,newPib,newTel) -> None:
     with transaction.atomic():
-        prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idAkt=idakt), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
-        prijava.save()
         korisnik.ime=newIme
         korisnik.pib=newPib
         korisnik.telefon=newTel
