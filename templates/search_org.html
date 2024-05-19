@@ -22,63 +22,33 @@
 			<div class="row">
 				<div class="col-sm-12 d-flex justify-content-center" style="padding-top: 10px;">
 					<div style="margin-top: 20px;">
-						<label for="name_search">Pretraga organizacije po imenu:</label>
-						<input type="text" id="name_search" name="name_search">
+						<form action="{% url 'search_organization' %}" method="GET">
+							<label for="name_search">Pretraga organizacije po imenu:</label>
+							<input type="text" id="name_search" name="name_search">
+							<button type="submit" class="btn btn-primary">Pretraži</button>
+						</form>
 					</div>
 				</div>
+				
 				<div class="container" style="padding: 30px; padding-top: 0px; margin-top: 20px;">
 					<!--Organizacija-->
-					<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
-						<div class="col-sm-4">
-							Organizacija 1
-						</div>
-						<div class="prijave col-sm-8 d-flex justify-content-end">
-							<a href="#">
-								<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
-							</a>
-						</div>
-					</div>
-					<br>
-					<!--Organizacija-->
-					<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
-						<div class="col-sm-4">
-							Organizacija 2
-						</div>
-						<div class="prijave col-sm-8 d-flex justify-content-end">
-							<a href="#">
-								<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
-							</a>
-						</div>
-					</div>
-					<br>
-					<!--Organizacija-->
-					<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
-						<div class="col-sm-4">
-							Organizacija 3
-						</div>
-						<div class="prijave col-sm-8 d-flex justify-content-end">
-							<a href="#">
-								<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
-							</a>
-						</div>
-					</div>
-					<br>
-					<!--Organizacija-->
-					<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
-						<div class="col-sm-4">
-							Organizacija 4
-						</div>
-						<div class="prijave col-sm-8 d-flex justify-content-end">
-							<a href="#">
-								<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
-							</a>
-						</div>
-					</div>
-					<br>
+					{%for org in orgs%}
 
+					<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
+						<div class="col-sm-4">
+							{{org.ime}}
+						</div>
+						<div class="prijave col-sm-8 d-flex justify-content-end">
+							<a href="{% url 'profile' %}?id={{ org.idkor }}">
 
+								<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
+							</a>
+						</div>
+					</div>
+					<br>
+					{%endfor%}
 				</div>
 			</div>
-
+		</div>
 	</body>
 </html>

@@ -339,3 +339,65 @@ def edit_profile(request:HttpRequest)-> HttpResponse:
             return render(request, 'vol_edit.html', context)
     else:
         return redirect('login')
+
+#Anja Mihajlov
+#Koristi se za pretragru organizacija
+def search_org(request: HttpRequest)-> HttpResponse:
+    name_search = request.GET.get('name_search')
+    if name_search:
+        orgs = model_funcs.filterOrganizationsName(name_search)
+    else:
+        orgs = model_funcs.getAllOrganizations()
+
+    from . import utils
+    context = {
+            'orgs':orgs,
+            'navbar':utils.getNavbar(request)
+            }
+    return render(request, 'search_org.html', context)
+
+
+#Anja Mihajlov
+#Koristi se za pretragu volontera
+def search_vol(request: HttpRequest)-> HttpResponse:
+    ulogovan=request.user.is_authenticated
+    if ulogovan:
+
+        name_search = request.GET.get('name_search')
+
+        vols = model_funcs.getAllVolunteers()
+        if name_search:
+            vols = model_funcs.filterVolunteersName(name_search,vols)
+
+        experience = request.GET.get('volunteer_experience')
+        
+        if experience=='ne':
+            vols = model_funcs.filterVolunteerExperience(False, vols)
+        elif experience =='da':
+            vols = model_funcs.filterVolunteerExperience(True, vols)
+
+        cats = request.GET.getlist('interes')
+        if (cats):
+            vols = model_funcs.filterVolunteerCategories(vols,cats)
+
+        interesi=model_funcs.getAllInteresIds()
+        from . import utils
+        context = {
+            'vols':vols,
+            'navbar':utils.getNavbar(request),
+            'interesi': interesi
+            }
+        return render(request, 'search_vol.html', context)
+    else:
+        return redirect('login')
+
+#Anja Mihajlov
+#Izbor pretrage korisnika
+def search_choose(request: HttpRequest)-> HttpResponse:
+    from . import utils
+    context = {
+            'navbar':utils.getNavbar(request),
+            }
+    return render(request, 'choose_search.html', context)
+
+

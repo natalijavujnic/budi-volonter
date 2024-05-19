@@ -315,3 +315,50 @@ def getInterestsIds(id) -> list:
 #Natalija Vujnic
 def getCategoryById(id) -> models.Oblast:
     return models.Oblast.objects.filter(idobl=id).first()
+
+#Anja Mihajlov
+#Dohvata sve organizacije iz baze
+def getAllOrganizations()->list:
+    return list(models.Korisnik.objects.filter(tip='O'))
+
+#Anja Mihajlov
+#Filtrira organizacije na osnovu imena
+def filterOrganizationsName(name)->list:
+    return list(models.Korisnik.objects.filter(tip='O', ime__icontains=name))
+
+#Anja Mihajlov
+#Dohvata sve volontere iz baze
+def getAllVolunteers():
+    return models.Korisnik.objects.filter(tip='V')
+
+#Anja Mihajlov
+#Filtrira volontere na osnovu imena
+def filterVolunteersName(name,vols):
+    from django.db.models import Q
+    return vols.filter(Q(ime__icontains=name) | Q(prezime__icontains=name))
+
+#Anja Mihajlov
+#filtrira volontere na osnovu iskustva
+def filterVolunteerExperience(exp, vols):
+    from datetime import date
+    today = date.today()
+    
+    active_volunteers = models.Prijava.objects.filter(
+        status='A',
+        idakt__datumdo__lt=today
+    ).select_related('idvol')
+    
+    vol_ids = [p.idvol for p in active_volunteers]
+    if(exp):
+        filtered_vols = [vol for vol in vols if vol in vol_ids]
+    else:
+        filtered_vols = [vol for vol in vols if vol not in vol_ids]
+
+    return filtered_vols
+
+#Anja Mihajlov
+#Filtrira volontera na osnovu interesovanja
+def filterVolunteerCategories(vols,cats):
+    vol_ids = list(models.ZanimaGa.objects.filter(idobl__in=cats).values_list('idkor', flat=True))
+    return [vol for vol in vols if vol.idkor in vol_ids]
+

@@ -16,7 +16,7 @@
 			<link href="{% static './CSS/org_profile.css' %}" rel="stylesheet">
 			<link href="{% static './CSS/org_from_volonteer.css' %}" rel="stylesheet">
 			<link href="{% static './CSS/search_vol.css' %}" rel="stylesheet">
-			<title>Pretraga volontera volonter</title>
+			<title>Pretraga volontera</title>
 			<script src="{% static './JS/switchPage.js' %}"></script>
 	</head>
 	<body  style="background-color:#FCFDFA">
@@ -26,77 +26,51 @@
 				<div class = "col-sm-4" style="background-color: #eef6d6; padding-top: 15px;">
 					<h2 style="color: #37401C;"> Filteri</h2>
 					<div>
-						<form>
+						<form action="{% url 'search_volunteer' %}" method="GET">
 							<div>
 								<label for="name_search">Pretraga po imenu:</label>
 								<input type="text" id="name_search" name="name_search">
 							</div>
-							<div>
+							<div class="form-group">
 								<p>Interesovanja:</p>
-								<label><input type="checkbox" name="interests" value="umetnost"> Umetnost</label><br>
-								<label><input type="checkbox" name="interests" value="veganstvo"> Veganstvo</label><br>
-								<label><input type="checkbox" name="interests" value="muzika"> Muzika</label><br>
-								<label><input type="checkbox" name="interests" value="priroda"> Priroda</label><br>
-								<label><input type="checkbox" name="interests" value="rad_sa_decom"> Rad sa decom</label><br>
-								<label><input type="checkbox" name="interests" value="rad_sa_ljudima"> Rad sa ljudima</label><br>
-								<label><input type="checkbox" name="interests" value="drustvene_igre"> Društvene igre</label><br>
-								<label><input type="checkbox" name="interests" value="sport"> Sport</label><br>
+								{% for interes in interesi %}
+								<label for="interes{{ interes.idobl }}">
+									<input type="checkbox" id="interes{{ interes.idobl }}" name="interes" value="{{ interes.idobl }}">
+									{{ interes.oblast }}
+								</label><br>
+								{% endfor %}
 							</div>
 							<div>
 								<label for="volunteer_experience">Volontersko iskustvo:</label>
 								<select id="volunteer_experience" name="volunteer_experience">
 									<option value="da">Da</option>
 									<option value="ne">Ne</option>
+									<option value="nebitno" selected>Nebitno</option>
 								</select>
 							</div>
-							<button type="submit">Primeni filtere</button>
+							<button type="submit" class="btn btn-primary">Primeni filtere</button>
 						</form>
 					</div>
 				</div>
 				<div class="col-sm-8" style="background-color: #f8faf3;">
 					<div class="container" style="padding: 30px; padding-top: 0px; margin-top: 20px;">
-						<!--Volonter-->
+						{%for vol in vols%}
 						<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
 							<div class="col-sm-4">
-								Volonter 1
+								{{vol.ime}} {{vol.prezime}}
 							</div>
 							<div class="prijave col-sm-8 d-flex justify-content-end">
-								<a href="#">
+								<a href="{% url 'profile' %}?id={{ vol.idkor }}">
+
 									<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
 								</a>
 							</div>
 						</div>
 						<br>
-						<!--Volonter-->
-						<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
-							<div class="col-sm-4">
-								Volonter 2
-							</div>
-							<div class="prijave col-sm-8 d-flex justify-content-end">
-								<a href="#">
-									<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
-								</a>
-							</div>
-						</div>
-						<br>
-						<!--Volonter-->
-						<div class="row justify-content-center align-items-center" style="background-color: #CAF1F6;">
-							<div class="col-sm-4">
-								Volonter 3
-							</div>
-							<div class="prijave col-sm-8 d-flex justify-content-end">
-								<a href="#">
-									<button type="button" class="btn btn-primary btn-block btn-sm float-right">Pogledaj profil</button>
-								</a>
-							</div>
-						</div>
-						<br>
+						{%endfor%}
 					</div>
 				</div>
 			</div>
 		</div>
 	</body>
-
-
-
 </html>
