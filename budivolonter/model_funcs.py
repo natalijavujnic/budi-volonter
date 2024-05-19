@@ -260,6 +260,12 @@ def getActivityById(idAkt) -> models.Aktivnost:
 def getUsrById(id) -> models.Korisnik:
     return models.Korisnik.objects.filter(idkor=id).first()
 
+
+def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
+    with transaction.atomic():
+        prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idAkt=idakt), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
+        prijava.save()
+
 #Kosta Novokmet
 def getChats(id):
     from django.db.models import Q
@@ -311,4 +317,3 @@ def getInterestsIds(id) -> list:
 #Natalija Vujnic
 def getCategoryById(id) -> models.Oblast:
     return models.Oblast.objects.filter(idobl=id).first()
->>>>>>> f326b46 (Zavrsen edit profila)
