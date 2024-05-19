@@ -99,7 +99,9 @@ def display_profile(request:HttpRequest)-> HttpResponse:
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'interesi': interesi,
-                    'id':request.GET['id']
+                    'id':request.GET['id'],
+                    'curr_id':getCurrentUser(request).idkor,
+                    'age':utils.getAge(korisnik.datumrodj)
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':
