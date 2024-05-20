@@ -324,7 +324,7 @@ def getAllOrganizations()->list:
 #Anja Mihajlov
 #Filtrira organizacije na osnovu imena
 def filterOrganizationsName(name)->list:
-    return list(models.Korisnik.objects.filter(tip='O', ime__istartswith=name))
+    return list(models.Korisnik.objects.filter(tip='O', ime__icontains=name))
 
 #Anja Mihajlov
 #Dohvata sve volontere iz baze
