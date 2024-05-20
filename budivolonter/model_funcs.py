@@ -324,7 +324,7 @@ def getAllOrganizations()->list:
 #Anja Mihajlov
 #Filtrira organizacije na osnovu imena
 def filterOrganizationsName(name)->list:
-    return list(models.Korisnik.objects.filter(tip='O', ime__icontains=name))
+    return list(models.Korisnik.objects.filter(tip='O', ime__istartswith=name))
 
 #Anja Mihajlov
 #Dohvata sve volontere iz baze
@@ -335,7 +335,7 @@ def getAllVolunteers():
 #Filtrira volontere na osnovu imena
 def filterVolunteersName(name,vols):
     from django.db.models import Q
-    return vols.filter(Q(ime__icontains=name) | Q(prezime__icontains=name))
+    return vols.filter(Q(ime__istartswith=name) | Q(prezime__istartswith=name))
 
 #Anja Mihajlov
 #filtrira volontere na osnovu iskustva
