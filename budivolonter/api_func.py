@@ -85,7 +85,6 @@ def get_chats(request:HttpRequest) -> JsonResponse:
     from .utils import checkLogin,getCurrentUser,loadChats
     id = getCurrentUser(request).idkor
     chats = loadChats(model_funcs.getChats(id),id)
-    print(chats)
     return JsonResponse({'chats':chats})
     
 def get_messages(request:HttpRequest) -> JsonResponse:

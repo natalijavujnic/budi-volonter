@@ -9,7 +9,7 @@ function start_websocket(){
 			let msg = data['message'];
 			$('#chat-box').prepend(`<div class="message">`+msg+`</div>`)
 		} else {
-			get_chats();
+			get_chats(); // zameni sa pametnijom logikom ako oces ali ovo radi
 		}
 		console.log(data);
 
@@ -37,13 +37,15 @@ function start_websocket(){
 			let messages = response['messages'];
 			var str = '';
 			for (let message of messages){
-				if(message['sender'] == user_id){
+  				if(message['sender'] != user_id){
 					str = `<div class="message">`+message['text']+`</div>` + str;
 				} else {
 					str = `<div class="message myMessage ml-auto">`+message['text']+`</div>` + str;
 				}
 			}
 			$('#chat-box').html(str)
+			document.getElementById('chat-form').setAttribute('style', 'visibility: visible !important;')
+			get_chats(); // zameni sa pametnijom logikom ako oces ali ovo radi
 		})
 	})
 
@@ -51,6 +53,11 @@ function start_websocket(){
 	form.addEventListener('submit', (e)=> {
 		e.preventDefault();
 		let message = e.target.newmsg.value;
+		console.log(message);
+		console.log(message == '')
+		if (message == ''){
+			return;
+		}
 		$('#chat-box').prepend(`<div class="message myMessage ml-auto">`+message+`</div>`);
 		socket.send(JSON.stringify({
 			'type':'chat',

@@ -280,7 +280,6 @@ def getMessages(chat_id, id_reader):
         if message.idsender_id != id_reader:
             message.status = 'R'
             message.save()
-    print(messages, id_reader)
     return messages
 #Natalija Vujnic
 def editOrganization(korisnik,newIme,newPib,newTel) -> None:
