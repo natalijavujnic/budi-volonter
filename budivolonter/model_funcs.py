@@ -362,3 +362,29 @@ def filterVolunteerCategories(vols,cats):
     vol_ids = list(models.ZanimaGa.objects.filter(idobl__in=cats).values_list('idkor', flat=True))
     return [vol for vol in vols if vol.idkor in vol_ids]
 
+#Natalija Vujnic
+#Vraca listu volontera koji su ucestvovali na konkretnoj aktivnosti, a nisu jos uvek ocenjeni
+def getUnreviewedApplications(idAkt)->list:
+    return models.Prijava.objects.filter(idakt=idAkt).filter(preporukaorg__isnull=True)
+
+#Natalija Vujnic
+#dohvata korisnika na osnovu mejla
+def getUserEmail(id):
+    return models.Korisnik.objects.filter(email=id).first()
+
+#Natalija Vujnic
+#unosi komentar od organizacije za konkretnu prijavu
+def writeCommentOrg(idPrijave,ocena,komentar):
+    with transaction.atomic():
+        rows_updated = models.Prijava.objects.filter(idpri=idPrijave).update(preporukaorg=ocena, komorg=komentar)
+
+#Natalija Vujnic
+#Vraca listu organizacija na cijim arhiviranim aktivnostima je ucestvovao volonter, a da nisu jos uvek ocenjene
+def getUnreviewedOrgs(idVol)->list:
+    return models.Prijava.objects.filter(idvol=idVol,status='A',).filter(preporukavol__isnull=True)
+
+#Natalija Vujnic
+#unosi komentar od volontera za konkretnu prijavu
+def writeCommentVol(idPrijave,ocena,komentar):
+    with transaction.atomic():
+        rows_updated = models.Prijava.objects.filter(idpri=idPrijave).update(preporukavol=ocena, komvol=komentar)
