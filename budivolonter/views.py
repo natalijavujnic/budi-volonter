@@ -84,7 +84,6 @@ def display_profile(request:HttpRequest)-> HttpResponse:
         id=request.GET['id']
         korisnik=model_funcs.getUsrById(id)
         tipKorisnika=korisnik.tip
-        print(tipKorisnika)
         if tipKorisnika=='O':
             context = {
                     'korisnik':korisnik,
@@ -400,4 +399,77 @@ def search_choose(request: HttpRequest)-> HttpResponse:
             }
     return render(request, 'choose_search.html', context)
 
+#Natalija Vujnic
+#ostavljanje recenzija volonterima sa profila organizacije
+def review_volunteers(request: HttpRequest)-> HttpResponse:
+    from . import utils
+    if utils.checkLogin(request):
+        id = getCurrentUser(request).idkor
+        korisnik=model_funcs.getUsrById(id)
+        tipKorisnika=korisnik.tip
+        if tipKorisnika=='O':
+            if request.method=='POST':
+                parameters = request.POST
+                ocena=parameters['recommendation']
+                komentar=parameters['comment']
+                idAkt=parameters['idAkt']
+                prijava=parameters['prijava']
+                model_funcs.writeCommentOrg(prijava,ocena,komentar)
+            elif request.method=='GET':
+                idAkt=request.GET['id']
+            prijave=model_funcs.getUnreviewedApplications(idAkt)
+            vols=[]
+            for prijava in prijave:
+                volonter=model_funcs.getUserEmail(prijava.idvol)
+                vol={
+                    'idkor': volonter.idkor,
+                    'ime':volonter.ime,
+                    'prezime':volonter.prezime,
+                    'idPrijave': prijava.idpri
+                    }
+                vols.append(vol)
+            context = {
+                    'korisnik':korisnik,
+                    'navbar':utils.getNavbar(request),
+                    'akt':model_funcs.getActivityById(idAkt),
+                    'vols':vols
+                    }
+            return render(request, 'org_review_volonteers.html', context)
+    return redirect('login')
 
+  #Natalija Vujnic
+
+#Natalija Vujnic
+#ostavljanje recenzija organizacijama sa profila volontera
+def review_organizations(request: HttpRequest)-> HttpResponse: 
+    from . import utils
+    if utils.checkLogin(request):
+        id = getCurrentUser(request).idkor
+        korisnik=model_funcs.getUsrById(id)
+        tipKorisnika=korisnik.tip
+        if tipKorisnika=='V':
+            if request.method=='POST':
+                parameters = request.POST
+                ocena=parameters['recommendation']
+                komentar=parameters['comment']
+                prijava=parameters['prijava']
+                model_funcs.writeCommentVol(prijava,ocena,komentar)
+            prijave=model_funcs.getUnreviewedOrgs(id)
+            orgs=[]
+            for prijava in prijave:
+                akt=model_funcs.getActivityById(prijava.idakt_id)
+                organizacija=model_funcs.getUserEmail(akt.idorg)
+                org={
+                    'idkor': organizacija.idkor,
+                    'ime':organizacija.ime,
+                    'idPrijave': prijava.idpri,
+                    'aktName':akt.naziv
+                    }
+                orgs.append(org)
+            context = {
+                    'korisnik':korisnik,
+                    'navbar':utils.getNavbar(request),
+                    'orgs':orgs
+                    }
+            return render(request, 'vol_review_org.html', context)
+    return redirect('login')

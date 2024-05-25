@@ -15,11 +15,9 @@
 		<title>Moj profil</title>
 		<script src="{% static 'JS/switchPage.js'%}"></script>
 		<script src="{% static './JS/fetch_activities_vol.js' %}"></script>
-
 	</head>
 	<body onload='fetch_activities(parseInt("{{id}}"))'> <!--NIT: shows me an error in vsc when curly brackets are in a js block :)-->
 		{{navbar|safe}}
-
 		<div class="container-fluid">
 			<div class="row">
 				<!--Informacije o profilu-->
@@ -70,7 +68,7 @@
 						</div>
 						{% if id|stringformat:"s" == curr_id|stringformat:"s" %}
 						<div class="d-flex justify-content-center" style="padding: 15px;">
-							<a href="{% static './vol_review_org.html'%}">
+							<a href="{% url 'review_organizations' %}">
 								<div class="btn ostavi-rec">Ostavi recenzije</div>
 							</a>
 						</div>
@@ -89,5 +87,6 @@
 					</div>
 				</div>
 			</div>
+		</div>
 	</body>
 </html>

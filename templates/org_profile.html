@@ -15,6 +15,9 @@
 		<title>Moj profil</title>
 		<script src="{% static './JS/switchPage.js' %}"></script>
 		<script src="{% static './JS/fetch_activities_org.js' %}"></script>
+		<script>
+			let reviewVolunteersUrl = "{% url 'review_volunteers' %}";
+		</script>
 	</head>
 	<body onload = 'fetch_activities({{curr_id}},{{id}})'>
 		{{navbar|safe}}

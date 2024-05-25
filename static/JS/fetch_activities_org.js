@@ -152,7 +152,7 @@ function fetch_activities(curr_id,id) {
 			if(id == curr_id) str2+=
 				`
 				<div class="oceni-volontere col-sm-4">
-				<a href="./org_review_volonteers.html">
+				<a href="${reviewVolunteersUrl}?id=${act.id}">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Ostavi recenzije volonterima</button>
 				</a>
 				</div>

@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout, activity_form
-from .views import view_applications,register_choice,display_profile,inbox,edit_profile,search_org, search_vol, search_choose
+from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout
+from .views import activity_form, view_applications, register_choice, display_profile, inbox, edit_profile
+from .views import search_org, search_vol, search_choose, review_volunteers, review_organizations
 
 urlpatterns = [
         path('welcome',welcome, name='welcome'),
@@ -20,5 +21,7 @@ urlpatterns = [
         path('edit_profile', edit_profile, name='edit_profile'),
         path('search_organization', search_org, name ='search_organization'),
         path('search_volunteer', search_vol, name ='search_volunteer'),
-        path('search_choose',search_choose, name ='search_choose')
+        path('search_choose',search_choose, name ='search_choose'),
+        path('review_volunteers', review_volunteers, name='review_volunteers'),
+        path('review_organizations', review_organizations, name='review_organizations')
         ]
