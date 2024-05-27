@@ -76,10 +76,9 @@ class Poruka(models.Model):
 
 
 class Prepiska(models.Model):
-    idpre = models.IntegerField(db_column='idPre', primary_key=True)  # Field name made lowercase.
+    idpre = models.AutoField(db_column='idPre', primary_key=True)  # Field name made lowercase.
     idkor1 = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idKor1')  # Field name made lowercase.
     idkor2 = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idKor2', related_name='prepiska_idkor2_set')  # Field name made lowercase.
-
     class Meta:
         managed = False
         db_table = 'prepiska'

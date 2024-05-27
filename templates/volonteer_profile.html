@@ -15,8 +15,10 @@
 		<title>Moj profil</title>
 		<script src="{% static 'JS/switchPage.js'%}"></script>
 		<script src="{% static './JS/fetch_activities_vol.js' %}"></script>
+		<script src="{% static './JS/open_chat.js' %}"></script>
 	</head>
 	<body onload='fetch_activities(parseInt("{{id}}"))'> <!--NIT: shows me an error in vsc when curly brackets are in a js block :)-->
+		<div id="hidden-data" data-my-value="{{id}}"></div>
 		{{navbar|safe}}
 		<div class="container-fluid">
 			<div class="row">
@@ -74,9 +76,7 @@
 						</div>
 						{% else %}
 						<div class="d-flex justify-content-center" style="padding: 15px;">
-							<a href="prepiske.html">
-								<div class="btn ostavi-rec">Posalji poruku</div>
-							</a>
+							<div id='posalji_poruku' class="btn ostavi-rec">Posalji poruku</div>
 						</div>
 						{% endif %}
 					</div>

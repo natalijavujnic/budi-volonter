@@ -93,3 +93,20 @@ def get_messages(request:HttpRequest) -> JsonResponse:
     id_reader = getCurrentUser(request).idkor
     messages = loadMessages(model_funcs.getMessages(id, id_reader))
     return JsonResponse({'messages':messages})
+
+
+def open_chat(request:HttpRequest):
+    from .utils import getCurrentUser
+    id = request.POST.get('id')
+    current_usr = getCurrentUser(request)
+    curr_id = current_usr.idkor
+    from .model_funcs import insertChat
+    print(curr_id,id)
+    insertChat(curr_id,id)
+    return HttpResponse('OK')
+    
+
+
+
+
+    

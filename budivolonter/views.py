@@ -277,6 +277,7 @@ def view_applications(request:HttpRequest):
 
 """Kosta Novokmet, Djordje Sarovic"""
 def inbox(request:HttpRequest):
+    print("returining html")
     from .utils import checkLogin,getCurrentUser, getNavbar
     if checkLogin(request):
         id = getCurrentUser(request).idkor

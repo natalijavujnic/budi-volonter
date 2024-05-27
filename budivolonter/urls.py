@@ -5,6 +5,7 @@ from .views import activity_form, view_applications, register_choice, display_pr
 from .views import search_org, search_vol, search_choose, review_volunteers, review_organizations
 
 urlpatterns = [
+        path('',welcome, name='welcome'),
         path('welcome',welcome, name='welcome'),
         path('open_activity',open_activity, name='open_activity'),
         path('register_organization',reg_org, name='register_organization'),

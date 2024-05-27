@@ -271,8 +271,14 @@ def getChats(id):
     from django.db.models import Q
     return list(models.Prepiska.objects.filter(Q(idkor1=id)|Q(idkor2=id)).all())
 
-
-
+def insertChat(id1,id2):
+    kor1 = getUsrById(id1)
+    kor2 = getUsrById(id2)
+    if models.Prepiska.objects.filter(idkor1=id1,idkor2=id2).exists(): return
+    if models.Prepiska.objects.filter(idkor2=id1,idkor1=id2).exists(): return
+    with transaction.atomic():
+        chat = models.Prepiska(idkor1=kor1,idkor2=kor2)
+        chat.save()
 
 def getMessages(chat_id, id_reader):
     messages = list(models.Poruka.objects.filter(idpre=chat_id).all())
