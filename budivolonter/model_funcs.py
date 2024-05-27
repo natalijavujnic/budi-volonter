@@ -404,3 +404,37 @@ def getUnreviewedOrgs(idVol) -> list:
 def writeCommentVol(idPrijave,ocena,komentar):
     with transaction.atomic():
         rows_updated = models.Prijava.objects.filter(idpri=idPrijave).update(preporukavol=ocena, komvol=komentar)
+#Anja Mihajlov
+#Dohvata oblasti kojima aktivnost pripada
+def getCategorisForActivity(idAkt):
+    return models.Oblast.objects.filter(aktivnosti__idakt=idAkt)
+
+#Anja Mihajlov
+#Dohvata vestine potrebne za neku aktivnost
+def getSkillsForActivity(idAkt):
+    return models.Vestina.objects.filter(idakt=idAkt)
+
+#Anja Mihajlov
+#Dohvata sve otvorene aktivnosti
+def getActiveActivities():
+    from datetime import date
+    today = date.today()
+    all_activities = models.Aktivnost.objects.all()
+    active_activities = all_activities.exclude(datumrok__lt=today)
+    return active_activities
+
+#Anja Mihajlov
+#Filtrirane aktivnosti nakon nekog datuma
+def getActivitiesAfter(acts,datumod):
+    from datetime import datetime
+    datumod = datetime.strptime(datumod, '%Y-%m-%d').date()
+    return acts.exclude(datumod__lte=datumod)
+
+#Anja Mihajlov
+#Filtrirane aktivnosti do nekog datuma
+def getActivitiesBefore(acts,datumdo):
+    from datetime import datetime
+    datumdo = datetime.strptime(datumdo, '%Y-%m-%d').date()
+    return acts.exclude(datumdo__gte=datumdo)
+
+

@@ -481,3 +481,48 @@ def review_organizations(request: HttpRequest)-> HttpResponse:
                     }
             return render(request, 'vol_review_org.html', context)
     return redirect('login')
+#Anja Mihajlov
+#Pretraga aktivnosti
+
+def search_activity(request: HttpRequest)-> HttpResponse:
+
+    acts = model_funcs.getActiveActivities()
+    datumod = request.GET.get('date_from')
+    if datumod:
+        acts = model_funcs.getActivitiesAfter(acts,datumod)
+
+    datumdo = request.GET.get('date_to')
+    if datumdo:
+        acts = model_funcs.getActivitiesBefore(acts,datumdo)
+
+    korisnik = getCurrentUser(request)
+    if korisnik is None:
+        korisnik = 0
+
+    act_list= []
+    for act in acts:
+        act_data = {}
+        oblasti =  model_funcs.getCategorisForActivity(act.idakt)
+        zahtevi = model_funcs.getSkillsForActivity(act.idakt)
+        act_data['idakt'] = act.idakt
+        act_data['naziv'] = act.naziv
+        act_data['opis'] = act.opis
+        act_data['cats'] = oblasti
+        act_data['skills'] = zahtevi
+        act_data['brmesta'] = act.brmesta
+        act_data['datumod'] = act.datumod
+        act_data['datumdo'] = act.datumdo
+        act_data['datumrok'] = act.datumrok
+        act_data['drzava'] = act.lokacija.drzava
+        act_data['mesto'] = act.mesto
+        act_data['organizacija'] = act.idorg.ime
+        act_list.append(act_data)
+    from . import utils
+    context = {
+            'korisnik': korisnik,
+            'navbar':utils.getNavbar(request),
+            'acts': act_list
+            }
+    return render(request, 'search_act.html', context)
+
+
