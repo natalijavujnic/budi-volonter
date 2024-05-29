@@ -278,7 +278,12 @@ def insertChat(id1,id2):
     if models.Prepiska.objects.filter(idkor2=id1,idkor1=id2).exists(): return
     with transaction.atomic():
         chat = models.Prepiska(idkor1=kor1,idkor2=kor2)
+        print("chat saved")
         chat.save()
+        from datetime import datetime, timezone
+        sender = getUsrById(id1)
+        msg = models.Poruka(idpre=chat,status='U',time=datetime.now(timezone.utc),tekst=f'Korisnik {sender.ime} je zapoceo prepisku',redbr=1,idsender=sender)
+        msg.save();
 
 def getMessages(chat_id, id_reader):
     messages = list(models.Poruka.objects.filter(idpre=chat_id).all())

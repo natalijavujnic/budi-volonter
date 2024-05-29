@@ -16,7 +16,7 @@ class Korisnik(models.Model):
 
 
 class Poruka(models.Model):
-    idpor = models.IntegerField(db_column='idPor', primary_key=True)
+    idpor = models.AutoField(db_column='idPor', primary_key=True)
     idpre = models.OneToOneField('Prepiska', models.DO_NOTHING, db_column='idPre')  # Field name made lowercase. The composite primary key (idPre, redBr) found, that is not supported. The first column is selected.
     redbr = models.CharField(db_column='redBr', max_length=45)  # Field name made lowercase.
     tekst = models.CharField(max_length=2000)
@@ -31,7 +31,7 @@ class Poruka(models.Model):
 
 
 class Prepiska(models.Model):
-    idpre = models.IntegerField(db_column='idPre', primary_key=True)  # Field name made lowercase.
+    idpre = models.AutoField(db_column='idPre', primary_key=True)  # Field name made lowercase.
     idkor1 = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idKor1')  # Field name made lowercase.
     idkor2 = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idKor2', related_name='prepiska_idkor2_set')  # Field name made lowercase.
 

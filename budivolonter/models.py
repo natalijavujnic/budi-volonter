@@ -61,7 +61,7 @@ class Oblast(models.Model):
 
 
 class Poruka(models.Model):
-    idpor = models.IntegerField(db_column='idPor', primary_key=True)
+    idpor = models.AutoField(db_column='idPor', primary_key=True)
     idpre = models.OneToOneField('Prepiska', models.DO_NOTHING, db_column='idPre')  # Field name made lowercase. The composite primary key (idPre, redBr) found, that is not supported. The first column is selected.
     redbr = models.CharField(db_column='redBr', max_length=45)  # Field name made lowercase.
     tekst = models.CharField(max_length=2000)

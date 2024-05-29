@@ -14,8 +14,8 @@ function fetch_activities(id) {
 				<div class="col-sm-11">${rev.komorg}</div>
 				</div></div>
 				</div>`
-			var n_str = `
-
+			var n_str = 
+				`
 				<div class="los row">
 				<div class="col-sm-1 d-flex justify-content-center align-items-center"><i class="bi bi-hand-thumbs-down-fill"></i></div>
 				<div class="col-sm-11">${rev.komorg}</div>
@@ -74,6 +74,6 @@ function fetch_activities(id) {
 			else str += '</div></div>'
 
 		}
-		$('#sve_aktivnosti').html(str);
+		$('#sve_aktivnosti').html("<h1>ISTORIJA AKTIVNOSTI</h1>"+str);
 	});
 }
