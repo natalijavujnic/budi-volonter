@@ -10,6 +10,15 @@
     position: relative;
     text-align: center;
 }
+.time{
+    width: 150px;
+    max-width: 70%;
+    margin-bottom: 10px; 
+    padding: 10px; 
+    position: relative;
+    text-align: center;
+	font-size:10px;
+}
 .list-group>li{
     background-color: #EEF6D6;
     border: none;

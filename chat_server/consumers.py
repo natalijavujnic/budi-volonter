@@ -69,12 +69,13 @@ class ChatConsumer(WebsocketConsumer):
             print("RECEIVE MESSAGE, my chat id",self.chat_id, "my id",self.idkor)
             async_to_sync(self.channel_layer.group_send)( #saljemo poruku iz servera u grupu
                                                          str(self.chat_id),
-                                                         {
+                                                            {
                                                              'type':'chat.message',
                                                              'message': message,
                                                              'redbr': redbr,
                                                              'sender': self.idkor,
-                                                             }
+                                                             'time' : poruka.time
+                                                            }
                                                          )
             other_user_id = prep.idkor1_id if self.idkor == prep.idkor2_id else prep.idkor2_id
             print("OTHER USER ID",other_user_id)
@@ -82,10 +83,10 @@ class ChatConsumer(WebsocketConsumer):
             print("SENDING UPDATE TO OTHER USER")
             async_to_sync(self.channel_layer.group_send)( #saljemo poruku iz servera u grupu
                                                          "U"+str(other_user_id),
-                                                         {
+                                                            {
                                                              'type':'update',
                                                              'sender': self.idkor,
-                                                             }
+                                                            }
                                                          )
 
     def chat_message(self, event): #event tipa chat.message dolazi u server iz grupe
@@ -101,13 +102,19 @@ class ChatConsumer(WebsocketConsumer):
             redbr = event['redbr']
 
             print("SEND MESSAGE, my chat id",self.chat_id, "my id",self.idkor)
-            poruka = models.Poruka.objects.get(idpre=self.chat_id, redbr=redbr)
+            poruka = models.Poruka.objects.filter(idpre=self.chat_id, redbr=redbr).first()
             poruka.status = 'R'
             poruka.save()
-
+            import json
+            time = event['time']
+            time =  json.dumps(time.isoformat())
+            time = time.split('.')[0]
+            time.replace('T','@')
+            print(time)
             self.send(text_data=json.dumps({
                 'type':'chat',
-                'message':message
+                'message':message,
+                'time' : time  
                 }))
 
     def update(self, event): #event tipa update dolazi u server iz grupe

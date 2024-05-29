@@ -71,10 +71,12 @@ def loadMessages(messages:list[models.Poruka]) -> list[dict]:
     from . import model_funcs
     message_list = []
     for message in messages:
+        time = message.time.isoformat().split('+')[0]
+        time = time.replace('T','@')
         message_data = {}
         message_data['sender'] = message.idsender_id
         message_data['text'] = message.tekst
-        message_data['timestamp'] = message.time
+        message_data['time'] = time
         message_data['status'] = message.status
         message_data['order'] = message.redbr
         message_list.append(message_data)

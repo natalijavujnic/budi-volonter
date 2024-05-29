@@ -5,9 +5,17 @@ function start_websocket(){
 	socket.onmessage = function(e){
 		let data = JSON.parse(e.data);
 		let type = data['type'];
+		let time = data['time'];
+		console.log(time);
 		if (type == 'chat'){
 			let msg = data['message'];
-			$('#chat-box').prepend(`<div class="message">`+msg+`</div>`)
+			$('#chat-box').prepend(
+				`
+				<div>
+				<div class='time'>`+time+`</div>
+				<div class="message">`+msg+`</div>
+				</div>
+				`)
 		} else {
 			get_chats(); // zameni sa pametnijom logikom ako oces ali ovo radi
 		}
@@ -38,9 +46,20 @@ function start_websocket(){
 			var str = '';
 			for (let message of messages){
   				if(message['sender'] != user_id){
-					str = `<div class="message">`+message['text']+`</div>` + str;
+					str = `
+						<div>
+						<div class='time'>`+message['time'] +`</div>
+						<div class="message">`+message['text']+`</div>
+						</div>
+
+						` + str;
 				} else {
-					str = `<div class="message myMessage ml-auto">`+message['text']+`</div>` + str;
+					str = `
+						<div>
+						<div class='time ml-auto'>`+message['time'] +`</div>
+						<div class="message myMessage ml-auto">`+message['text']+`</div>
+						</div>
+						`+ str;
 				}
 			}
 			$('#chat-box').html(str)
@@ -58,7 +77,14 @@ function start_websocket(){
 		if (message == ''){
 			return;
 		}
-		$('#chat-box').prepend(`<div class="message myMessage ml-auto">`+message+`</div>`);
+		var currentdate = new Date(); 
+		let time = currentdate.toISOString().split('.')[0];
+		time = time.replace('T','@');
+		$('#chat-box').prepend(`
+			<div>
+			<div class="time ml-auto">`+time+`</div>
+			<div class="message myMessage ml-auto">`+message+`</div>
+			</div>`);
 		socket.send(JSON.stringify({
 			'type':'chat',
 			'message':message

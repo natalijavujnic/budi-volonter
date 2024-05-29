@@ -260,7 +260,7 @@ def getActivityById(idAkt) -> models.Aktivnost:
 def getUsrById(id) -> models.Korisnik:
     return models.Korisnik.objects.filter(idkor=id).first()
 
-
+ 
 def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
     with transaction.atomic():
         prijava = models.Prijava(idvol=idvol, idakt= getActivityById(idAkt=idakt), pismo=pismo, rezime=rezimeFile.file.read() if rezimeFile is not None else None, status='O')
