@@ -25,7 +25,7 @@ function start_websocket(){
 	}
 	var currentChat = null;
 	let list = document.getElementById('chats');
-	list.addEventListener('click', (e)=> {
+	list.addEventListener('click', (e) => {
 		let chatid = parseInt(e.target.getAttribute('name'));
 		let chatUserName = e.target.getAttribute('userChatName');
 		$('#chatUserName').html(chatUserName);
@@ -67,7 +67,7 @@ function start_websocket(){
 			document.getElementById('chat-form').setAttribute('style', 'visibility: visible !important;')
 			get_chats(); // zameni sa pametnijom logikom ako oces ali ovo radi
 		})
-	setTimeout(refresh(),1000);
+	setTimeout(refresh,1000);
 	})
 
 	let form = document.getElementById('chat-form');
