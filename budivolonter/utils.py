@@ -129,3 +129,13 @@ def getAge(dateOfBirth) -> int:
     if(today.month,today.day)<(dateOfBirth.month,dateOfBirth.day):
         age-=1
     return age
+
+def unread_msg(id) -> int:
+    from . import model_funcs
+    chats = model_funcs.getChats(id);
+    from .utils import loadChats
+    chat_dict = loadChats(chats,id)
+    sum = 0
+    for chat in chat_dict:
+       sum += chat['messages_unread']
+    return sum

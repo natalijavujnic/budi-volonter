@@ -267,7 +267,7 @@ def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
         prijava.save()
 
 #Kosta Novokmet
-def getChats(id):
+def getChats(id) ->list[models.Prepiska]:
     from django.db.models import Q
     return list(models.Prepiska.objects.filter(Q(idkor1=id)|Q(idkor2=id)).all())
 
@@ -390,7 +390,7 @@ def writeCommentOrg(idPrijave,ocena,komentar):
 
 #Natalija Vujnic
 #Vraca listu organizacija na cijim arhiviranim aktivnostima je ucestvovao volonter, a da nisu jos uvek ocenjene
-def getUnreviewedOrgs(idVol)->list:
+def getUnreviewedOrgs(idVol) -> list:
     return models.Prijava.objects.filter(idvol=idVol,status='A',).filter(preporukavol__isnull=True)
 
 #Natalija Vujnic
@@ -398,3 +398,5 @@ def getUnreviewedOrgs(idVol)->list:
 def writeCommentVol(idPrijave,ocena,komentar):
     with transaction.atomic():
         rows_updated = models.Prijava.objects.filter(idpri=idPrijave).update(preporukavol=ocena, komvol=komentar)
+
+

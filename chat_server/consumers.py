@@ -118,7 +118,10 @@ class ChatConsumer(WebsocketConsumer):
                 }))
 
     def update(self, event): #event tipa update dolazi u server iz grupe
+        from budivolonter import utils 
+        unread_msgs = utils.unread_msg(self.idkor)
         print("UPDATE")
         self.send(text_data=json.dumps({
-            'type':'update'
+            'type':'update',
+            'unread_msgs': unread_msgs
             }))

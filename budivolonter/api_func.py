@@ -108,5 +108,8 @@ def open_chat(request:HttpRequest):
 
 
 
+def get_unread(request:HttpRequest):
+    from .utils import unread_msg,getCurrentUser
+    id = getCurrentUser(request).idkor
+    return JsonResponse({'count':unread_msg(id)})
 
-    

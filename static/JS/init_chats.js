@@ -17,6 +17,7 @@ function start_websocket(){
 				</div>
 				`)
 		} else {
+			$('#unread').text(data['unread_msgs'])
 			get_chats(); // zameni sa pametnijom logikom ako oces ali ovo radi
 		}
 		console.log(data);
@@ -66,6 +67,7 @@ function start_websocket(){
 			document.getElementById('chat-form').setAttribute('style', 'visibility: visible !important;')
 			get_chats(); // zameni sa pametnijom logikom ako oces ali ovo radi
 		})
+	setTimeout(refresh(),1000);
 	})
 
 	let form = document.getElementById('chat-form');
