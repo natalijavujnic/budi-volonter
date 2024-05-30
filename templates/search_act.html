@@ -32,32 +32,29 @@
 							<div>
 								<label for="country">Gde:</label>
 								<select id="country" name="country">
-									<option value="" disabled selected>Odaberi regiju</option>
-									<option value="srbija">Srbija</option>
-									<option value="evropa">Evropa</option>
-									<option value="s_amerika">Severna Amerika</option>
-									<option value="j_amerika">Južna Amerika</option>
-									<option value="afrika">Afrika</option>
-									<option value="azija">Azija</option>
-									<option value="au_oke">Australija i Okeanija</option>
+									<option value="" disabled selected>Odaberi kontinent</option>
+									{%for cont in conts%}
+									<option value="{{cont}}">{{cont}}</option>
+			
+									{% endfor %}
 								</select>
 							</div>
-							<div style="margin-top: 4px;">
-								<p style="margin-bottom: 0px; padding-bottom: 0px;">Potrebne veštine:</p>
-								<label><input type="checkbox" name="skills" value="vozacka_dozvola"> Vozačka dozvola</label><br>
-								<label><input type="checkbox" name="skills" value="engleski_sertifikat"> Engleski jezik (sertifikat)</label><br>
-								<label><input type="checkbox" name="skills" value="prva_pomoc"> Prva pomoć</label><br>
-								<label><input type="checkbox" name="skills" value="m_office"> Microsoft Office</label><br>
-							</div>
+							<!--div style="margin-top: 4px;">
+								<p style="margin-bottom: 0px; padding-bottom: 0px;">Posedujem veštine:</p>
+								{% for skill in skills %}
+								<label for="skill{{ skill.idves }}">
+									<input type="checkbox" id="skill{{ skill.idves }}" name="skill" value="{{ skill.idves }}" checked>
+									{{ skill.opis }}
+								</label><br>
+								{% endfor %}
+							</div-->
 							<div>
 								<label for="volunteering_area" style="margin-bottom: 3px;">Oblast volontiranja:</label>
-								<select id="volunteering_area" name="volunteering_area">
+								<select id="volunteering_area" name="area">
 									<option value="" disabled selected>Odaberi oblast volontiranja</option>
-									<option value="rad_sa_decom">Rad sa decom</option>
-									<option value="rad_sa_zivotinjama">Rad sa životinjama</option>
-									<option value="rad_sa_o_inv">Rad sa osobama sa invaliditetom</option>
-									<option value="manualni_rad">Manuelni rad</option>
-									<option value="akitivizam">Aktivizam</option>
+									{% for cat in cats %}
+									<option value="{{cat.idobl}}">{{cat.oblast}}</option>
+									{% endfor %}
 								</select>
 							</div>
 							<button type="submit" style="margin-top: 10px;">Primeni filtere</button>

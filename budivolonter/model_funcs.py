@@ -415,12 +415,13 @@ def getSkillsForActivity(idAkt):
     return models.Vestina.objects.filter(idakt=idAkt)
 
 #Anja Mihajlov
-#Dohvata sve otvorene aktivnosti
+#Dohvata sve otvorene aktivnosti za koje ima sobodnih mesta
 def getActiveActivities():
     from datetime import date
     today = date.today()
     all_activities = models.Aktivnost.objects.all()
     active_activities = all_activities.exclude(datumrok__lt=today)
+    active_activities = active_activities.exclude(brmesta__lt=1)
     return active_activities
 
 #Anja Mihajlov
@@ -437,4 +438,48 @@ def getActivitiesBefore(acts,datumdo):
     datumdo = datetime.strptime(datumdo, '%Y-%m-%d').date()
     return acts.exclude(datumdo__gte=datumdo)
 
+#Anja Mihajlov
+#Dohvata sve postojece potrebne vestine
+def getAllSkills():
+    return list(models.Vestina.objects.all())
 
+#Anja Mihajlov
+#Dohvata sva postejaca interesovanja
+def getAllCats():
+    return list(models.Oblast.objects.all())
+
+'''
+#Anja Mihajlov
+#Filtrira aktivnosti na osnovu skillova
+def filterActBySkills(acts, skills):
+    from django.db.models import Q
+    skills_set = set(map(int, skills))
+    matching_activity_ids = []
+    for act in acts:
+        activity_skills = models.Vestina.objects.filter(idakt=act.idakt).values_list('idves', flat=True)
+        activity_skills_set = set(activity_skills)
+        if skills_set.issuperset(activity_skills_set):
+            matching_activity_ids.append(act.idakt)
+    filtered_activities = acts.filter(Q(idakt__in=matching_activity_ids))
+    return filtered_activities
+'''
+
+#Anja Mihajlov
+#Filtrira aktivnosti na osnovu oblasti
+def filterActsByCat(acts,area):
+    matching_activity_ids = models.Pripada.objects.filter(idobl=area).values_list('idakt', flat=True)
+    filtered_activities = acts.filter(idakt__in=matching_activity_ids)
+    return filtered_activities
+
+#Anja Mihajlov
+#Filtrira aktivnosti na osnovu oblasti
+def getActivitiesContinent(acts,kontinent):
+    lokacije = models.Lokacija.objects.filter(kontinent=kontinent).values_list('idlok', flat=True)
+    print(lokacije)
+    filtered_activities = acts.filter(lokacija__in=lokacije)
+    return filtered_activities
+
+
+
+
+    

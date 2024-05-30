@@ -481,12 +481,17 @@ def review_organizations(request: HttpRequest)-> HttpResponse:
                     }
             return render(request, 'vol_review_org.html', context)
     return redirect('login')
+
+
 #Anja Mihajlov
 #Pretraga aktivnosti
-
 def search_activity(request: HttpRequest)-> HttpResponse:
 
     acts = model_funcs.getActiveActivities()
+    '''
+    vestine = request.GET.getlist('skill')
+    acts = model_funcs.filterActBySkills(acts, vestine)
+    '''
     datumod = request.GET.get('date_from')
     if datumod:
         acts = model_funcs.getActivitiesAfter(acts,datumod)
@@ -495,6 +500,12 @@ def search_activity(request: HttpRequest)-> HttpResponse:
     if datumdo:
         acts = model_funcs.getActivitiesBefore(acts,datumdo)
 
+    kontinent = request.GET.get('country')
+    if kontinent:
+        acts= model_funcs.getActivitiesContinent(acts,kontinent)
+    area = request.GET.get('area')
+    if area:
+        acts = model_funcs.filterActsByCat(acts,area)
     korisnik = getCurrentUser(request)
     if korisnik is None:
         korisnik = 0
@@ -521,7 +532,10 @@ def search_activity(request: HttpRequest)-> HttpResponse:
     context = {
             'korisnik': korisnik,
             'navbar':utils.getNavbar(request),
-            'acts': act_list
+            'acts': act_list,
+            #'skills': model_funcs.getAllSkills(),
+            'cats': model_funcs.getAllCats(),
+            'conts':['Afrika','Azija', 'Evropa','Severna Amerika', 'Okeanija','Južna Amerika'],
             }
     return render(request, 'search_act.html', context)
 
