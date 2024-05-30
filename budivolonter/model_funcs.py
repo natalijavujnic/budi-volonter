@@ -52,7 +52,7 @@ def getCategoryObject(name) -> models.Oblast:
 
 
 #Natalija Vujnic
-#funkcija vraca interesovanja korisnika
+#vraca interesovanja konkretnog korisnika
 def getInterests(id) -> list:
     return models.ZanimaGa.objects.filter(idkor_id=id).values_list('idobl__oblast', flat=True)
     
@@ -292,7 +292,9 @@ def getMessages(chat_id, id_reader):
             message.status = 'R'
             message.save()
     return messages
+
 #Natalija Vujnic
+#azurira profil korisnika tipa organizacija
 def editOrganization(korisnik,newIme,newPib,newTel) -> None:
     with transaction.atomic():
         korisnik.ime=newIme
@@ -301,6 +303,7 @@ def editOrganization(korisnik,newIme,newPib,newTel) -> None:
         korisnik.save()
 
 #Natalija Vujnic
+#azurira profil korisnika tipa volonter
 def editVolunteer(korisnik,newIme,newPrezime,newDatum,newCats) -> None:
     with transaction.atomic():
         korisnik.ime=newIme
@@ -315,14 +318,17 @@ def editVolunteer(korisnik,newIme,newPrezime,newDatum,newCats) -> None:
                 unos.save()
 
 #Natalija Vujnic
+#vraca listu svih interesovanja
 def getAllInteresIds() -> list:
     return models.Oblast.objects.all()
 
 #Natalija Vujnic
+#vraca listu interesovanja za konkretnog korisnika
 def getInterestsIds(id) -> list:
     return models.ZanimaGa.objects.filter(idkor_id=id).values_list('idobl', flat=True)
 
 #Natalija Vujnic
+#vraca kategoriju na osnovu identifikatora
 def getCategoryById(id) -> models.Oblast:
     return models.Oblast.objects.filter(idobl=id).first()
 
@@ -373,7 +379,7 @@ def filterVolunteerCategories(vols,cats):
     return [vol for vol in vols if vol.idkor in vol_ids]
 
 #Natalija Vujnic
-#Vraca listu volontera koji su ucestvovali na konkretnoj aktivnosti, a nisu jos uvek ocenjeni
+#vraca listu volontera koji su ucestvovali na konkretnoj aktivnosti, a nisu jos uvek ocenjeni
 def getUnreviewedApplications(idAkt)->list:
     return models.Prijava.objects.filter(idakt=idAkt).filter(preporukaorg__isnull=True)
 
@@ -398,5 +404,3 @@ def getUnreviewedOrgs(idVol) -> list:
 def writeCommentVol(idPrijave,ocena,komentar):
     with transaction.atomic():
         rows_updated = models.Prijava.objects.filter(idpri=idPrijave).update(preporukavol=ocena, komvol=komentar)
-
-

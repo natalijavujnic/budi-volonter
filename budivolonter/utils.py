@@ -120,6 +120,7 @@ def getNavbar(request) -> str:
             return file.read()
 
 #Natalija Vujnic
+#vraca broj godina na osnovu datuma rodjenja
 def getAge(dateOfBirth) -> int:
     from datetime import datetime
     if isinstance(dateOfBirth, str):

@@ -57,9 +57,11 @@
 						</table>
 					</div>
 					{% if id|stringformat:"s" != curr_id|stringformat:"s" %}
-					<div class="d-flex justify-content-center" style="padding: 15px;">
-						<div id="posalji_poruku" class="btn" title="Uredi profil">Pošalji poruku</div>
-					</div>
+						{% if posalji_poruku%}
+						<div class="d-flex justify-content-center" style="padding: 15px;">
+							<div id="posalji_poruku" class="btn" title="Uredi profil">Pošalji poruku</div>
+						</div>
+						{% endif %}
 					{% endif %}
 				</div>
 				<!--Aktivnosti-->

@@ -76,7 +76,8 @@ def display_my_profile(request):
     else:
         return redirect('login')
 
-
+#Natalija Vujnic
+#prikaz profila korisnika na osnovu id prosledjenog u query stringu
 def display_profile(request:HttpRequest)-> HttpResponse:
     from .utils import checkLogin
     if checkLogin(request):
@@ -84,23 +85,30 @@ def display_profile(request:HttpRequest)-> HttpResponse:
         id=request.GET['id']
         korisnik=model_funcs.getUsrById(id)
         tipKorisnika=korisnik.tip
+        tipProfila=getCurrentUser(request).tip
         if tipKorisnika=='O':
+            posalji=False
+            if tipProfila=='V': posalji=True
             context = {
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'id':request.GET['id'], 
-                    'curr_id':getCurrentUser(request).idkor
+                    'curr_id':getCurrentUser(request).idkor,
+                    'posalji_poruku':posalji
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
             interesi=model_funcs.getInterests(korisnik.idkor)
+            posalji=False
+            if tipProfila=='O': posalji=True
             context = {
                     'korisnik':korisnik,
                     'navbar':utils.getNavbar(request),
                     'interesi': interesi,
                     'id':request.GET['id'],
                     'curr_id':getCurrentUser(request).idkor,
-                    'age':utils.getAge(korisnik.datumrodj)
+                    'age':utils.getAge(korisnik.datumrodj),
+                    'posalji_poruku':posalji
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika=='A':
@@ -286,6 +294,7 @@ def inbox(request:HttpRequest):
     
 
 #Natalija Vujnic
+#funkcija za azuriranje korisnickog profila
 def edit_profile(request:HttpRequest)-> HttpResponse:
     ulogovan=request.user.is_authenticated
     if ulogovan:
@@ -437,8 +446,6 @@ def review_volunteers(request: HttpRequest)-> HttpResponse:
                     }
             return render(request, 'org_review_volonteers.html', context)
     return redirect('login')
-
-  #Natalija Vujnic
 
 #Natalija Vujnic
 #ostavljanje recenzija organizacijama sa profila volontera
