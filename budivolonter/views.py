@@ -546,7 +546,7 @@ def search_activity(request: HttpRequest)-> HttpResponse:
 
 #Anja Mihajlov
 #Admin start, stranica gde brise korisnike i aktivnosti
-
+#email je admin@bv.rs, sifra je Admin123
 def admin_start(request: HttpRequest)-> HttpResponse:
     from . import utils
     if utils.checkLogin(request):
@@ -568,3 +568,4 @@ def admin_start(request: HttpRequest)-> HttpResponse:
                 }
         return render(request, 'admin_start.html', context)
     return redirect('login')
+

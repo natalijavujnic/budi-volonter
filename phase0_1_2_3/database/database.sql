@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `budivolonter` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `budivolonter`;
--- MySQL dump 10.13  Distrib 8.0.36, for macos14 (arm64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: budivolonter
+-- Host: localhost    Database: budivolonter
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -52,6 +50,67 @@ LOCK TABLES `aktivnost` WRITE;
 /*!40000 ALTER TABLE `aktivnost` DISABLE KEYS */;
 INSERT INTO `aktivnost` VALUES (1,1,'Volontiranje u bolnici',10,'2024-06-01','2024-06-30','2024-05-31','Beograd',1,'Pomoc osoblju bolnice u svakodnevnim aktivnostima.'),(3,2,'Radionice za decu',20,'2024-07-01','2024-07-15','2024-06-25','Novi Sad',2,'Održavanje kreativnih radionica za decu.'),(1,3,'Sportski kamp',15,'2024-08-01','2024-08-10','2024-07-20','Subotica',3,'Organizacija sportskih aktivnosti za decu i mlade.'),(2,4,'Ekološka akcija',30,'2024-09-01','2024-09-05','2024-08-25','Niš',4,'Čišćenje i uređenje parkova.');
 /*!40000 ALTER TABLE `aktivnost` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_admin_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int DEFAULT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_korisnik_idKor` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_korisnik_idKor` FOREIGN KEY (`user_id`) REFERENCES `korisnik` (`idKor`),
+  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_content_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'','admin','logentry'),(2,'','contenttypes','contenttype'),(3,'','sessions','session'),(4,'','budivolonter','aktivnost'),(5,'','budivolonter','korisnik'),(6,'','budivolonter','lokacija'),(7,'','budivolonter','oblast'),(8,'','budivolonter','prepiska'),(9,'','budivolonter','prijava'),(10,'','budivolonter','pripada'),(11,'','budivolonter','vestina'),(12,'','budivolonter','zanimaga'),(13,'','budivolonter','poruka');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -129,7 +188,7 @@ CREATE TABLE `korisnik` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `PIB_UNIQUE` (`pib`),
   UNIQUE KEY `telefon_UNIQUE` (`telefon`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +197,7 @@ CREATE TABLE `korisnik` (
 
 LOCK TABLES `korisnik` WRITE;
 /*!40000 ALTER TABLE `korisnik` DISABLE KEYS */;
-INSERT INTO `korisnik` VALUES (1,'marko@gmail.com','pbkdf2_sha256$720000$EOmu3yd8YbISsrZrmFRiwy$Id0ELO3cFw2MITGJrNHFDvWGfOVr92KevyLoB7ijGz0=','Marko','Marković',123456789,'0612345678','O','1990-01-01','2024-05-31 16:10:56',1),(2,'ana@gmail.com','pbkdf2_sha256$720000$T0KLSKOigjMdj83KdEAwiG$CR4E0usgWCuQyLJZm30YJ0Hj12gN0yUqUgGBTvibXZc=','Ana','Anić',987654321,'0609876543','V','1992-05-15','2024-05-31 16:03:35',1),(3,'jovan@gmail.com','pbkdf2_sha256$720000$MnH2etfjU8B6V6E4TFRKoM$kamxUT/PepdKccys1kh+ZJtVx0Zc0bhbD0/MAkwlWJs=','Jovan','Jovanović',456123789,'0651234567','O','1985-08-20','2024-05-31 16:03:35',1),(4,'milica@gmail.com','pbkdf2_sha256$720000$YJZliUdQfB7404h7IGMX3d$QaYT77aR9b20VDVDyoyITkacNsrpmt7StI+Lr3RFNqk=','Milica','Milić',321654987,'0626543210','V','1995-12-30','2024-05-31 16:03:35',1);
+INSERT INTO `korisnik` VALUES (1,'marko@gmail.com','pbkdf2_sha256$720000$EOmu3yd8YbISsrZrmFRiwy$Id0ELO3cFw2MITGJrNHFDvWGfOVr92KevyLoB7ijGz0=','Marko','Marković',123456789,'0612345678','O','1990-01-01','2024-05-31 16:10:56',1),(2,'ana@gmail.com','pbkdf2_sha256$720000$T0KLSKOigjMdj83KdEAwiG$CR4E0usgWCuQyLJZm30YJ0Hj12gN0yUqUgGBTvibXZc=','Ana','Anić',987654321,'0609876543','V','1992-05-15','2024-05-31 16:03:35',1),(3,'jovan@gmail.com','pbkdf2_sha256$720000$MnH2etfjU8B6V6E4TFRKoM$kamxUT/PepdKccys1kh+ZJtVx0Zc0bhbD0/MAkwlWJs=','Jovan','Jovanović',456123789,'0651234567','O','1985-08-20','2024-05-31 16:03:35',1),(4,'milica@gmail.com','pbkdf2_sha256$720000$YJZliUdQfB7404h7IGMX3d$QaYT77aR9b20VDVDyoyITkacNsrpmt7StI+Lr3RFNqk=','Milica','Milić',321654987,'0626543210','V','1995-12-30','2024-05-31 16:03:35',1),(21,'admin@bv.rs','pbkdf2_sha256$720000$fB91HR8EMIQCYYMDbfJEbR$J5KoRCekeUntUSPXc0zTE7fE+dWohcmOXI9sWxm3Dho=','Admin',NULL,NULL,NULL,'A',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `korisnik` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,4 +437,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-31 22:42:15
+-- Dump completed on 2024-05-31 23:49:34
