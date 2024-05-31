@@ -1,6 +1,8 @@
 from django.http import HttpRequest
+
 from budivolonter import models
 from budivolonter.models import Aktivnost, Korisnik
+
 
 #Djordje Sarovic
 def getCurrentUser(request:HttpRequest) -> Korisnik|None:
@@ -16,7 +18,7 @@ def checkLogin(request:HttpRequest) -> bool:
 #Kosta Novokmet
 #vraca na kom kontinentu je neka drzava 
 def getContinent(country) -> dict:
-    from .locations import countries,continents
+    from .locations import continents, countries
     for contient,countries in continents.items():
         if country in countries: return contient
     return None
@@ -33,7 +35,9 @@ def getCountries() -> tuple:
 #Kosta Novokmet
 #proverava da li je datum prosao 
 #ako je datum prosao, vraca true 
-from datetime import date 
+from datetime import date
+
+
 def datePassed(date:date) -> bool:
     curr_date = date.today()
     if (curr_date > date): 
@@ -48,21 +52,21 @@ def loadActivities(acts:list[Aktivnost]) -> list[dict]:
     from . import model_funcs
     act_list= []
     for act in acts:
-        act_data = {}
-        oblasti = list(act.oblasti.all().values_list(flat=True))
-        zahtevi = model_funcs.getActivityReqs(act.idakt)
-        act_data['id'] = act.idakt
-        act_data['naziv'] = act.naziv
-        act_data['opis'] = act.opis
-        act_data['oblasti'] = oblasti
-        act_data['zahtevi'] = zahtevi
-        act_data['brmesta'] = act.brmesta
+        act_data               = {}
+        oblasti                = list(act.oblasti.all().values_list(flat=True))
+        zahtevi                = model_funcs.getActivityReqs(act.idakt)
+        act_data['id']         = act.idakt
+        act_data['naziv']      = act.naziv
+        act_data['opis']       = act.opis
+        act_data['oblasti']    = oblasti
+        act_data['zahtevi']    = zahtevi
+        act_data['brmesta']    = act.brmesta
         act_data['datumStart'] = act.datumod
-        act_data['datumEnd'] = act.datumdo
-        act_data['datumRok'] = act.datumrok
-        act_data['drzava'] = act.lokacija.drzava
-        act_data['kontinent'] = act.lokacija.kontinent
-        act_data['org'] = act.idorg.ime
+        act_data['datumEnd']   = act.datumdo
+        act_data['datumRok']   = act.datumrok
+        act_data['drzava']     = act.lokacija.drzava
+        act_data['kontinent']  = act.lokacija.kontinent
+        act_data['org']        = act.idorg.ime
         act_list.append(act_data)
     return act_list
 
@@ -71,14 +75,14 @@ def loadMessages(messages:list[models.Poruka]) -> list[dict]:
     from . import model_funcs
     message_list = []
     for message in messages:
-        time = message.time.isoformat().split('+')[0]
-        time = time.replace('T','@')
-        message_data = {}
+        time                   = message.time.isoformat().split('+')[0]
+        time                   = time.replace('T','@')
+        message_data           = {}
         message_data['sender'] = message.idsender_id
-        message_data['text'] = message.tekst
-        message_data['time'] = time
+        message_data['text']   = message.tekst
+        message_data['time']   = time
         message_data['status'] = message.status
-        message_data['order'] = message.redbr
+        message_data['order']  = message.redbr
         message_list.append(message_data)
     return message_list
 
@@ -125,10 +129,10 @@ def getAge(dateOfBirth) -> int:
     from datetime import datetime
     if isinstance(dateOfBirth, str):
         dateOfBirth = datetime.strptime(dateOfBirth, '%Y-%m-%d').date()
-    today=date.today()
-    age=today.year-dateOfBirth.year
+    today = date.today()
+    age   = today.year-dateOfBirth.year
     if(today.month,today.day)<(dateOfBirth.month,dateOfBirth.day):
-        age-=1
+        age -= 1
     return age
 
 def unread_msg(id) -> int:

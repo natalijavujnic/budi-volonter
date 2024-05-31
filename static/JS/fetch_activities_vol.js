@@ -1,28 +1,26 @@
 function fetch_activities(id) {
-	var acts;
-	$.get('api/get_activities_vol?id='+id, function(response) {
-		console.log(response);
-		acts = response['activities'];
-		let str = '';
-		let index = 0;
-		for (let act of acts) {
-			if (act['review']['status'] != 'A') continue; //only show activities that the volunteer has been accepted to
-			let rev = act['review'];
-			var p_str = 
-				`<div class="dobar row">
+  var acts;
+  $.get("api/get_activities_vol?id=" + id, function (response) {
+    console.log(response);
+    acts = response["activities"];
+    let str = "";
+    let index = 0;
+    for (let act of acts) {
+      if (act["review"]["status"] != "A") continue; //only show activities that the volunteer has been accepted to
+      let rev = act["review"];
+      var p_str = `<div class="dobar row">
 				<div class="col-sm-1 d-flex justify-content-center align-items-center"><i class="bi bi-hand-thumbs-up-fill"></i></div>
 				<div class="col-sm-11">${rev.komorg}</div>
 				</div></div>
-				</div>`
-			var n_str = 
-				`
+				</div>`;
+      var n_str = `
 				<div class="los row">
 				<div class="col-sm-1 d-flex justify-content-center align-items-center"><i class="bi bi-hand-thumbs-down-fill"></i></div>
 				<div class="col-sm-11">${rev.komorg}</div>
 				</div></div>
-				</div>`
-			index++;
-			str += `
+				</div>`;
+      index++;
+      str += `
 				<div class="aktivnost">
 				<div class="row align-items-center">
 				<div class="col-sm-12">
@@ -68,12 +66,11 @@ function fetch_activities(id) {
 				</div>
 				<div class="col-sm-4">
 				</div>
-				<div class="recenzije_sekcija container-fluid" style="margin-top: 15px;">`
-			if(rev.preporukaorg == 'P') str += p_str;
-			else if(rev.preporukaorg == 'N') str += n_str;
-			else str += '</div></div>'
-
-		}
-		$('#sve_aktivnosti').html("<h1>ISTORIJA AKTIVNOSTI</h1>"+str);
-	});
+				<div class="recenzije_sekcija container-fluid" style="margin-top: 15px;">`;
+      if (rev.preporukaorg == "P") str += p_str;
+      else if (rev.preporukaorg == "N") str += n_str;
+      else str += "</div></div>";
+    }
+    $("#sve_aktivnosti").html("<h1>ISTORIJA AKTIVNOSTI</h1>" + str);
+  });
 }

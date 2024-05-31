@@ -1,116 +1,118 @@
-*{
-    padding: 0px;
-    margin:0px;
+* {
+  padding: 0px;
+  margin: 0px;
 }
-#inbox{
-    font-size: 20px;
+#inbox {
+  font-size: 20px;
 }
-#OtvoriAkt{
-    padding:8px 60px;
-    border-color: #5C7C2F;
+#OtvoriAkt {
+  padding: 8px 60px;
+  border-color: #5c7c2f;
 }
-.row{
-    padding: 0px;
+.row {
+  padding: 0px;
 }
-#user-info{
-
+#user-info {
 }
-#EDIT{
-    align-self: right;
-    padding: 8px 16px;
-    background-color: #00A2C7;
-    color: #F8FAF8;
-    font-size: 10px;
-}
-
-#EDIT:hover{
-    background-color: #0797B9;
-    border-color: #107D98;
+#EDIT {
+  align-self: right;
+  padding: 8px 16px;
+  background-color: #00a2c7;
+  color: #f8faf8;
+  font-size: 10px;
 }
 
-#org-info table tr td{
-    color: #107D98;
+#EDIT:hover {
+  background-color: #0797b9;
+  border-color: #107d98;
 }
 
-.tabovi-otvorene-arhivirane{
-    width: 50%;
-    text-align: center;
-    background-color: #CAF1F6;
+#org-info table tr td {
+  color: #107d98;
 }
 
-.tabovi-otvorene-arhivirane a{
-    color: #107D98;
-    font-size: 20px;;
+.tabovi-otvorene-arhivirane {
+  width: 50%;
+  text-align: center;
+  background-color: #caf1f6;
 }
 
-.aktivnost{
-    background-color: #F2FAFB;
-    border-color: #9DDDE7;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 10px 20px;
-    padding-top: 20px;
+.tabovi-otvorene-arhivirane a {
+  color: #107d98;
+  font-size: 20px;
 }
 
-.prijave button{
-    align-self: right;
-    width: 150px;
-    height: 40px;
-    background-color: #00A2C7;
-    border: none;
-    color: #F8FAF8;
+.aktivnost {
+  background-color: #f2fafb;
+  border-color: #9ddde7;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px 20px;
+  padding-top: 20px;
 }
 
-.prijave button:hover,.plus-minus button:hover,.oceni-volontere button:hover{
-    background-color: #0797B9;
-    border-color: #107D98;
+.prijave button {
+  align-self: right;
+  width: 150px;
+  height: 40px;
+  background-color: #00a2c7;
+  border: none;
+  color: #f8faf8;
 }
 
-.plus-minus button{
-    background-color: #00A2C7;
-    border: none;
-    color: #F8FAF8;
-    padding-bottom: 0px;
-    padding-top: 0px;
+.prijave button:hover,
+.plus-minus button:hover,
+.oceni-volontere button:hover {
+  background-color: #0797b9;
+  border-color: #107d98;
 }
 
-.recenzije{
-    background-color: #9DDDE7;
-    border: none;
-    color: #0D3C48;
+.plus-minus button {
+  background-color: #00a2c7;
+  border: none;
+  color: #f8faf8;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
-.recenzije:hover{
-    background-color: #0797B9;
-    border-color: #107D98;
+.recenzije {
+  background-color: #9ddde7;
+  border: none;
+  color: #0d3c48;
 }
 
-.oceni-volontere button{
-    align-self: right;
-    width: 230px;
-    height: 40px;
-    background-color: #00A2C7;
-    border: none;
-    color: #F8FAF8;
+.recenzije:hover {
+  background-color: #0797b9;
+  border-color: #107d98;
 }
 
-.recenzije_sekcija{
-    max-height: 200px;
-    overflow-y: auto;
+.oceni-volontere button {
+  align-self: right;
+  width: 230px;
+  height: 40px;
+  background-color: #00a2c7;
+  border: none;
+  color: #f8faf8;
 }
 
-.dobar,.los{
-    padding: 10px;
-    margin-bottom: 10px;
-    border: none;
+.recenzije_sekcija {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.dobar{
-    background-color: #B5E9F0;
+.dobar,
+.los {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
 }
 
-.los{
-    background-color: #FFD19A;
+.dobar {
+  background-color: #b5e9f0;
+}
+
+.los {
+  background-color: #ffd19a;
 }

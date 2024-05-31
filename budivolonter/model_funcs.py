@@ -1,7 +1,10 @@
 from django.db import transaction
+
 #Kosta Novokmet
 #vraca sve korisnike kao listu objekata
 from . import models
+
+
 def getUsers():
     return list(models.Korisnik.objects.all())
 

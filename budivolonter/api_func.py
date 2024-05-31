@@ -1,17 +1,21 @@
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect
+
 from budivolonter import models
 from budivolonter.utils import getCurrentUser
+
 from . import model_funcs
-from django.http import HttpResponse, JsonResponse,HttpRequest
+
+
 #kosta novokmet
 #vraca sve aktivnosti organizacije 
 #org = ona ciji se profil gleda
 def fetch_activities_org(request:HttpRequest) -> JsonResponse:
     from . import utils
-    idkor = model_funcs.getUserId(request.GET.get('id'))
-    active_activities = model_funcs.getActiveActivitiesOrg(idkor)
-    archived_activities= model_funcs.getArchivedActivitiesOrg(idkor)
-    active_activities_list = utils.loadActivities(active_activities)
+    idkor                    = model_funcs.getUserId(request.GET.get('id'))
+    active_activities        = model_funcs.getActiveActivitiesOrg(idkor)
+    archived_activities      = model_funcs.getArchivedActivitiesOrg(idkor)
+    active_activities_list   = utils.loadActivities(active_activities)
     archived_activities_list = utils.loadActivities(archived_activities)
     for act in archived_activities_list:
         reviews = model_funcs.getApplicationsForAct(idakt=act.get('id'),finished=True,status='A')
@@ -25,7 +29,7 @@ def fetch_activities_org(request:HttpRequest) -> JsonResponse:
 #volonter = onaj ciji se profil gleda
 def fetch_activities_vol(request) -> JsonResponse:
     from . import utils
-    idkor = model_funcs.getUserId(request.GET.get('id'))
+    idkor      = model_funcs.getUserId(request.GET.get('id'))
     print(idkor)
     activities = model_funcs.getActivitiesVol(idkor)
     activities_list = utils.loadActivities(activities)
@@ -41,8 +45,8 @@ def fetch_activities_vol(request) -> JsonResponse:
 def update_free_spaces(request:HttpRequest) -> JsonResponse:
     import json
     json_data = json.loads(request.body.decode('utf-8'))
-    val = json_data['val']
-    aktId = json_data['idakt']
+    val       = json_data['val']
+    aktId     = json_data['idakt']
     model_funcs.updateFreeSpaces(val,aktId)
     return JsonResponse({'message': 'Data received successfully'}, status=200)
 
@@ -51,8 +55,8 @@ def update_free_spaces(request:HttpRequest) -> JsonResponse:
 def resolveApplication(request:HttpRequest) -> HttpResponse:
     if request.method != 'POST':
         return HttpResponse('Method not allowed', status=405)
-    id = request.POST.get('id', None)
-    status = request.POST.get('status', None)
+    id      = request.POST.get('id', None)
+    status  = request.POST.get('status', None)
     prijava = model_funcs.getApplicationById(id)
     prijava.status = status
     prijava.save()
@@ -82,24 +86,26 @@ def download(request:HttpRequest) -> HttpResponse:
 
 #Kosta Novokmet
 def get_chats(request:HttpRequest) -> JsonResponse:
-    from .utils import checkLogin,getCurrentUser,loadChats
-    id = getCurrentUser(request).idkor
+    from .utils import checkLogin, getCurrentUser, loadChats
+    id    = getCurrentUser(request).idkor
     chats = loadChats(model_funcs.getChats(id),id)
     return JsonResponse({'chats':chats})
     
+
 def get_messages(request:HttpRequest) -> JsonResponse:
     from .utils import loadMessages
-    id = int(request.GET.get('id'))
+    id        = int(request.GET.get('id'))
     id_reader = getCurrentUser(request).idkor
-    messages = loadMessages(model_funcs.getMessages(id, id_reader))
+    messages  = loadMessages(model_funcs.getMessages(id, id_reader))
     return JsonResponse({'messages':messages})
 
 
-def open_chat(request:HttpRequest):
+#Kosta Novokmet
+def open_chat(request:HttpRequest) -> HttpResponse:
     from .utils import getCurrentUser
-    id = request.POST.get('id')
+    id          = request.POST.get('id')
     current_usr = getCurrentUser(request)
-    curr_id = current_usr.idkor
+    curr_id     = current_usr.idkor
     from .model_funcs import insertChat
     print(curr_id,id)
     insertChat(curr_id,id)
@@ -107,9 +113,9 @@ def open_chat(request:HttpRequest):
     
 
 
-
-def get_unread(request:HttpRequest):
-    from .utils import unread_msg,getCurrentUser
+#Kosta Novokmet
+def get_unread(request:HttpRequest) -> JsonResponse:
+    from .utils import getCurrentUser, unread_msg
     id = getCurrentUser(request).idkor
     return JsonResponse({'count':unread_msg(id)})
 
