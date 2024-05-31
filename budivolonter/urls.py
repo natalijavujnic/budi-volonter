@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout, activity_form
-,view_applications,register_choice,display_profile,inbox,edit_profile,search_org, search_vol, search_choose, search_activity
+from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout, activity_form, \
+view_applications,register_choice,display_profile,inbox,edit_profile,search_org, search_vol, search_choose, search_activity \
 ,review_volunteers, review_organizations
 
 urlpatterns = [
