@@ -207,7 +207,9 @@ CREATE TABLE `poruka` (
   `time` timestamp NOT NULL,
   `status` char(1) NOT NULL,
   `idSender` int NOT NULL,
-  PRIMARY KEY (`idPor`)
+  PRIMARY KEY (`idPor`),
+  KEY `FK_Prepiska_Poruka_idx` (`idPre`),
+  CONSTRAINT `FK_Prepiska_Poruka` FOREIGN KEY (`idPre`) REFERENCES `prepiska` (`idPre`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -235,8 +237,8 @@ CREATE TABLE `prepiska` (
   PRIMARY KEY (`idPre`),
   KEY `FK_kor1_prepiska_idx` (`idKor1`),
   KEY `FK_kor2_prepiska_idx` (`idKor2`),
-  CONSTRAINT `FK_kor1_prepiska` FOREIGN KEY (`idKor1`) REFERENCES `korisnik` (`idKor`) ON UPDATE CASCADE,
-  CONSTRAINT `FK_kor2_prepiska` FOREIGN KEY (`idKor2`) REFERENCES `korisnik` (`idKor`) ON UPDATE CASCADE
+  CONSTRAINT `FK_kor1_prepiska` FOREIGN KEY (`idKor1`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_kor2_prepiska` FOREIGN KEY (`idKor2`) REFERENCES `korisnik` (`idKor`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -246,7 +248,7 @@ CREATE TABLE `prepiska` (
 
 LOCK TABLES `prepiska` WRITE;
 /*!40000 ALTER TABLE `prepiska` DISABLE KEYS */;
-INSERT INTO `prepiska` VALUES (13,1,2),(14,2,3),(15,1,3);
+INSERT INTO `prepiska` VALUES (1,1,2),(2,2,3),(3,1,3);
 /*!40000 ALTER TABLE `prepiska` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,4 +378,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-31 19:50:55
+-- Dump completed on 2024-05-31 22:42:15
