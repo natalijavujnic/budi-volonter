@@ -611,3 +611,25 @@ def getActivitiesContinent(acts, kontinent):
     print(lokacije)
     filtered_activities = acts.filter(lokacija__in=lokacije)
     return filtered_activities
+
+
+#Anja Mihajlov
+#Brisanje aktivnosti
+def deleteAktivnost(IdAktivnost):
+    with transaction.atomic():
+        aktivnost = models.Aktivnost.objects.get(idakt=IdAktivnost)
+        if(aktivnost):
+            aktivnost.delete()
+            return "Obrisana aktivnost " + IdAktivnost
+        return "Ne postoji aktivnost sa tim ID"
+
+
+#Anja Mihajlov
+#Brisanje aktivnosti
+def deleteUser(email):
+    with transaction.atomic():
+        user = models.Korisnik.objects.get(email=email)
+        if user:
+            user.delete()
+            return "Obrisan korisnik " + email
+        return "Ne postoji korisnik sa tom email adresom"
