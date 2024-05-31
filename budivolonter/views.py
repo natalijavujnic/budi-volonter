@@ -214,6 +214,8 @@ def login_page(request:HttpRequest)-> HttpResponse:
         if user:
             if user.check_password(password):
                 login(request, user)
+                if user.tip =='A': #dodala sam ti ova dva reda zbog admina
+                    return redirect('admin_start')
                 return redirect('my_profile')
             else:
                 return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar(request)})
@@ -542,3 +544,21 @@ def search_activity(request: HttpRequest)-> HttpResponse:
             }
     return render(request, 'search_act.html', context)
 
+#Anja Mihajlov
+#Admin start, stranica gde brise korisnike i aktivnosti
+
+def admin_start(request: HttpRequest)-> HttpResponse:
+    aktivnost =  request.GET.get('aktivnost')
+    poruka =""
+    email =  request.GET.get('email')
+    if aktivnost:
+        poruka = model_funcs.deleteAktivnost(aktivnost)
+    if email:
+        poruka = model_funcs.deleteUser(email)
+    
+    from . import utils
+    context = {
+            'navbar':utils.getNavbar(request),
+            'poruka': poruka, 
+            }
+    return render(request, 'admin_start.html', context)
