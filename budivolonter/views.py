@@ -275,13 +275,13 @@ def view_applications(request:HttpRequest):
         return redirect('welcome') #todo redirect to error 404 page
     if aktivnost.idorg_id != getCurrentUser(request).idkor:
         return redirect('welcome') #todo redirect to error 403 forbidden page
-    prijave = model_funcs.getApplicationsForAct(idakt=idAkt)
+    prijave = model_funcs.getApplicationsForAct(idakt=idAkt,status="O")
     context = {
         'naziv':   aktivnost.naziv,
         'prijave': prijave,
         'navbar':  utils.getNavbar(request)
     }
-
+    print(context)
     return render(request, 'applications_view.html', context)
 
 
