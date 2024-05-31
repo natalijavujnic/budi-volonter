@@ -548,17 +548,23 @@ def search_activity(request: HttpRequest)-> HttpResponse:
 #Admin start, stranica gde brise korisnike i aktivnosti
 
 def admin_start(request: HttpRequest)-> HttpResponse:
-    aktivnost =  request.GET.get('aktivnost')
-    poruka =""
-    email =  request.GET.get('email')
-    if aktivnost:
-        poruka = model_funcs.deleteAktivnost(aktivnost)
-    if email:
-        poruka = model_funcs.deleteUser(email)
-    
     from . import utils
-    context = {
-            'navbar':utils.getNavbar(request),
-            'poruka': poruka, 
-            }
-    return render(request, 'admin_start.html', context)
+    if utils.checkLogin(request):
+        tip = getCurrentUser(request).tip
+        if(tip !='A'):
+            return redirect('login')
+        aktivnost =  request.GET.get('aktivnost')
+        poruka =""
+        email =  request.GET.get('email')
+        if aktivnost:
+            poruka = model_funcs.deleteAktivnost(aktivnost)
+        if email:
+            poruka = model_funcs.deleteUser(email)
+        
+        from . import utils
+        context = {
+                'navbar':utils.getNavbar(request),
+                'poruka': poruka, 
+                }
+        return render(request, 'admin_start.html', context)
+    return redirect('login')
