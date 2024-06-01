@@ -799,9 +799,9 @@
 														"$ref": "AAAAAAGP0vZ7l7ORUvk="
 													},
 													"font": "Arial;13;0",
-													"left": 512,
+													"left": 486,
 													"top": 151,
-													"width": 81.66259765625,
+													"width": 133.681640625,
 													"height": 13,
 													"alpha": -4.037648647917532,
 													"distance": 12.806248474865697,
@@ -809,7 +809,7 @@
 														"$ref": "AAAAAAGP0vZ7l7OSIWQ="
 													},
 													"edgePosition": 1,
-													"text": "3 : edit_profile"
+													"text": "3 : edit_profile(request)"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -2435,17 +2435,17 @@
 														"$ref": "AAAAAAGP0w/ALrXiZEc="
 													},
 													"font": "Arial;13;0",
-													"left": 516,
-													"top": 618,
-													"width": 88.892578125,
+													"left": 486,
+													"top": 617,
+													"width": 140.91162109375,
 													"height": 13,
-													"alpha": 1.5707963267948966,
-													"distance": 10,
+													"alpha": -4.331883465341588,
+													"distance": 10.770329614269007,
 													"hostEdge": {
 														"$ref": "AAAAAAGP0w/ALrXjods="
 													},
 													"edgePosition": 1,
-													"text": "13 : edit_profile"
+													"text": "13 : edit_profile(request)"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -3625,7 +3625,8 @@
 									"target": {
 										"$ref": "AAAAAAGP0vYZZbNxqUk="
 									},
-									"messageSort": "asynchCall"
+									"messageSort": "asynchCall",
+									"arguments": "request"
 								},
 								{
 									"_type": "UMLMessage",
@@ -3776,7 +3777,8 @@
 									"target": {
 										"$ref": "AAAAAAGP0vYZZbNxqUk="
 									},
-									"messageSort": "asynchCall"
+									"messageSort": "asynchCall",
+									"arguments": "request"
 								},
 								{
 									"_type": "UMLMessage",
