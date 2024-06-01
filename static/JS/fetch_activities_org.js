@@ -177,65 +177,65 @@ function fetch_activities(curr_id, id) {
       str2 += `
 				</div>
 				</div></div>
-				`;
-    }
-    // Append str to a container or use it as needed
-    $("#otvorene_akt").html(str1);
-    $("#arhivirane_akt").html(str2);
-    if (curr_id == id) {
-      var debouncer;
-      acts = response["active_activities"];
-      for (let i = 1; i <= acts.length; i++) {
-        $("#inc" + i).on("click", function () {
-          clearTimeout(debouncer);
-          debouncer = setTimeout(() => {
-            $.ajax({
-              url: "api/update_free_spaces",
-              type: "PUT",
-              contentType: "application/json",
-              data: JSON.stringify({
-                val: parseInt($("#peopleCount" + i).text()) + 1,
-                idakt: acts[i - 1]["id"],
-              }),
-              success: function (response) {
-                let n = $("#peopleCount" + i).text();
-                n = parseInt(n);
-                n++;
-                $("#peopleCount" + i).text(n);
-              },
-              error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-              },
-            });
-          }, 300);
-        });
+				`
+		}
+		// Append str to a container or use it as needed
+		$('#otvorene_akt').html(str1);
+		$('#arhivirane_akt').html(str2);
+		if(curr_id == id){
+			var debouncer;
+			acts = response['active_activities'];
+			for(let i = 1; i <= acts.length;i++){
+				$('#inc'+i).on('click',function(){
+					clearTimeout(debouncer);
+					debouncer = setTimeout(() => {
+						$.ajax({
+							url: 'api/update_free_spaces',
+							type: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								val: parseInt($('#peopleCount'+i).text()) + 1,
+								idakt: acts[i-1]['id']
+							}),
+							success: function(response) {
+								let n = $('#peopleCount'+i).text();
+								n = parseInt(n);
+								n++;
+								$('#peopleCount' + i).text(n);
+							},
+							error: function(xhr, status, error) {
+								console.error(xhr.responseText);
+							}
+						});
+					}, 300);
+				});
 
-        $("#dec" + i).on("click", function () {
-          clearTimeout(debouncer);
-          debouncer = setTimeout(() => {
-            $.ajax({
-              url: "api/update_free_spaces",
-              type: "PUT",
-              contentType: "application/json",
-              data: JSON.stringify({
-                val: parseInt($("#peopleCount" + i).text()) - 1,
-                idakt: acts[i - 1]["id"],
-              }),
-              success: function (response) {
-                let n = $("#peopleCount" + i).text();
-                n = parseInt(n);
-                n--;
-                $("#peopleCount" + i).text(n);
-              },
-              error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-              },
-            });
-          }, 300);
-        });
-      }
-    }
-  });
+				$('#dec'+i).on('click',function(){
+					clearTimeout(debouncer);
+					debouncer = setTimeout(() => {
+						$.ajax({
+							url: 'api/update_free_spaces',
+							type: 'PUT',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								val: parseInt($('#peopleCount'+i).text()) - 1,
+								idakt: acts[i-1]['id']
+							}),
+							success: function(response) {
+								let n = $('#peopleCount'+i).text();
+								n = parseInt(n);
+								n--;
+								$('#peopleCount' + i).text(n);
+							},
+							error: function(xhr, status, error) {
+								console.error(xhr.responseText);
+							}
+						});
+					}, 300);
+				});
+			}
+		}
+	});
 }
 function toggleRevs(id) {
   $(`#review${id}`).toggle();
