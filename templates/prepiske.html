@@ -40,7 +40,7 @@
   </head>
   <body onload="get_chats();start_websocket()" id="body" user_id="{{user_id}}">
     {{navbar|safe}}
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-4">
           <!-- Sidebar or user list -->
@@ -83,5 +83,6 @@
         </div>
       </div>
     </div>
+    {{footer|safe}}
   </body>
 </html>

@@ -123,6 +123,11 @@ def getNavbar(request) -> str:
         with open('./budivolonter/html/navbar_unreg.html','r') as file:
             return file.read()
 
+#Kosta Novokmet
+def getFooter() -> str:
+    with open('./budivolonter/html/footer.html','r') as file:
+        return file.read()
+    
 #Natalija Vujnic
 #vraca broj godina na osnovu datuma rodjenja
 def getAge(dateOfBirth) -> int:

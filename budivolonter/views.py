@@ -12,7 +12,8 @@ from .utils import getCurrentUser
 def welcome(request:HttpRequest) -> HttpResponse:
     from . import utils
     context = {}
-    context['navbar'] = utils.getNavbar(request)
+    context['navbar'] = utils.getNavbar(request),
+    context['footer'] = utils.getFooter()
     return render(request,'main_page.html',context) 
 
 def register_choice(request):
@@ -20,7 +21,8 @@ def register_choice(request):
     if utils.getCurrentUser(request) is not None:
         return HttpResponse('Access Forbidden', status=403)
     context = {}
-    context['navbar'] = utils.getNavbar(request)
+    context['navbar'] = utils.getNavbar(request),
+    context['footer'] = utils.getFooter()
     return render(request,'reg_choose.html',context) 
 
 
@@ -53,7 +55,8 @@ def open_activity(request:HttpRequest)-> HttpResponse:
                     'countries': utils.getCountries,
                     'status':    'USPESNO DODATA AKTIVNOST!',
                     'cats':      model_funcs.getCategoryNames(),
-                    'navbar':    utils.getNavbar(request)
+                    'navbar':    utils.getNavbar(request),
+                    'footer':    utils.getFooter()
                     }
             return render(request,'open_activity.html',context)
         else:
@@ -62,7 +65,8 @@ def open_activity(request:HttpRequest)-> HttpResponse:
                     'countries': utils.getCountries,
                     'status':    '',
                     'cats':      model_funcs.getCategoryNames(),
-                    'navbar':    utils.getNavbar(request)
+                    'navbar':    utils.getNavbar(request),
+                    'footer':    utils.getFooter()
                     }
             return render(request,'open_activity.html',context)
     else:return redirect('login')
@@ -95,7 +99,8 @@ def display_profile(request:HttpRequest)-> HttpResponse:
                     'navbar':         utils.getNavbar(request),
                     'id':             request.GET['id'],
                     'curr_id':        getCurrentUser(request).idkor,
-                    'posalji_poruku': posalji
+                    'posalji_poruku': posalji,
+                    'footer':    utils.getFooter()
                     }
             return render(request, 'org_profile.html', context)
         elif tipKorisnika=='V':
@@ -109,7 +114,8 @@ def display_profile(request:HttpRequest)-> HttpResponse:
                     'id':             request.GET['id'],
                     'curr_id':        getCurrentUser(request).idkor,
                     'age':            utils.getAge(korisnik.datumrodj),
-                    'posalji_poruku': posalji
+                    'posalji_poruku': posalji,
+                    'footer':    utils.getFooter()
                     }
             return render(request, 'volonteer_profile.html', context)
         elif tipKorisnika == 'A':
@@ -125,7 +131,8 @@ def reg_org(request: HttpRequest)-> HttpResponse:
         return redirect('welcome')
     from . import utils
     context = {
-            'navbar': utils.getNavbar(request)
+            'navbar': utils.getNavbar(request),
+            'footer':    utils.getFooter()
             }
     if(request.method == 'POST'):
         parametri = request.POST
@@ -156,7 +163,8 @@ def reg_vol(request: HttpRequest)-> HttpResponse:
         return redirect('welcome')
     context = {
                 'cats':   model_funcs.getCategoryNames(),
-                'navbar': utils.getNavbar(request)
+                'navbar': utils.getNavbar(request),
+                'footer':    utils.getFooter()
                 }
     if(request.method == 'POST'):
         parametri      = request.POST
@@ -182,7 +190,8 @@ def reg_vol(request: HttpRequest)-> HttpResponse:
             context = {
                 'poruka': "Ne spadate u starosnu grupu za volontiranje",
                 'cats':   model_funcs.getCategoryNames(),
-                'navbar': utils.getNavbar(request)
+                'navbar': utils.getNavbar(request),
+                'footer':    utils.getFooter()
                 }
 
         else:
@@ -190,7 +199,8 @@ def reg_vol(request: HttpRequest)-> HttpResponse:
             context = {
                 'poruka': "Volonter je uspešno registrovan.",
                 'cats':   model_funcs.getCategoryNames(),
-                'navbar': utils.getNavbar(request)
+                'navbar': utils.getNavbar(request),
+                'footer':    utils.getFooter()
                 }
 
         from . import utils
@@ -205,7 +215,10 @@ def login_page(request:HttpRequest)-> HttpResponse:
     if utils.getCurrentUser(request) is not None:
         return redirect('welcome')
     if request.method == 'GET':
-        return render(request, 'login.html',{'navbar': utils.getNavbar(request)})
+        return render(request, 'login.html',{'navbar': utils.getNavbar(request),
+
+                                            'footer':    utils.getFooter()
+                                             })
     else:
         email    = request.POST['email']
         password = request.POST['password']
@@ -217,9 +230,14 @@ def login_page(request:HttpRequest)-> HttpResponse:
                     return redirect('admin_start')
                 return redirect('my_profile')
             else:
-                return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar(request)})
+                return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar(request),
+
+                                                      'footer':    utils.getFooter()
+                                                      })
         else:
-            return render(request, 'login.html', {'errorEmail':'Pogresan email','navbar': utils.getNavbar(request)})
+            return render(request, 'login.html', {'errorEmail':'Pogresan email','navbar': utils.getNavbar(request),
+                                                  'footer':    utils.getFooter()
+                                                  })
 #Djordje Sarovic
 def do_logout(request)-> HttpResponse:
     logout(request)
@@ -242,7 +260,8 @@ def activity_form(request:HttpRequest)-> HttpResponse:
         'datumOd':          aktivnost.datumod,
         'datumDo':          aktivnost.datumdo,
         'organizacija_ime': organizacija.ime,
-        'navbar':           utils.getNavbar(request)
+        'navbar':           utils.getNavbar(request),
+        'footer':    utils.getFooter()
     }
     if request.method == 'GET':
         return render(request, 'activity_form.html', context)
@@ -280,7 +299,8 @@ def view_applications(request:HttpRequest):
     context = {
         'naziv':   aktivnost.naziv,
         'prijave': prijave,
-        'navbar':  utils.getNavbar(request)
+        'navbar':  utils.getNavbar(request),
+        'footer':  utils.getFooter()
     }
     print(context)
     return render(request, 'applications_view.html', context)
@@ -290,10 +310,12 @@ def view_applications(request:HttpRequest):
 """Kosta Novokmet, Djordje Sarovic"""
 def inbox(request:HttpRequest):
     print("returining html")
-    from .utils import checkLogin, getCurrentUser, getNavbar
+    from .utils import checkLogin, getCurrentUser, getNavbar,getFooter
     if checkLogin(request):
         id = getCurrentUser(request).idkor
-        return render(request,'prepiske.html', {'navbar':getNavbar(request), 'user_id':id})
+        return render(request,'prepiske.html', {'navbar':getNavbar(request), 'user_id':id,
+                                                'footer':    getFooter()
+                                                })
     else: return redirect('login')
     
 
@@ -307,7 +329,8 @@ def edit_profile(request:HttpRequest)-> HttpResponse:
         tipKorisnika=korisnik.tip
         context = {
                     'korisnik': korisnik,
-                    'navbar':   utils.getNavbar(request)
+                    'navbar':   utils.getNavbar(request),
+                    'footer':    utils.getFooter()
                     }
         if request.method == 'POST':
             if tipKorisnika=='O':
@@ -365,7 +388,8 @@ def search_org(request: HttpRequest)-> HttpResponse:
     from . import utils
     context = {
             'orgs':   orgs,
-            'navbar': utils.getNavbar(request)
+            'navbar': utils.getNavbar(request),
+            'footer':    utils.getFooter()
             }
     return render(request, 'search_org.html', context)
 
@@ -398,7 +422,8 @@ def search_vol(request: HttpRequest)-> HttpResponse:
         context = {
             'vols':     vols,
             'navbar':   utils.getNavbar(request),
-            'interesi': interesi
+            'interesi': interesi,
+            'footer':    utils.getFooter()
             }
         return render(request, 'search_vol.html', context)
     else:
@@ -410,6 +435,7 @@ def search_choose(request: HttpRequest)-> HttpResponse:
     from . import utils
     context = {
             'navbar': utils.getNavbar(request),
+            'footer':    utils.getFooter()
             }
     return render(request, 'choose_search.html', context)
 
@@ -446,7 +472,8 @@ def review_volunteers(request: HttpRequest)-> HttpResponse:
                     'korisnik': korisnik,
                     'navbar':   utils.getNavbar(request),
                     'akt':      model_funcs.getActivityById(idAkt),
-                    'vols':     vols
+                    'vols':     vols,
+                    'footer':    utils.getFooter()
                     }
             return render(request, 'org_review_volonteers.html', context)
     return redirect('login')
@@ -481,7 +508,8 @@ def review_organizations(request: HttpRequest)-> HttpResponse:
             context = {
                     'korisnik': korisnik,
                     'navbar':   utils.getNavbar(request),
-                    'orgs':     orgs
+                    'orgs':     orgs,
+                    'footer':    utils.getFooter()
                     }
             return render(request, 'vol_review_org.html', context)
     return redirect('login')
@@ -540,6 +568,7 @@ def search_activity(request: HttpRequest)-> HttpResponse:
             #'skills': model_funcs.getAllSkills(),
             'cats': model_funcs.getAllCats(),
             'conts':['Afrika','Azija', 'Evropa','Severna Amerika', 'Okeanija','Južna Amerika'],
+            'footer':    utils.getFooter()
             }
     return render(request, 'search_act.html', context)
 
@@ -564,6 +593,7 @@ def admin_start(request: HttpRequest) -> HttpResponse:
         context = {
                 'navbar':utils.getNavbar(request),
                 'poruka': poruka, 
+                'footer':    utils.getFooter()
                 }
         return render(request, 'admin_start.html', context)
     return redirect('login')
