@@ -6,7 +6,7 @@
 .searchButton {
   margin-right: 5px;
   border-color: #c2da91;
-  background-color: #eef6d6;
+  background-color: rgb(202, 241, 246);
   padding: 8px 16px;
   font-size: 20px;
 }
@@ -15,7 +15,7 @@
 }
 .searchButton:hover {
   border-color: #abc978;
-  background-color: #e2f0bd;
+  background-color: rgb(150, 200, 200);
 }
 * {
   margin: 0;
@@ -38,3 +38,15 @@
   font-family: "Inter";
 }
 
+
+body{
+	display:flex;
+	min-height:100vh;
+	flex-direction:column;
+}
+.container-fluid{
+	flex-grow:1;
+}
+.grow{
+	flex-grow:1;
+}
