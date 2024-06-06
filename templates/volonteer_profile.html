@@ -30,10 +30,10 @@
     <link href="{% static 'CSS/volonteer_profile.css'%}" rel="stylesheet" />
     <title>Moj profil</title>
     <script src="{% static 'JS/switchPage.js'%}"></script>
-    <script src="{% static './JS/fetch_activities_vol.js' %}"></script>
+    <script src="{% static './JS/fetch_vol.js' %}"></script>
     <script src="{% static './JS/open_chat.js' %}"></script>
   </head>
-  <body onload='fetch_activities(parseInt("{{id}}"))'>
+  <body onload='renderActivities(parseInt("{{id}}"))'>
     <!--NIT: shows me an error in vsc when curly brackets are in a js block :)-->
     <div id="hidden-data" data-my-value="{{id}}"></div>
     {{navbar|safe}}

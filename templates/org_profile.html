@@ -30,13 +30,13 @@
     <link href="{% static './CSS/org_from_volonteer.css' %}" rel="stylesheet" />
     <title>Moj profil</title>
     <script src="{% static './JS/switchPage.js' %}"></script>
-    <script src="{% static './JS/fetch_activities_org.js' %}"></script>
+    <script src="{% static './JS/fetch_org.js' %}"></script>
     <script src="{% static './JS/open_chat.js' %}"></script>
     <script>
       let reviewVolunteersUrl = "{% url 'review_volunteers' %}";
     </script>
   </head>
-  <body onload="fetch_activities({{curr_id}},{{id}})">
+  <body onload="renderActivities({{curr_id}},{{id}})">
     <div id="hidden-data" data-my-value="{{id}}"></div>
     {{navbar|safe}}
     <div class="container-fluid">
