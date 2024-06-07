@@ -1,8 +1,7 @@
 from datetime import datetime
 from django.contrib.auth import login, logout
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest 
 from django.shortcuts import HttpResponse, redirect, render
-
 from . import model_funcs
 from .utils import getCurrentUser
 

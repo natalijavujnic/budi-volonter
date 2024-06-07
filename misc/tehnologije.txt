@@ -7,3 +7,5 @@ mysql za bazu
 photoshop za logo
 selenium ide za testiranje
 starUML za modelovanje
+modul selenium za testiranje
+selenium ide za tesitranje

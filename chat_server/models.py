@@ -5,10 +5,10 @@ class Korisnik(models.Model):
     idkor         = models.AutoField(
         db_column = "idKor", primary_key=True
     )  # Field name made lowercase.
-    email         = models.CharField(unique=True, max_length=256)
-    password      = models.CharField(max_length=256)
-    ime           = models.CharField(max_length=256)
-    prezime       = models.CharField(max_length=256, blank=True, null=True)
+    email         = models.CharField(unique=True, max_length=255)
+    password      = models.CharField(max_length=255)
+    ime           = models.CharField(max_length=255)
+    prezime       = models.CharField(max_length=255, blank=True, null=True)
     pib           = models.IntegerField(unique=True, blank=True, null=True)
     telefon       = models.CharField(unique=True, max_length=14, blank=True, null=True)
     tip           = models.CharField(max_length=1)
@@ -23,7 +23,7 @@ class Korisnik(models.Model):
 
 class Poruka(models.Model):
     idpor    = models.AutoField(db_column = "idPor", primary_key = True)
-    idpre    = models.OneToOneField("Prepiska", models.DO_NOTHING, db_column = "idPre")  # Field name made lowercase. The composite primary key (idPre, redBr) found, that is not supported. The first column is selected.
+    idpre    = models.ForeignKey("Prepiska", models.DO_NOTHING, db_column = "idPre")  # Field name made lowercase. The composite primary key (idPre, redBr) found, that is not supported. The first column is selected.
     redbr    = models.CharField(db_column = "redBr", max_length=45)  # Field name made lowercase.
     tekst    = models.CharField(max_length = 2000)
     time     = models.DateTimeField()
