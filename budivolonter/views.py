@@ -12,7 +12,7 @@ from .utils import getCurrentUser
 def welcome(request:HttpRequest) -> HttpResponse:
     from . import utils
     context = {}
-    context['navbar'] = utils.getNavbar(request),
+    context['navbar'] = utils.getNavbar(request)
     context['footer'] = utils.getFooter()
     return render(request,'main_page.html',context) 
 
@@ -21,7 +21,7 @@ def register_choice(request):
     if utils.getCurrentUser(request) is not None:
         return HttpResponse('Access Forbidden', status=403)
     context = {}
-    context['navbar'] = utils.getNavbar(request),
+    context['navbar'] = utils.getNavbar(request)
     context['footer'] = utils.getFooter()
     return render(request,'reg_choose.html',context) 
 

@@ -616,20 +616,27 @@ def getActivitiesContinent(acts, kontinent):
 #Anja Mihajlov
 #Brisanje aktivnosti
 def deleteAktivnost(IdAktivnost):
+    from django.core.exceptions import ObjectDoesNotExist
     with transaction.atomic():
-        aktivnost = models.Aktivnost.objects.get(idakt=IdAktivnost)
-        if(aktivnost):
-            aktivnost.delete()
-            return "Obrisana aktivnost " + IdAktivnost
-        return "Ne postoji aktivnost sa tim ID"
+        try:
+            aktivnost = models.Aktivnost.objects.get(idakt=IdAktivnost)
+            if(aktivnost):
+                aktivnost.delete()
+                return "Obrisana aktivnost " + IdAktivnost
+        except ObjectDoesNotExist:
+            return "Ne postoji aktivnost sa tim ID"
 
 
 #Anja Mihajlov
 #Brisanje aktivnosti
 def deleteUser(email):
+    from django.core.exceptions import ObjectDoesNotExist
     with transaction.atomic():
-        user = models.Korisnik.objects.get(email=email)
-        if user:
-            user.delete()
-            return "Obrisan korisnik " + email
-        return "Ne postoji korisnik sa tom email adresom"
+        try:
+            user = models.Korisnik.objects.get(email=email)
+            if user:
+                user.delete()
+                return "Obrisan korisnik " + email
+        except ObjectDoesNotExist:
+            return "Ne postoji korisnik sa tom email adresom"
+        
