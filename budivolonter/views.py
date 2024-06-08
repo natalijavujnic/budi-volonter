@@ -230,7 +230,6 @@ def login_page(request:HttpRequest)-> HttpResponse:
                 return redirect('my_profile')
             else:
                 return render(request, 'login.html', {'errorPassword':'Pogresna sifra','navbar': utils.getNavbar(request),
-
                                                       'footer':    utils.getFooter()
                                                       })
         else:
@@ -260,7 +259,7 @@ def activity_form(request:HttpRequest)-> HttpResponse:
         'datumDo':          aktivnost.datumdo,
         'organizacija_ime': organizacija.ime,
         'navbar':           utils.getNavbar(request),
-        'footer':    utils.getFooter()
+        'footer':           utils.getFooter()
     }
     if request.method == 'GET':
         return render(request, 'activity_form.html', context)
@@ -512,6 +511,39 @@ def review_organizations(request: HttpRequest)-> HttpResponse:
                     }
             return render(request, 'vol_review_org.html', context)
     return redirect('login')
+
+#Kosta Novokmet
+
+def my_acts(request:HttpRequest):
+    from .model_funcs import getAcceptedActs
+    usr = getCurrentUser(request)
+    acts = getAcceptedActs(usr)
+    act_list= []
+    for act in acts:
+        act_data = {}
+        oblasti =  model_funcs.getCategorisForActivity(act.idakt)
+        zahtevi = model_funcs.getSkillsForActivity(act.idakt)
+        act_data['idakt']        = act.idakt
+        act_data['naziv']        = act.naziv
+        act_data['opis']         = act.opis
+        act_data['cats']         = oblasti
+        act_data['skills']       = zahtevi
+        act_data['brmesta']      = act.brmesta
+        act_data['datumod']      = act.datumod
+        act_data['datumdo']      = act.datumdo
+        act_data['datumrok']     = act.datumrok
+        act_data['drzava']       = act.lokacija.drzava
+        act_data['mesto']        = act.mesto
+        act_data['organizacija'] = act.idorg.ime
+        act_data['idorg']        = act.idorg_id
+        act_list.append(act_data)
+    from . import utils
+    context = {
+            'navbar':   utils.getNavbar(request),
+            'acts':     act_list,
+            'footer':   utils.getFooter()
+            }
+    return render(request,'my_acts.html',context)
 
 
 #Anja Mihajlov

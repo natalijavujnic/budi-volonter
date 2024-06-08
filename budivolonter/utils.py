@@ -48,13 +48,17 @@ def datePassed(date:date) -> bool:
 
 #Kosta Novokmet
 #pravi listu aktivnosti, svaka aktivnost je recnik
-def loadActivities(acts:list[Aktivnost]) -> list[dict]:
+def loadActivities(acts:list[Aktivnost],request) -> list[dict]:
     from . import model_funcs
+    idkor = getCurrentUser(request).idkor
     act_list= []
     for act in acts:
+        app = model_funcs.getApplicationsForActVol(idkor=idkor,idakt=act.idakt)
+        print(idkor,act.idakt,app)
         act_data               = {}
         oblasti                = list(act.oblasti.all().values_list(flat=True))
         zahtevi                = model_funcs.getActivityReqs(act.idakt)
+        act_data['status_prijave'] =  app.get('status') if app != None else 'X'
         act_data['id']         = act.idakt
         act_data['naziv']      = act.naziv
         act_data['opis']       = act.opis

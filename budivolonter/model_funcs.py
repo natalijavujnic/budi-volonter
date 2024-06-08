@@ -1,5 +1,7 @@
 from django.db import transaction
 
+from chat_server.models import Korisnik
+
 from . import models
 
 
@@ -17,7 +19,7 @@ def getUserId(id):
 # u bazu ubacuje novu aktivnost kao i sve propratne veze
 def insertActivity(
     org, name, desc, spots, startD, endD, deadline, categories, country, city, reqs
-) -> None:
+) -> models.Aktivnost:
     with transaction.atomic():
         location = getLocation(country)
         activity = models.Aktivnost(
@@ -40,7 +42,7 @@ def insertActivity(
             print(cat_obj.oblast, cat_obj.idobl)
             belongs = models.Pripada(idakt=activity, idobl=cat_obj)
             belongs.save()
-
+    return activity
 
 # Kosta Novokmet
 # vraca objekat Lokacija na osnovu drzave
@@ -80,18 +82,19 @@ def getInterests(id) -> list:
 
 # Anja Mihajlov
 # U bazu unosi novog korisnika koji je tipa O, tj. organizacija
-def insertOrganization(ime, pib, telefon, email, lozinka) -> None:
+def insertOrganization(ime, pib, telefon, email, lozinka) -> models.Korisnik:
     with transaction.atomic():
         organizacija = models.Korisnik(
             ime=ime, password=lozinka, email=email, pib=pib, telefon=telefon, tip="O"
         )
         organizacija.set_password(lozinka)
         organizacija.save()
+    return organizacija
 
 
 # Anja Mihajlov
 # U bazu unosi novog korisnika tipa V, tj. volontera, radi insert u zanimaga
-def insertVolunteer(ime, prezime, datumRodj, email, lozinka, cats) -> None:
+def insertVolunteer(ime, prezime, datumRodj, email, lozinka, cats) -> models.Korisnik:
     with transaction.atomic():
         volonter = models.Korisnik(
             ime       = ime,
@@ -106,6 +109,7 @@ def insertVolunteer(ime, prezime, datumRodj, email, lozinka, cats) -> None:
         for cat in cats:
             unos = models.ZanimaGa(idkor=volonter, idobl=getCategoryObject(cat))
             unos.save()
+    return volonter
 
 
 # Kosta Novokmet
@@ -219,6 +223,20 @@ def getApplicationsForAct(**kwargs) -> list[dict]:
         ]
 
 
+#Kosta Novokmet
+#vraca sve aktivnosti na kojima je Korisnik prihvacen, ali tako da ta aktivnost nije pocela
+def getAcceptedActs(user:models.Korisnik) -> list[models.Prijava]:
+    apps = list(models.Prijava.objects.filter(idvol=user,status='A').all())
+    acts = []
+    from .utils import datePassed
+    for app in apps:
+        act = models.Aktivnost.objects.filter(idakt=app.idakt.idakt).first()
+        if not datePassed(act.datumod):
+            acts.append(act)
+    return acts
+
+
+
 # Kosta Novokmet
 # vraca prijavu odredjenog volontera za odredjenu aktivnost kao recnik, ako nema vraca None
 # opciono finished=True ako hocemo prijavu samo ako je ta akt prosla
@@ -330,7 +348,7 @@ def getUsrById(id) -> models.Korisnik:
     return models.Korisnik.objects.filter(idkor=id).first()
 
 
-def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
+def insertApplication(idvol, idakt, pismo, rezimeFile) -> models.Prijava:
     with transaction.atomic():
         prijava = models.Prijava(
             idvol  = idvol,
@@ -340,6 +358,7 @@ def insertApplication(idvol, idakt, pismo, rezimeFile) -> None:
             status = "O",
         )
         prijava.save()
+    return prijava
 
 
 # Kosta Novokmet
@@ -349,7 +368,7 @@ def getChats(id) -> list[models.Prepiska]:
     return list(models.Prepiska.objects.filter(Q(idkor1=id) | Q(idkor2=id)).all())
 
 
-def insertChat(id1, id2):
+def insertChat(id1, id2) -> models.Prepiska:
     kor1 = getUsrById(id1)
     kor2 = getUsrById(id2)
     if models.Prepiska.objects.filter(idkor1=id1, idkor2=id2).exists():
@@ -372,6 +391,7 @@ def insertChat(id1, id2):
             idsender = sender,
         )
         msg.save()
+    return chat
 
 
 def getMessages(chat_id, id_reader):

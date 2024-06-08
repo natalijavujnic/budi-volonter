@@ -87,7 +87,7 @@ class Prepiska(models.Model):
 
 
 class Prijava(models.Model):
-    idpri        = models.IntegerField(db_column='idPri', primary_key=True)  # Field name made lowercase.
+    idpri        = models.AutoField(db_column='idPri', primary_key=True)  # Field name made lowercase.
     idvol        = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idVol')  # Field name made lowercase.
     idakt        = models.ForeignKey(Aktivnost, models.DO_NOTHING, db_column='idAkt')  # Field name made lowercase.
     pismo        = models.CharField(max_length=2000)

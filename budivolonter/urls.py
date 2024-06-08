@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from .views import welcome, open_activity, reg_org, reg_vol, display_my_profile, login_page, do_logout, activity_form, \
 view_applications,register_choice,display_profile,inbox,edit_profile,search_org, search_vol, search_choose, search_activity \
-,review_volunteers, review_organizations, admin_start
+,review_volunteers, review_organizations, admin_start,my_acts
 
 urlpatterns = [
         path('',welcome, name='welcome'),
@@ -27,5 +27,6 @@ urlpatterns = [
         path('search_choose',search_choose, name ='search_choose'),
         path('review_volunteers', review_volunteers, name='review_volunteers'),
         path('review_organizations', review_organizations, name='review_organizations'),
-        path('admin_start', admin_start, name='admin_start')
+        path('admin_start', admin_start, name='admin_start'),
+        path('my_acts', my_acts)
         ]
