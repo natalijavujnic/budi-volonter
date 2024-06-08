@@ -56,10 +56,14 @@ class ApplicationTest(StaticLiveServerTestCase):
         submit_button = self.driver.find_element(By.ID, 'submit')
         submit_button.click()
         assert (len(getApplicationsForAct(idakt=act.idakt)) == 1)
+ 
+    def tearDown(self):
+        self.driver.close()
 
+class AdminTest(StaticLiveServerTestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome()
 
-
-    
     def test_admin_delete_user(self):
         from .utils import insertAdmin
         from .model_funcs import insertVolunteer
@@ -136,6 +140,7 @@ class ApplicationTest(StaticLiveServerTestCase):
         greske = self.driver.find_elements(By.CSS_SELECTOR,'input:invalid') 
         poruka = greske[0].get_attribute('validationMessage')
         assert 'Please fill in this field.' in poruka
-        
+    
     def tearDown(self):
         self.driver.close()
+
