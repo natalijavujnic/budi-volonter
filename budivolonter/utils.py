@@ -1,8 +1,6 @@
 from django.http import HttpRequest
-
 from budivolonter import models
 from budivolonter.models import Aktivnost, Korisnik
-
 
 #Djordje Sarovic
 def getCurrentUser(request:HttpRequest) -> Korisnik|None:
@@ -23,7 +21,6 @@ def getContinent(country) -> dict:
         if country in countries: return contient
     return None
 
-
 #Kosta Novokmet
 #vraca listu svih drzava na svetu
 #za potrebe biranja drzava kada se pravi aktivnost
@@ -31,20 +28,15 @@ def getCountries() -> tuple:
     from .locations import countries
     return countries
 
-
 #Kosta Novokmet
 #proverava da li je datum prosao 
 #ako je datum prosao, vraca true 
 from datetime import date
-
-
 def datePassed(date:date) -> bool:
     curr_date = date.today()
     if (curr_date > date): 
        return True
     return False
-
-
 
 #Kosta Novokmet
 #pravi listu aktivnosti, svaka aktivnost je recnik
@@ -89,9 +81,6 @@ def loadMessages(messages:list[models.Poruka]) -> list[dict]:
         message_data['order']  = message.redbr
         message_list.append(message_data)
     return message_list
-
-    
-
 
 #Kosta Novokmet
 def loadChats(chats:list[models.Prepiska],id:int) -> list[dict]:
@@ -153,3 +142,14 @@ def unread_msg(id) -> int:
     for chat in chat_dict:
        sum += chat['messages_unread']
     return sum
+
+#Natalija Vujnic
+#kreira admina u bazi
+def insertAdmin():
+    from django.db import transaction
+    with transaction.atomic():
+        admin = models.Korisnik(
+            password="Admin123", email="admin@bv.rs", tip="A"
+        )
+        admin.set_password("Admin123")
+        admin.save()
