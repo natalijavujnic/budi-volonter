@@ -16,8 +16,8 @@ class AdminTest(StaticLiveServerTestCase):
         self.driver = webdriver.Chrome()
 
     def test_admin_delete_user(self):
-        from .utils import insertAdmin
-        from .model_funcs import insertVolunteer
+        from ..utils import insertAdmin
+        from ..model_funcs import insertVolunteer
         insertAdmin()
         insertVolunteer('Volonter','Test','2000-01-01','volonter@mejl.com','sifra123','')
         self.driver.get(f'{self.live_server_url}/budivolonter/login')
@@ -51,11 +51,11 @@ class AdminTest(StaticLiveServerTestCase):
         delete_button.click()
         greske = self.driver.find_elements(By.CSS_SELECTOR,'input:invalid') 
         poruka = greske[0].get_attribute('validationMessage')
-        assert 'Please fill in this field.' in poruka
+        assert 'Please fill in this field.' in poruka.text
 
     def test_admin_delete_activity(self):
-        from .utils import insertAdmin
-        from .model_funcs import insertOrganization,insertActivity,getUserEmail
+        from ..utils import insertAdmin
+        from ..model_funcs import insertOrganization,insertActivity,getUserEmail
         insertAdmin()
         insertOrganization('Organizacija','123456789','+381600000000','organizacija@mejl.com','sifra123')
         insertActivity(getUserEmail('organizacija@mejl.com'),'Aktivnost','',1,'2030-01-01','2030-01-01','2030-01-01','','Avganistan','','')
