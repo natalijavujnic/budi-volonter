@@ -1,0 +1,1185 @@
+{
+  "id": "fe8b430a-d271-4300-9328-2a3e4e2e7dce",
+  "version": "2.0",
+  "name": "Pretraga",
+  "url": "http://127.0.0.1:8000/budivolonter/welcome",
+  "tests": [{
+    "id": "afaf12f3-8bbd-4490-8a75-24ac66faf353",
+    "name": "Gost-pretraga volontera(nije dozvoljena)",
+    "commands": [{
+      "id": "8e25d908-10b3-4704-901d-6c5d6db1eb5a",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b6217869-c70b-4266-bffe-b5d2f24f59b8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1275x863",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c4eff1bf-2f24-467d-b65b-830de3c14a25",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-people-fill",
+      "targets": [
+        ["css=.bi-people-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li/button/i", "xpath:idRelative"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69de0d1f-8d4e-4c9c-8e9e-9f250b824f8a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dugme:nth-child(2)",
+      "targets": [
+        ["css=.dugme:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"switchPage('search_volunteer')\"]", "xpath:attributes"],
+        ["xpath=//div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Volonter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bddc86ce-acfb-4701-8191-b62131204f57",
+      "comment": "",
+      "command": "click",
+      "target": "id=emailHelp",
+      "targets": [
+        ["id=emailHelp", "id"],
+        ["css=#emailHelp", "css:finder"],
+        ["xpath=//small[@id='emailHelp']", "xpath:attributes"],
+        ["xpath=//small", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "849ade7f-fc17-444e-8702-483bc275d594",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=emailHelp",
+      "targets": [
+        ["id=emailHelp", "id"],
+        ["css=#emailHelp", "css:finder"],
+        ["xpath=//small[@id='emailHelp']", "xpath:attributes"],
+        ["xpath=//small", "xpath:position"]
+      ],
+      "value": "Niste postojeći korisnik? Registrujte se"
+    }]
+  }, {
+    "id": "68a3be4d-d3b9-482b-97ae-0f71f98fdb12",
+    "name": "Gost-pretraga organizacija po imenu",
+    "commands": [{
+      "id": "e5eacb3e-244a-4424-bae1-4a3de92746e4",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "205206fc-54ef-4680-ad55-6cef36b4f876",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-people-fill",
+      "targets": [
+        ["css=.bi-people-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li/button/i", "xpath:idRelative"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e1f9fd2-256b-41bd-b0a5-00753db154ca",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dugme:nth-child(3)",
+      "targets": [
+        ["css=.dugme:nth-child(3)", "css:finder"],
+        ["xpath=//button[@onclick=\"switchPage('search_organization')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Organizacija')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "86d056c9-f77f-4951-82bd-72557e0594dc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1275x863",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "035fdcca-52c9-450e-a1b8-72663f0b85af",
+      "comment": "",
+      "command": "click",
+      "target": "id=name_search",
+      "targets": [
+        ["id=name_search", "id"],
+        ["name=name_search", "name"],
+        ["css=#name_search", "css:finder"],
+        ["xpath=//input[@id='name_search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d68d06e5-3cd4-4f71-a371-2cacc1e2ea92",
+      "comment": "",
+      "command": "type",
+      "target": "id=name_search",
+      "targets": [
+        ["id=name_search", "id"],
+        ["name=name_search", "name"],
+        ["css=#name_search", "css:finder"],
+        ["xpath=//input[@id='name_search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "marko"
+    }, {
+      "id": "a4c57e15-f5d7-4f27-a057-ceabf406dbaf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(3)",
+      "targets": [
+        ["css=.btn:nth-child(3)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Pretraži')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bd6509a-5be0-41e1-b032-f6d91faac3b0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4",
+      "targets": [
+        ["css=.col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f8abf76-e771-4402-a610-45a81440bd1c",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.col-sm-4",
+      "targets": [
+        ["css=.col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div", "xpath:position"]
+      ],
+      "value": "Marko"
+    }]
+  }, {
+    "id": "228ad215-dec7-42b3-a374-a4e4f477c8be",
+    "name": "Gost-pretraga aktivnosti-po oblasti",
+    "commands": [{
+      "id": "f674e20e-d00e-47e7-b23e-3bdb8dd7152e",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1af4b16f-9bf1-420e-ae29-3a0e6cf70164",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(2) > .searchButton",
+      "targets": [
+        ["css=.nav-item:nth-child(2) > .searchButton", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[2]/button", "xpath:idRelative"],
+        ["xpath=//li[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d37445ff-85e8-47d7-8899-f10a6c44bed2",
+      "comment": "",
+      "command": "click",
+      "target": "id=volunteering_area",
+      "targets": [
+        ["id=volunteering_area", "id"],
+        ["name=area", "name"],
+        ["css=#volunteering_area", "css:finder"],
+        ["xpath=//select[@id='volunteering_area']", "xpath:attributes"],
+        ["xpath=//div[4]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e9d50a8-4d09-438c-b477-674f15adbc49",
+      "comment": "",
+      "command": "select",
+      "target": "id=volunteering_area",
+      "targets": [],
+      "value": "label=Obrazovanje"
+    }, {
+      "id": "87ec7b14-6ead-4596-9ba5-24abfad4c8ee",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "051204dc-f3ff-474f-ba6b-7f6982e3821c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mr-3",
+      "targets": [
+        ["css=.mr-3", "css:finder"],
+        ["xpath=//div[2]/div/div/div/h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Radionice za decu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3457878d-95ac-45b2-99f0-e1846de2d149",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Opis akivnosti",
+      "targets": [
+        ["linkText=Opis akivnosti", "linkText"],
+        ["css=.col-sm-8 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Opis akivnosti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Opis akivnosti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "45857bf4-6193-4d1b-979b-8557b7d18035",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "linkText=Opis akivnosti",
+      "targets": [
+        ["linkText=Opis akivnosti", "linkText"],
+        ["css=.col-sm-8 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Opis akivnosti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Opis akivnosti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b544fa07-ae00-4843-9476-f28935fe407e",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "linkText=Opis akivnosti",
+      "targets": [
+        ["linkText=Opis akivnosti", "linkText"],
+        ["css=.col-sm-8 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Opis akivnosti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Opis akivnosti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2f7f53c9-31e1-46ff-a249-70d4cbdfadb8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-6:nth-child(1) > div:nth-child(1)",
+      "targets": [
+        ["css=.col-sm-6:nth-child(1) > div:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='example2Modal']/div/div/div[2]/div[3]/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f68ad06c-5b72-4984-906d-94c5016fb7cd",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.col-sm-6:nth-child(1) > div:nth-child(1)",
+      "targets": [
+        ["css=.col-sm-6:nth-child(1) > div:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='example2Modal']/div/div/div[2]/div[3]/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div", "xpath:position"]
+      ],
+      "value": "Kategorije:\\nObrazovanje"
+    }]
+  }, {
+    "id": "b1c0c66b-cb51-411c-b0d5-590229bd9cdb",
+    "name": "Gost-pretraga aktivnosti-po kontinentu",
+    "commands": [{
+      "id": "f498c7d2-7ed2-48a8-85a4-6d81f2ce09b0",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "64e0a56a-d9ad-42bc-a3fd-0fbbc53e3f8a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1275x863",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "df51d284-6823-4277-8e5b-7ab9a9cf6c03",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-flag-fill",
+      "targets": [
+        ["css=.bi-flag-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[2]/button/i", "xpath:idRelative"],
+        ["xpath=//li[2]/button/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "463d3be8-39dd-430c-bdfd-0346b540b69a",
+      "comment": "",
+      "command": "click",
+      "target": "id=country",
+      "targets": [
+        ["id=country", "id"],
+        ["name=country", "name"],
+        ["css=#country", "css:finder"],
+        ["xpath=//select[@id='country']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f919a303-f2e8-42fb-a8d8-dd83daa4ffaa",
+      "comment": "",
+      "command": "select",
+      "target": "id=country",
+      "targets": [],
+      "value": "label=Evropa"
+    }, {
+      "id": "65a313fa-d0a8-4118-8642-d2f901c72353",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "277e9b14-5c82-4e81-834d-6d7630d47ec5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Opis akivnosti",
+      "targets": [
+        ["linkText=Opis akivnosti", "linkText"],
+        ["css=.aktivnost:nth-child(1) .col-sm-8 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Opis akivnosti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Opis akivnosti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d37a0afa-6d43-4a80-950c-5a68dfb4ae50",
+      "comment": "",
+      "command": "click",
+      "target": "css=#example2Modal .d-flex:nth-child(1)",
+      "targets": [
+        ["css=#example2Modal .d-flex:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='example2Modal']/div/div/div[2]/div/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div[2]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3dc4f80-4ea8-41fe-8cda-19a831c8b0ee",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=#example2Modal .d-flex:nth-child(1)",
+      "targets": [
+        ["css=#example2Modal .d-flex:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='example2Modal']/div/div/div[2]/div/div", "xpath:idRelative"],
+        ["xpath=//div/div/div/div[2]/div/div", "xpath:position"]
+      ],
+      "value": "  Novi Sad, Srbija"
+    }]
+  }, {
+    "id": "e9a934ba-d9d1-4c94-ab4c-764e7ba846a7",
+    "name": "Gost-pretraga aktivnosti-po datumu pocetka",
+    "commands": [{
+      "id": "4917ee7b-f29f-46a9-b72d-a0e4f4c76110",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "360e1295-22d9-411c-a302-7101a1abfbf9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(2) > .searchButton",
+      "targets": [
+        ["css=.nav-item:nth-child(2) > .searchButton", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[2]/button", "xpath:idRelative"],
+        ["xpath=//li[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08199db3-6f3d-4f8e-a1fb-ccc468e93ae0",
+      "comment": "",
+      "command": "click",
+      "target": "id=date_from",
+      "targets": [
+        ["id=date_from", "id"],
+        ["name=date_from", "name"],
+        ["css=#date_from", "css:finder"],
+        ["xpath=//input[@id='date_from']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0399ae5f-1490-4dc0-800d-9daa5ee243d3",
+      "comment": "",
+      "command": "click",
+      "target": "id=date_from",
+      "targets": [
+        ["id=date_from", "id"],
+        ["name=date_from", "name"],
+        ["css=#date_from", "css:finder"],
+        ["xpath=//input[@id='date_from']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d00eabc-ba0d-462a-a458-069c9839a16c",
+      "comment": "",
+      "command": "type",
+      "target": "id=date_from",
+      "targets": [
+        ["id=date_from", "id"],
+        ["name=date_from", "name"],
+        ["css=#date_from", "css:finder"],
+        ["xpath=//input[@id='date_from']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2024-07-16"
+    }, {
+      "id": "505681da-d7d2-49e1-87aa-103d86f4d913",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "60e9ad0b-550b-4f3c-991e-580e33ed208a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mr-3",
+      "targets": [
+        ["css=.mr-3", "css:finder"],
+        ["xpath=//div[2]/div/div/div/h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Sportski kamp')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1868d0bc-2bc1-405b-97f7-27e70e72d840",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Opis akivnosti",
+      "targets": [
+        ["linkText=Opis akivnosti", "linkText"],
+        ["css=.col-sm-8 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Opis akivnosti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Opis akivnosti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ebd3e5f7-78df-45ae-960e-9376723df1cd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.justify-content-center:nth-child(2)",
+      "targets": [
+        ["css=.justify-content-center:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='example3Modal']/div/div/div[2]/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd4c25b2-0bce-45b7-9917-07a9f023acac",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.justify-content-center:nth-child(2)",
+      "targets": [
+        ["css=.justify-content-center:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='example3Modal']/div/div/div[2]/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]", "xpath:position"]
+      ],
+      "value": "  01.08.2024-10.08.2024"
+    }]
+  }, {
+    "id": "98eaff05-3d37-4da1-8749-bff4f2e9bb2c",
+    "name": "Gost-pretraga aktivnosti-po datumu kraja",
+    "commands": [{
+      "id": "6b09add3-8e42-4587-be8e-c4fce9dd191d",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5e40ad07-cc6f-4890-b157-52379b450ebb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(2) > .searchButton",
+      "targets": [
+        ["css=.nav-item:nth-child(2) > .searchButton", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[2]/button", "xpath:idRelative"],
+        ["xpath=//li[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3b4b4db-3716-427a-bdc3-10ba481e8270",
+      "comment": "",
+      "command": "click",
+      "target": "id=date_to",
+      "targets": [
+        ["id=date_from", "id"],
+        ["name=date_from", "name"],
+        ["css=#date_from", "css:finder"],
+        ["xpath=//input[@id='date_from']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f341d0c-8b1a-4bc0-a444-f47f2e0d254f",
+      "comment": "",
+      "command": "click",
+      "target": "id=date_to",
+      "targets": [
+        ["id=date_from", "id"],
+        ["name=date_from", "name"],
+        ["css=#date_from", "css:finder"],
+        ["xpath=//input[@id='date_from']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "78880efe-8496-4c26-8017-4162d57003cd",
+      "comment": "",
+      "command": "type",
+      "target": "id=date_to",
+      "targets": [
+        ["id=date_from", "id"],
+        ["name=date_from", "name"],
+        ["css=#date_from", "css:finder"],
+        ["xpath=//input[@id='date_from']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2024-07-16"
+    }, {
+      "id": "33ffa69f-7547-43b2-bb4e-24c4d06d1759",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2084a78f-78d4-495a-8804-1f97b96de51b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Opis akivnosti",
+      "targets": [
+        ["linkText=Opis akivnosti", "linkText"],
+        ["css=.col-sm-8 > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Opis akivnosti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Opis akivnosti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "de6a0951-81df-4527-8f5e-addce4a713c2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.justify-content-center:nth-child(2)",
+      "targets": [
+        ["css=.justify-content-center:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='example2Modal']/div/div/div[2]/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0565a6b6-39e9-4207-993d-f24a0770420a",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.justify-content-center:nth-child(2)",
+      "targets": [
+        ["css=.justify-content-center:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='example2Modal']/div/div/div[2]/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]", "xpath:position"]
+      ],
+      "value": "  01.07.2024-15.07.2024"
+    }]
+  }, {
+    "id": "2392d7b4-d3df-4321-bee5-440dcbe555aa",
+    "name": "Registrovani korisnik-pretraga volontera po imenu",
+    "commands": [{
+      "id": "98688eb2-a5bb-461f-ade5-b29ca1f98ec5",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f0741011-dade-400f-bd0b-b5fbb7c4677e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x819",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "82708d25-ce77-4016-a17e-fd4441d72649",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Prijavi se",
+      "targets": [
+        ["linkText=Prijavi se", "linkText"],
+        ["css=.d-flex > a:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Prijavi se')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0698bfb5-cb70-48ce-b345-08c9137c67f8",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7807bb6-20a2-48b9-9de7-534353f3ef73",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "crvenikrst@bv.rs"
+    }, {
+      "id": "6ff9f8d7-2c2d-4d1f-9e7a-03a0d9c17c0a",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b5d33e55-d3cb-4583-aa05-662b30aee6fe",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "sifra123"
+    }, {
+      "id": "80d0da30-01a0-4f69-803c-5b8c8211b534",
+      "comment": "",
+      "command": "click",
+      "target": "css=.d-flex > .btn",
+      "targets": [
+        ["css=.d-flex > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ee3ae1e-0799-4ce0-858c-4c08cea56e89",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-people-fill",
+      "targets": [
+        ["css=.bi-people-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li/button/i", "xpath:idRelative"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a363bd5-9c87-45bf-b035-e9ab3f907b6e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dugme:nth-child(2)",
+      "targets": [
+        ["css=.dugme:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"switchPage('search_volunteer')\"]", "xpath:attributes"],
+        ["xpath=//body/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Volonter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4865e2ae-babb-4c45-939c-dbe002b88321",
+      "comment": "",
+      "command": "click",
+      "target": "id=name_search",
+      "targets": [
+        ["id=name_search", "id"],
+        ["name=name_search", "name"],
+        ["css=#name_search", "css:finder"],
+        ["xpath=//input[@id='name_search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff3ca2b2-61f0-4cc5-84dc-b34654f552cb",
+      "comment": "",
+      "command": "type",
+      "target": "id=name_search",
+      "targets": [
+        ["id=name_search", "id"],
+        ["name=name_search", "name"],
+        ["css=#name_search", "css:finder"],
+        ["xpath=//input[@id='name_search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "ana"
+    }, {
+      "id": "c731867c-67e2-4214-ae13-c6bf20fe3b78",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(4)",
+      "targets": [
+        ["css=.btn:nth-child(4)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[5]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "16f490ab-afd7-401a-9d3b-73e92fb09cb6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.justify-content-center > .col-sm-4",
+      "targets": [
+        ["css=.justify-content-center > .col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aded1de6-75c1-4be5-ac3e-ab7b7202c4e0",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.justify-content-center > .col-sm-4",
+      "targets": [
+        ["css=.justify-content-center > .col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": "Ana Anić"
+    }, {
+      "id": "908155d7-6236-4d1e-9e10-b31f591a714a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-box-arrow-right",
+      "targets": [
+        ["css=.bi-box-arrow-right", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/div/a/i", "xpath:idRelative"],
+        ["xpath=//a/i", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "1f802330-2364-40df-8072-c31cdf8a3007",
+    "name": "Registrovani korisnik-pretraga volontera po interesovanjima",
+    "commands": [{
+      "id": "f6f7b59e-ecc9-4669-8be3-129c4487652b",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ab329cdc-9331-408f-8344-fa6703247c87",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x819",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9770ddb7-2eac-488e-9187-5b9a479e83a3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Prijavi se",
+      "targets": [
+        ["linkText=Prijavi se", "linkText"],
+        ["css=.d-flex > a:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Prijavi se')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fab76e2-f0d6-4115-8a8e-8561c77aca90",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a52d74e5-7eb9-4b2d-9f67-3b18b518b832",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "crvenikrst@bv.rs"
+    }, {
+      "id": "969c39ad-d602-4424-a45f-79be08f4416b",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ef7ea733-a1f5-486d-8133-ff1a5e5825d5",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "sifra123"
+    }, {
+      "id": "2be4f28a-5162-49e7-824c-ed0aaf651604",
+      "comment": "",
+      "command": "click",
+      "target": "css=.d-flex > .btn",
+      "targets": [
+        ["css=.d-flex > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ccfcd541-99b2-4598-a740-901d7743e33d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-people-fill",
+      "targets": [
+        ["css=.bi-people-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li/button/i", "xpath:idRelative"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e44777dc-57dd-4de7-b58e-8112b65d9a6e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dugme:nth-child(2)",
+      "targets": [
+        ["css=.dugme:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"switchPage('search_volunteer')\"]", "xpath:attributes"],
+        ["xpath=//body/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Volonter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b5636be8-11d9-4ceb-ae8e-7af22a5fbbc1",
+      "comment": "",
+      "command": "click",
+      "target": "id=interes2",
+      "targets": [
+        ["id=interes2", "id"],
+        ["css=#interes2", "css:finder"],
+        ["xpath=//input[@id='interes2']", "xpath:attributes"],
+        ["xpath=//label[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "96b4363a-4481-439c-b03d-462842f1fbf6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=(//button[@type='submit'])[5]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d50b968-c520-4cc6-8b54-b297ed76d342",
+      "comment": "",
+      "command": "click",
+      "target": "css=.justify-content-center > .col-sm-4",
+      "targets": [
+        ["css=.justify-content-center > .col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b04ef9d1-5c1f-4b23-808f-ce7603a52cc3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.justify-content-center > .col-sm-4",
+      "targets": [
+        ["css=.justify-content-center > .col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": "Ana Anić"
+    }, {
+      "id": "4826cc5e-bdbe-4171-9a41-3697551f73f4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-box-arrow-right",
+      "targets": [
+        ["css=.bi-box-arrow-right", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/div/a/i", "xpath:idRelative"],
+        ["xpath=//a/i", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "490b7850-f51a-4af1-8fb4-cf2b5a7ca28f",
+    "name": "Registrovani korisnik-pretraga volontera po prethodnom iskustvu",
+    "commands": [{
+      "id": "d9035b17-811f-433f-836f-bd20ec4d03b8",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:8000/budivolonter/welcome",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "90569bfe-b28c-4bde-9db8-bd92f90aed52",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1200x819",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4fc052d0-6dd0-4358-a7c2-c27543efd427",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Prijavi se",
+      "targets": [
+        ["linkText=Prijavi se", "linkText"],
+        ["css=.d-flex > a:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Prijavi se')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'login')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "974826a1-98d1-44ec-8526-893ab6320972",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ccdedf35-4399-46c2-93d9-14c224441a98",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "crvenikrst@bv.rs"
+    }, {
+      "id": "c096f2ba-6066-47f0-a430-6546475154e2",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "469dbb67-e654-46b9-924c-1da09e2edd1b",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "sifra123"
+    }, {
+      "id": "0bdbb4cd-fd75-49b4-af63-646c930db42a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.d-flex > .btn",
+      "targets": [
+        ["css=.d-flex > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b79498a-c654-4220-bc67-ddf47948d476",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-people-fill",
+      "targets": [
+        ["css=.bi-people-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li/button/i", "xpath:idRelative"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ff55b78-a8b2-48ba-8dc9-0d5a1f9effaa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-people-fill",
+      "targets": [
+        ["css=.bi-people-fill", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li/button/i", "xpath:idRelative"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c72eb758-3fb6-465e-a071-5df245b97f33",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dugme:nth-child(2)",
+      "targets": [
+        ["css=.dugme:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"switchPage('search_volunteer')\"]", "xpath:attributes"],
+        ["xpath=//body/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Volonter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "69aee421-6c97-44f6-a50b-82a8c64bf137",
+      "comment": "",
+      "command": "click",
+      "target": "id=volunteer_experience",
+      "targets": [
+        ["id=volunteer_experience", "id"],
+        ["name=volunteer_experience", "name"],
+        ["css=#volunteer_experience", "css:finder"],
+        ["xpath=//select[@id='volunteer_experience']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "764b8a19-5457-4fbd-a769-9279c4f508a2",
+      "comment": "",
+      "command": "select",
+      "target": "id=volunteer_experience",
+      "targets": [],
+      "value": "label=Ne"
+    }, {
+      "id": "2e329969-0343-48e5-8c24-d0ffbf18a7b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=(//button[@type='submit'])[5]", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Primeni filtere')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "16c23789-48a7-42b3-997d-0d94ee3f8f61",
+      "comment": "",
+      "command": "click",
+      "target": "css=.justify-content-center:nth-child(1) > .col-sm-4",
+      "targets": [
+        ["css=.justify-content-center:nth-child(1) > .col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c25b66ef-1260-4a85-8c3b-11251c6aff02",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.justify-content-center:nth-child(1) > .col-sm-4",
+      "targets": [
+        ["css=.justify-content-center:nth-child(1) > .col-sm-4", "css:finder"],
+        ["xpath=//div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": "Ana Anić"
+    }, {
+      "id": "fc137ce1-d46b-47b6-bd38-a4d6fb0600b4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-box-arrow-right",
+      "targets": [
+        ["css=.bi-box-arrow-right", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/div/a/i", "xpath:idRelative"],
+        ["xpath=//a/i", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "edde4a66-6884-424c-be56-005a1b5c2c41",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["afaf12f3-8bbd-4490-8a75-24ac66faf353", "98eaff05-3d37-4da1-8749-bff4f2e9bb2c", "e9a934ba-d9d1-4c94-ab4c-764e7ba846a7", "b1c0c66b-cb51-411c-b0d5-590229bd9cdb", "228ad215-dec7-42b3-a374-a4e4f477c8be", "68a3be4d-d3b9-482b-97ae-0f71f98fdb12", "2392d7b4-d3df-4321-bee5-440dcbe555aa", "1f802330-2364-40df-8072-c31cdf8a3007", "490b7850-f51a-4af1-8fb4-cf2b5a7ca28f"]
+  }],
+  "urls": ["http://127.0.0.1:8000/budivolonter/welcome"],
+  "plugins": []
+}
