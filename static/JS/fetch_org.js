@@ -3,8 +3,8 @@ function buildHTML(curr_id, id, response) {
   let str1 = "";
   let index = 0;
   for (let act of acts) {
-	let status = act['status_prijave'];
-	console.log(status);
+    let status = act["status_prijave"];
+    console.log(status);
     index++;
     str1 += `<div clqss="aktivnost">
 				<div class="row align-items-center">
@@ -53,7 +53,7 @@ function buildHTML(curr_id, id, response) {
 				<div  class="mr-2">Broj preostalih mesta: <span id="peopleCount${index}">${act.brmesta}</span></div>
 				`;
 
-    if (curr_id == id)
+    if (curr_id == id) {
       str1 += `
 				<div class="plus-minus">
 				<button id="inc${index}" class="btn btn-primary btn-sm"">+</button>
@@ -68,26 +68,25 @@ function buildHTML(curr_id, id, response) {
 				</div>
 				</div>
 				</div>`;
-    else
+    } else {
       str1 += `
 				</div>
-				<div class="prijave d-flex justify-content-end">`
-	  if(status == 'X'){
-		  str1 += `
+				<div class="prijave d-flex justify-content-end">`;
+      if (status == "X") {
+        str1 += `
 				<a href="activity_form.html">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Prijavi se</button>
-				</a>`
-	  }
-	  else if (status == 'A'){
-			str1 += `
+				</a>`;
+      } else if (status == "A") {
+        str1 += `
 					<span> Prihavecni ste! </span>
-		  `
-	  }
-	  else if (status == 'R') 
-			str1 += `
+		  `;
+      } else if (status == "R")
+        str1 += `
 					<span> Odbijeni ste! </span>
-		  `
-	  str1 += `
+		  `;
+    }
+    str1 += `
 				</div>
 				</div>
 				</div>
@@ -261,6 +260,6 @@ async function renderActivities(curr_id, id) {
   let activities = await getActivities(id);
   if (!activities) {
     html = "failed to render activites";
-  } else html = buildHTML(curr_id,id,activities);
+  } else html = buildHTML(curr_id, id, activities);
   $("#sve_aktivnosti").html("<h1>ISTORIJA AKTIVNOSTI</h1>" + html);
 }

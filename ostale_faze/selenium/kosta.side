@@ -1,0 +1,398 @@
+{
+  "id": "3cc85710-6439-4f20-b167-d2df13ff4ab2",
+  "version": "2.0",
+  "name": "budivolonter",
+  "url": "http://localhost:8000/budivolonter/login",
+  "tests": [{
+    "id": "760edd42-554e-4902-8011-d7134549f65b",
+    "name": "login_test_fail_bad_pass",
+    "commands": [{
+      "id": "6ecd4cac-cb04-497f-a66d-498f597ebe15",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/budivolonter/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "84abfb48-84fa-405f-9fed-cc0b1dd4f92a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "35aa8ca9-96de-495a-bb3d-90b8022db002",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "677ef5c0-5c3b-4939-b60e-f2130fe2dfc2",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "marko@gmail.com"
+    }, {
+      "id": "6d79168f-9387-4be8-82b3-e0381e923000",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Pas1234"
+    }, {
+      "id": "c8ba7b89-88df-472f-b02d-ba8066c3f4d7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.d-flex > .btn",
+      "targets": [
+        ["css=.d-flex > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Prijavi se')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "85652bdf-011c-4b33-ba55-a64d1cf0f546",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//div[2]/div", "xpath:position"]
+      ],
+      "value": "Pogresna sifra"
+    }]
+  }, {
+    "id": "bc32fc81-4fbc-4788-90d4-9e4523c1e544",
+    "name": "login_test_success",
+    "commands": [{
+      "id": "a06140d3-f504-41f7-b945-eae746f58abd",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/budivolonter/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "20dcc663-a2c0-410b-84fd-d3d4ace12088",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1055",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bf8af64f-943a-49f7-84f8-bea62c888227",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a65a8538-e6b4-4c96-8b3d-8c61ea7d1613",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "marko@gmail.com"
+    }, {
+      "id": "c11c8e6f-a5ce-4cdf-adc6-61813b36565c",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3ca762d-9d1e-4906-9172-b3240df6e3bb",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Pass1234"
+    }, {
+      "id": "bbd3eb46-8e0d-43f4-8dd6-208cc24c27cf",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "5ecf5224-a3ea-428a-8e9c-a50008ff4d5a",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.d-flex > .searchButton:nth-child(1)",
+      "targets": [
+        ["css=.d-flex > .searchButton:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/button", "xpath:idRelative"],
+        ["xpath=//div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Profil')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d5985813-8e1d-4c8f-a0b7-a67f9a944640",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bi-box-arrow-right",
+      "targets": [
+        ["css=.bi-box-arrow-right", "css:finder"],
+        ["xpath=//div[@id='navbarSupportedContent']/div/div/a/i", "xpath:idRelative"],
+        ["xpath=//a/i", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "e6af3ce6-b982-4130-90ae-1717ca6afc9b",
+    "name": "login_test_fail_bad_mail",
+    "commands": [{
+      "id": "c7570573-2508-4d93-9745-d2618d95cded",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/budivolonter/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5ba687dc-29e4-4d29-aa86-03e17cdc11ab",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1055",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d28dd7f7-c4ea-46e1-aa81-4fadad5e80f4",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a42b1e1-dd0d-4289-9edc-db0b8aaa5422",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "markoo@gmail.com"
+    }, {
+      "id": "3c98f27e-841d-4c75-b7e0-042637b75368",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Pass1234"
+    }, {
+      "id": "bfb02e63-559a-4ca2-90b1-ac18f7d7cd1c",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "60fb5b3c-91f4-4bad-875d-341f80fdd811",
+      "comment": "",
+      "command": "click",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//form/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0db6e8f3-2d79-4746-b603-f5dbba1957ec",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.alert",
+      "targets": [
+        ["css=.alert", "css:finder"],
+        ["xpath=//form/div/div", "xpath:position"]
+      ],
+      "value": "Pogresan email"
+    }]
+  }, {
+    "id": "cb6adfcf-0199-4ca7-be1b-b5740f34246e",
+    "name": "pregled_prijava",
+    "commands": [{
+      "id": "f0c532ba-d24b-492a-a481-9eb818f7d24d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/budivolonter/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9d052ceb-30b5-4965-8fa1-a020f79db054",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0e4b576d-2cb6-40ed-aee3-faf01e1111e9",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a5cc1ec8-b3c6-49e4-ba9f-7c53f052d6b5",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "marko@gmail.com"
+    }, {
+      "id": "431acadd-1b76-4c4f-af62-6edf71774d2d",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "607d54c7-10ae-4504-b400-e95217ef6a1e",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Pass1234"
+    }, {
+      "id": "5211c565-ca1c-43ec-a827-a29a7b6adf01",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "1a1db64c-0864-48a0-970b-7fcbb26b9dc9",
+      "comment": "",
+      "command": "click",
+      "target": "css=div:nth-child(3) .prijave .btn",
+      "targets": [
+        ["css=div:nth-child(3) .prijave .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='otvorene_akt']/div[2]/div/div[2]/div[2]/a/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div[2]/a/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4740278-5cba-495b-bd2a-0d21febc1020",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='21']/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Prihvati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fbf9edd0-c732-4044-95ee-5d1200ecdde5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "79e6ba02-8fd2-42ea-a3a1-b431f1b49640",
+      "comment": "",
+      "command": "assertElementNotPresent",
+      "target": "css=.btn-success",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "1a32a88f-278f-456a-93f6-5a896e466bcd",
+    "name": "login",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e6af3ce6-b982-4130-90ae-1717ca6afc9b", "760edd42-554e-4902-8011-d7134549f65b", "bc32fc81-4fbc-4788-90d4-9e4523c1e544"]
+  }],
+  "urls": ["localhost:8000/budivolonter/open_activity", "http://localhost:8000/budivolonter/login"],
+  "plugins": []
+}
