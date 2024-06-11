@@ -50,7 +50,8 @@ class AdminTest(StaticLiveServerTestCase):
         delete_button.click()
         greske = self.driver.find_elements(By.CSS_SELECTOR,'input:invalid') 
         poruka = greske[0].get_attribute('validationMessage')
-        assert 'Please fill in this field.' in poruka.text
+        self.assertEqual( 'Please fill out this field.' , poruka)
+
 
     def test_admin_delete_activity(self):
         from ..utils import insertAdmin
@@ -89,7 +90,7 @@ class AdminTest(StaticLiveServerTestCase):
         delete_button.click()
         greske = self.driver.find_elements(By.CSS_SELECTOR,'input:invalid') 
         poruka = greske[0].get_attribute('validationMessage')
-        assert 'Please fill in this field.' in poruka
+        self.assertEqual( 'Please fill out this field.' , poruka)
     
     def tearDown(self):
         self.driver.close()

@@ -515,11 +515,11 @@ def review_organizations(request: HttpRequest)-> HttpResponse:
 #Kosta Novokmet
 
 def my_acts(request:HttpRequest):
-    from .model_funcs import getAcceptedActs
+    from .model_funcs import getAllActiveActs
     usr = getCurrentUser(request)
-    acts = getAcceptedActs(usr)
+    pairs = getAllActiveActs(usr)
     act_list= []
-    for act in acts:
+    for act,app in pairs:
         act_data = {}
         oblasti =  model_funcs.getCategorisForActivity(act.idakt)
         zahtevi = model_funcs.getSkillsForActivity(act.idakt)
@@ -536,6 +536,7 @@ def my_acts(request:HttpRequest):
         act_data['mesto']        = act.mesto
         act_data['organizacija'] = act.idorg.ime
         act_data['idorg']        = act.idorg_id
+        act_data['status'] = app.status
         act_list.append(act_data)
     from . import utils
     context = {

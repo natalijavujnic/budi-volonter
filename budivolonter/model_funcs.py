@@ -224,16 +224,18 @@ def getApplicationsForAct(**kwargs) -> list[dict]:
 
 
 #Kosta Novokmet
-#vraca sve aktivnosti na kojima je Korisnik prihvacen, ali tako da ta aktivnost nije pocela
-def getAcceptedActs(user:models.Korisnik) -> list[models.Prijava]:
-    apps = list(models.Prijava.objects.filter(idvol=user,status='A').all())
+#vraca sve aktivnosti na koje je volonter aplicirao, a da nije pocela aktivnost
+def getAllActiveActs(user:models.Korisnik) -> list[models.Prijava]:
+    apps = list(models.Prijava.objects.filter(idvol=user).all())
     acts = []
+    ret_apps = []
     from .utils import datePassed
     for app in apps:
         act = models.Aktivnost.objects.filter(idakt=app.idakt.idakt).first()
         if not datePassed(act.datumod):
             acts.append(act)
-    return acts
+            ret_apps.append(app)
+    return  zip(acts,ret_apps)
 
 
 

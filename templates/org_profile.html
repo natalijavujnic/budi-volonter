@@ -42,7 +42,7 @@
     <div class="container-fluid">
       <div class="grow" style="flex-flow:row;display:flex;height:100vh;">
         <!--Informacije o profilu-->
-        <div class="col-sm-4 grow" style="background-color: rgb(202, 241, 246);">
+        <div class="col-sm-4" style="background-color: #f2fafb;margin-left:0px;">
           {% if id|stringformat:"s" == curr_id|stringformat:"s" %}
           <div class="d-flex justify-content-end" style="padding: 15px">
             <a href="{% url 'edit_profile' %}">

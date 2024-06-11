@@ -26,7 +26,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link href="{% static './CSS/main_page.css' %}" rel="stylesheet">
+    <link href="{% static './CSS/main_page.css' %}" rel="stylesheet" />
     <title>BudiVolonter!</title>
     <script src="{% static './JS/switchPage.js' %}"></script>
   </head>
@@ -34,29 +34,52 @@
     {{navbar|safe}}
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-12" style="background-color: #f8faf3">
-          <div id = 'cardbox'>
-          {%for act in acts%}
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">{{act.naziv}}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{act.organizacija}}</h6>
-              <p class="card-text">{{act.datumod|date:'d.m.Y'}}-{{act.datumdo|date:'d.m.Y'}}</p>
-              <a href="profile?id={{act.idorg}}" class="card-link">Profil organizacije</a>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="background-color: #f8faf3;">
+          <div class="w-100" id="cardbox">
+            {%for act in acts%}
+            <div
+              class="card {% if act.status == 'R' %}los{% elif act.status == 'A' %}dobar{% elif act.status == 'O' %}grey-background{% endif %}"
+            >
+              <div class="card-body">
+                <h5 class="card-title">{{act.naziv}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {{act.organizacija}}
+                </h6>
+                <p class="card-text">
+                  {{act.datumod|date:'d.m.Y'}}-{{act.datumdo|date:'d.m.Y'}}
+                </p>
+                <a href="profile?id={{act.idorg}}" class="card-link"
+                  >Profil organizacije</a
+                >
+                <span>{{act.status}}</span>
+              </div>
             </div>
+            {%endfor%}
           </div>
-          {%endfor%}
-        </div>
         </div>
       </div>
     </div>
     {{footer|safe}}
     <style>
-      #cardbox{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: white;
+      .dobar {
+        background-color: #b5e9f0;
+      }
+
+      .los {
+        background-color: #ffd19a;
+      }
+
+              .grey-background {
+                background-color: grey;
+              }
+              #cardbox {
+                flex-direction: column;
+                align-items: center;
+                background-color: white;
+              }
+      .card{
+        margin-top: 20px;
       }
     </style>
   </body>
