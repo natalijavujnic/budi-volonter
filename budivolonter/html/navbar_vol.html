@@ -3,10 +3,9 @@
   style="background-color: #c2da91"
 >
   <div class="container-fluid">
-    <a class="navbar-brand" href="welcome"
-      ><img src="../../static/resources/bvp5.png" height="60px" width="60px"
-    /></a>
-
+    <a class="navbar-brand" href="welcome">
+      <img src="../../static/resources/bvp5.png" height="60px" width="60px" />
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -47,13 +46,15 @@
             ></i>
           </button>
         </li>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-right">
         <li class="nav-item">
           <button
+            class="searchButton btn"
             onclick="switchPage('my_acts')"
-            class="searchButton btn rounded-circle"
+            id="OtvoriAkt"
             type="submit"
-            id="mojeAktivnostiBtn"
-          >
+          >Moje aktivnosti
             <i
               class="bi bi-award-fill"
               style="color: #37401c"
@@ -62,7 +63,6 @@
           </button>
         </li>
       </ul>
-
       <div class="d-flex align-items-center">
         <button
           onclick='switchPage("my_profile")'
@@ -75,19 +75,21 @@
           onclick='switchPage("inbox")'
           id="inbox"
           class="searchButton btn d-flex align-items-center justify-content-center"
-          style="color: #37401c; background-color: #d3e7a6"
+          style="color: #37401c; background-color: rgb(202, 241, 246)"
         >
-          <i class="bi bi-chat-left-text-fill mr-1"></i>Prepiske<span
+          <i class="bi bi-chat-left-text-fill mr-1"></i>Prepiske
+          <span
             style="color: #f8faf3"
+            id="unread"
             class="badge bg-danger ml-1"
           ></span>
         </button>
         <div
           class="d-flex flex-column justify-content-end align-items-end pl-1"
         >
-          <a style="color: #5c7c2f; font-size: 30px" href="logout"
-            ><i class="bi bi-box-arrow-right" title="Izlogujte se"></i
-          ></a>
+        <a style="color: #5c7c2f; font-size: 30px" href="logout"
+            <i class="bi bi-box-arrow-right" title="Izlogujte se"></i>
+          </a>
         </div>
       </div>
     </div>
