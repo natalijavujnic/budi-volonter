@@ -1,4 +1,3 @@
-
 from django.test import TestCase, Client, SimpleTestCase,LiveServerTestCase
 from django.urls import resolve, reverse
 from django.contrib.auth.models import User

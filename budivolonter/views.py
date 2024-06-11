@@ -239,7 +239,7 @@ def login_page(request:HttpRequest)-> HttpResponse:
 #Djordje Sarovic
 def do_logout(request)-> HttpResponse:
     logout(request)
-    return redirect('login_view')
+    return redirect('login')
 
 #Djordje Sarovic
 def activity_form(request:HttpRequest)-> HttpResponse:
