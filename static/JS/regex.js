@@ -73,10 +73,10 @@ function check_email(event) {
 function check_name(event) {
   let name = document.getElementById("ime").value;
   if (name === "") {
-    document.getElementById("name error").innerHTML = "Popunite polje";
+    document.getElementById("name_error").innerHTML = "Popunite polje";
     event.preventDefault();
   } else if (/[0-9]/.test(name)) {
-    document.getElementById("name error").innerHTML =
+    document.getElementById("name_error").innerHTML =
       "Ime ne sme sadrzati brojeve";
     event.preventDefault();
   } else {
