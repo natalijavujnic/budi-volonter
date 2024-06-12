@@ -12,7 +12,7 @@ function buildHTML(curr_id, id, response) {
     let status = act["status_prijave"];
     console.log(status);
     index++;
-    str1 += `<div clqss="aktivnost">
+    str1 += `<div class="aktivnost">
 				<div class="row align-items-center">
 				<div class="col-sm-8">
 				<h2 class="mr-3 mb-0">${act.naziv}</h2>
@@ -80,7 +80,7 @@ function buildHTML(curr_id, id, response) {
 				<div class="prijave d-flex justify-content-end">`;
       if (status == "X" && type == 'V' && act.brmesta > 0) {
         str1 += `
-				<a href="activity_form">
+				<a href="activity_form?id=${act.id}">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Prijavi se</button>
 				</a>`;
       } else if (status == "A"&& type == 'V') {

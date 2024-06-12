@@ -154,18 +154,19 @@ def insert_prijava():
         cursor.execute(query, (idVol, idAkt, pismo, rezime, status, preporukaVol, preporukaOrg, komVol, komOrg))
 
 def insert_pripada():
-    for i in range(1000):
-        idAkt = random.randint(1,99)
-        idObl = random.randint(1, 99)
+    for i in range(1,99):
+        idAkt = i
+        for j in range(random.randint(1,3)):
+            idObl = random.randint(1, 99)
 
-        query = '''
-        INSERT INTO `pripada` (`idAkt`, `idObl`)
-        VALUES (%s, %s)
-        '''
-        cursor.execute(query, (idAkt, idObl))
+            query = '''
+            INSERT INTO `pripada` (`idAkt`, `idObl`)
+            VALUES (%s, %s)
+            '''
+            cursor.execute(query, (idAkt, idObl))
 
 def insert_vestina():
-    for i in range(1000):
+    for i in range(100):
         idAkt = random.randint(1, 99)
         opis = f'Opis{i}'
 
@@ -176,15 +177,16 @@ def insert_vestina():
         cursor.execute(query, (idAkt, opis))
 
 def insert_zanima_ga():
-    for i in range(1000):
-        idKor = random.randint(2, 50)
-        idObl = random.randint(1, 99)
+    for i in range(2,50):
+        for j in range(random.randint(1,4)):
+            idKor = i
+            idObl = random.randint(1, 99)
 
-        query = '''
-        INSERT INTO `zanima_ga` (`idKor`, `idObl`)
-        VALUES (%s, %s)
-        '''
-        cursor.execute(query, (idKor, idObl))
+            query = '''
+            INSERT INTO `zanima_ga` (`idKor`, `idObl`)
+            VALUES (%s, %s)
+            '''
+            cursor.execute(query, (idKor, idObl))
 
 insert_korisnik()
 insert_lokacija()
