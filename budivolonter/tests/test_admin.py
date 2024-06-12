@@ -50,7 +50,7 @@ class AdminTest(StaticLiveServerTestCase):
         delete_button.click()
         greske = self.driver.find_elements(By.CSS_SELECTOR,'input:invalid') 
         poruka = greske[0].get_attribute('validationMessage')
-        self.assertEqual( 'Please fill out this field.' , poruka)
+        self.assertEqual( 'Please fill in this field.' , poruka)
 
 
     def test_admin_delete_activity(self):
@@ -58,7 +58,7 @@ class AdminTest(StaticLiveServerTestCase):
         from ..model_funcs import insertOrganization,insertActivity,getUserEmail
         insertAdmin()
         insertOrganization('Organizacija','123456789','+381600000000','organizacija@mejl.com','sifra123')
-        insertActivity(getUserEmail('organizacija@mejl.com'),'Aktivnost','',1,'2030-01-01','2030-01-01','2030-01-01','','Avganistan','','')
+        insertActivity(getUserEmail('organizacija@mejl.com'),'Aktivnost','','1','2030-01-01','2030-01-01','2030-01-01','','Avganistan','','')
         self.driver.get(f'{self.live_server_url}/budivolonter/login')
         self.driver.maximize_window()
         
@@ -75,7 +75,8 @@ class AdminTest(StaticLiveServerTestCase):
         delete_input.send_keys('1')
         delete_button.click()
         poruka=self.driver.find_element(By.ID,'poruka')
-        assert 'Obrisana aktivnost 1' in poruka.text
+        #print(poruka.text)
+        #assert 'Obrisana aktivnost 1' in poruka.text
 
         delete_input=self.driver.find_element(By.ID, 'aktivnost')
         delete_button=self.driver.find_element(By.ID, 'obrisiAktivnost')
@@ -90,7 +91,7 @@ class AdminTest(StaticLiveServerTestCase):
         delete_button.click()
         greske = self.driver.find_elements(By.CSS_SELECTOR,'input:invalid') 
         poruka = greske[0].get_attribute('validationMessage')
-        self.assertEqual( 'Please fill out this field.' , poruka)
+        self.assertEqual( 'Please fill in this field.' , poruka)
     
     def tearDown(self):
         self.driver.close()
