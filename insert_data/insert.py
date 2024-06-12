@@ -33,18 +33,33 @@ def reset_autoincrement():
 reset_autoincrement()
 
 def insert_korisnik():
-    for i in range(2,100):
-        email = f'test{i}@gmail.com'
+    for i in range(2,50):
+        email = f'vol{i}@gmail.com'
         password = 'pbkdf2_sha256$720000$fB91HR8EMIQCYYMDbfJEbR$J5KoRCekeUntUSPXc0zTE7fE+dWohcmOXI9sWxm3Dho='
-        ime = f'Name{i}'
+        ime = f'VolName{i}'
         prezime = f'Surname{i}'
+        tip = 'V'
+        last_login = None
+        is_active = 1
+        datumRodj = datetime(1990, 1, 1).strftime('%Y-%m-%d')
+        pib = None
+        telefon = None
+        query = '''
+        INSERT INTO `korisnik` (`email`, `password`, `ime`, `prezime`, `pib`, `telefon`, `tip`, `datumRodj`, `last_login`, `is_active`)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        '''
+        cursor.execute(query, (email, password, ime, prezime, pib, telefon, tip, datumRodj, last_login, is_active))
+    for i in range(50,100):
+        email = f'org{i}@gmail.com'
         pib = random.randint(100000000, 999999999)
         telefon = f'{random.randint(1000000000, 9999999999)}'
-        tip = random.choice(['V', 'O'])
-        datumRodj = datetime(1990, 1, 1).strftime('%Y-%m-%d')
+        password = 'pbkdf2_sha256$720000$fB91HR8EMIQCYYMDbfJEbR$J5KoRCekeUntUSPXc0zTE7fE+dWohcmOXI9sWxm3Dho='
+        ime = f'OrgName{i}'
+        tip = 'O'
+        prezime = None
+        datumRodj = None
         last_login = None
-        is_active = 0
-
+        is_active = 1
         query = '''
         INSERT INTO `korisnik` (`email`, `password`, `ime`, `prezime`, `pib`, `telefon`, `tip`, `datumRodj`, `last_login`, `is_active`)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -64,23 +79,24 @@ def insert_lokacija():
         cursor.execute(query, (drzava, kontinent))
 
 def insert_aktivnost():
-    for i in range(100):
-        idOrg = random.randint(2, 99)
-        naziv = f'Aktivnost{i}'
-        brMesta = random.randint(10, 100)
-        month = random.choice((6,7))
-        datumOd = datetime(2024, month, 1).strftime('%Y-%m-%d')
-        datumDo = datetime(2024, month, 10).strftime('%Y-%m-%d')
-        datumRok = datetime(2024, 6, 25).strftime('%Y-%m-%d')
-        mesto = f'Mesto{i}'
-        lokacija = random.randint(1, 99)
-        opis = f'Opis{i}'
+    for j in range(50,99):
+        for i in range(random.randint(4,20)):
+            idOrg = j
+            naziv = f'Aktivnost{i}-{i}'
+            brMesta = random.randint(10, 100)
+            month = random.choice((6,7))
+            datumOd = datetime(2024, month, 1).strftime('%Y-%m-%d')
+            datumDo = datetime(2024, month, 10).strftime('%Y-%m-%d')
+            datumRok = datetime(2024, 6, 25).strftime('%Y-%m-%d')
+            mesto = f'Mesto{i}'
+            lokacija = random.randint(1, 99)
+            opis = f'Opis{i}'
 
-        query = '''
-        INSERT INTO `aktivnost` (`idOrg`, `naziv`, `brMesta`, `datumOd`, `datumDo`, `datumRok`, `mesto`, `lokacija`, `opis`)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        '''
-        cursor.execute(query, (idOrg, naziv, brMesta, datumOd, datumDo, datumRok, mesto, lokacija, opis))
+            query = '''
+            INSERT INTO `aktivnost` (`idOrg`, `naziv`, `brMesta`, `datumOd`, `datumDo`, `datumRok`, `mesto`, `lokacija`, `opis`)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            '''
+            cursor.execute(query, (idOrg, naziv, brMesta, datumOd, datumDo, datumRok, mesto, lokacija, opis))
 
 def insert_oblast():
     for i in range(100):
@@ -94,9 +110,9 @@ def insert_oblast():
 
 def insert_prepiska():
     for i in range(100):
-        idKor1 = random.randint(2, 99)
+        idKor1 = random.randint(1, 98)
 
-        idKor2 = random.randint(2, 99)
+        idKor2 = random.randint(1, 98)
         query = '''
         INSERT INTO `prepiska` (`idKor1`, `idKor2`)
         VALUES (%s, %s)
@@ -121,13 +137,13 @@ def insert_poruka():
 
 def insert_prijava():
     for i in range(1000):
-        idVol = random.randint(2, 99)
+        idVol = random.randint(2, 50)
         idAkt = random.randint(2, 99)
         pismo = f'Pismo{i}'
         rezime = None
-        status = random.choice(['A', 'R'])
-        preporukaVol = random.choice([None, 'Y'])
-        preporukaOrg = random.choice([None, 'Y'])
+        status = random.choice(['A', 'R','O'])
+        preporukaVol = random.choice([None, 'P','N'])
+        preporukaOrg = random.choice([None, 'P','N'])
         komVol = f'Komentar Vol{i}'
         komOrg = f'Komentar Org{i}'
 
@@ -161,7 +177,7 @@ def insert_vestina():
 
 def insert_zanima_ga():
     for i in range(1000):
-        idKor = random.randint(2, 99)
+        idKor = random.randint(2, 50)
         idObl = random.randint(1, 99)
 
         query = '''
