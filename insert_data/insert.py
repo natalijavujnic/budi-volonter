@@ -6,8 +6,8 @@ from lokacija import countries
 print(countries)
 db = connector.connect(
         host='127.0.0.1',
-        port='3306',
-        password='123',
+        port='3307',
+        password='root',
         database='budivolonter',
         user='root'
     )
