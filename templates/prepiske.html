@@ -33,14 +33,14 @@
     <link href="{% static './CSS/prepiske.css' %}" rel="stylesheet" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Prepiske</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static './JS/switchPage.js' %}"></script>
     <script src="{% static './JS/init_chats.js' %}"></script>
   </head>
   <body onload="get_chats();start_websocket()" id="body" user_id="{{user_id}}">
     {{navbar|safe}}
-    <div class="container-fluid">
+    <div  class="container-fluid">
       <div class="row">
         <div class="col-md-4">
           <!-- Sidebar or user list -->
@@ -54,7 +54,7 @@
         <div class="col-md-8">
           <!-- Chat area -->
           <div class="card">
-            <div class="card-body d-flex flex-column">
+            <div id='chat-window' class="card-body d-flex flex-column">
               <h5 class="card-title" id="chatUserName">Chat</h5>
               <hr />
               <div

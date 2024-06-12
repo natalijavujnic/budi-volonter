@@ -132,13 +132,17 @@ function get_chats() {
     let chats = response["chats"];
     console.log(chats);
     for (let chat of chats) {
-      str1 += `
-				<li class="list-group-item d-flex" name="${chat["id"]}" userChatName="${chat["user"]}">
-				<div name="${chat["id"]}" userChatName="${chat["user"]}"> ${chat["user"]}</div>`;
+      str1 += `				<li class="list-group-item d-flex" name="${chat["id"]}" userChatName="${chat["user"]}">
+				<div name="${chat["id"]}" userChatName="${chat["user"]}"> ${chat["user"]}
+				<a href='profile?id=${chat["user_id"]}'>
+				<i class="bi bi-person"></i>
+				</a>
+				</div>`;
       if (chat["messages_unread"] > 0) {
         str1 += `<div name="${chat["id"]}" userChatName="${chat["user"]}" class="badge bg-danger ml-auto"> ${chat["messages_unread"]} </div>`;
       }
-      str1 += `</li>`;
+      str1 += `
+				</li>`;
     }
     $("#chats").html(str1);
   });

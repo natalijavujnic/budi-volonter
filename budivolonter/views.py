@@ -537,6 +537,8 @@ def my_acts(request:HttpRequest):
         act_data['organizacija'] = act.idorg.ime
         act_data['idorg']        = act.idorg_id
         act_data['status'] = app.status
+        act_data['ispis'] = 'Prihvacen' if app.status == 'A' else 'Odbijen'
+        if app.status == 'O': act_data['ispis'] = 'Otvoreno'
         act_list.append(act_data)
     from . import utils
     context = {

@@ -44,15 +44,16 @@
               <div class="card-body">
                 <h5 class="card-title">{{act.naziv}}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">
+				<a href="profile?id={{act.idorg}}">
+				<i class="bi bi-person"></i>
+				</a>
                   {{act.organizacija}}
                 </h6>
                 <p class="card-text">
                   {{act.datumod|date:'d.m.Y'}}-{{act.datumdo|date:'d.m.Y'}}
                 </p>
-                <a href="profile?id={{act.idorg}}" class="card-link"
-                  >Profil organizacije</a
-                >
-                <span>{{act.status}}</span>
+                
+                <span>{{act.ispis}}</span>
               </div>
             </div>
             {%endfor%}

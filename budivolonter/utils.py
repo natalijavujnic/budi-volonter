@@ -91,6 +91,7 @@ def loadChats(chats:list[models.Prepiska],id:int) -> list[dict]:
         messages_unread = models.Poruka.objects.filter(idpre=chat.idpre, status='U', idsender_id=chat.idkor1_id if id == chat.idkor2_id else chat.idkor2_id).count()
         chat_data['messages_unread'] = messages_unread
         chat_data['user'] = f'{chat.idkor2.ime} {chat.idkor2.prezime if chat.idkor2.prezime else ""}' if id == chat.idkor1_id else f'{chat.idkor1.ime} {chat.idkor1.prezime if chat.idkor1.prezime else ""}' #(yes i know its bad)
+        chat_data['user_id'] = f'{chat.idkor2_id}' if id != chat.idkor2_id else f'{chat.idkor1_id}'
         chat_data['id'] = chat.idpre
         chat_list.append(chat_data)
 

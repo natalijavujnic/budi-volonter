@@ -17,23 +17,22 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-
-
 class WebChatTest(StaticLiveServerTestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
 
     def test_openChat(self):
         from ..model_funcs import insertOrganization, insertVolunteer
+
         self.user = insertVolunteer(
             "marko", "markovic", "1990-01-01", "marko@gmail.com", "Pass1234", ""
         )
         self.org = insertOrganization(
-            ime     = "TestOrg",
-            pib     = 88888888,
-            telefon = "0616357399",
-            email   = "org@gmail.com",
-            lozinka = "Pass1234",
+            ime="TestOrg",
+            pib=88888888,
+            telefon="0616357399",
+            email="org@gmail.com",
+            lozinka="Pass1234",
         )
         self.driver.get(f"{self.live_server_url}/budivolonter/login")
         self.driver.maximize_window()
@@ -47,8 +46,12 @@ class WebChatTest(StaticLiveServerTestCase):
             self.driver.current_url.split("?")[0]
             == f"{self.live_server_url}/budivolonter/profile"
         )
-        prepiske_btn = self.driver.find_element(By.ID,'inbox')
-        prepiske_btn.click();
-        assert (self.driver.current_url.split('?')[0] == f'{self.live_server_url}/budivolonter/inbox')
+        prepiske_btn = self.driver.find_element(By.ID, "inbox")
+        prepiske_btn.click()
+        assert (
+            self.driver.current_url.split("?")[0]
+            == f"{self.live_server_url}/budivolonter/inbox"
+        )
+
 
 # Create your tests here.

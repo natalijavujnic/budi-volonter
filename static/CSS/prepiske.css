@@ -32,4 +32,11 @@
 }
 .card-title {
   margin: 0px;
+.card-body{
+	border-style:solid !important;
+	border-radius:10px !important;
+}
+}
+#chat-window{
+	background-color:#e6f0e7;
 }

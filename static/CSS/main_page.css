@@ -38,15 +38,24 @@
   font-family: "Inter";
 }
 
-
-body{
-	display:flex;
-	min-height:100vh;
-	flex-direction:column;
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
-.container-fluid{
-	flex-grow:1;
+.container-fluid {
+  flex-grow: 1;
 }
-.grow{
-	flex-grow:1;
+.grow {
+  flex-grow: 1;
+}
+#watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.5; /* Optional: to make it look more like a watermark */
+  object-fit: cover; /* Ensures the image covers the entire container */
 }
