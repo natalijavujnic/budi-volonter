@@ -2,3 +2,4 @@ django
 mysqlclient
 channels[daphne]
 selenium
+mysql-connector-python

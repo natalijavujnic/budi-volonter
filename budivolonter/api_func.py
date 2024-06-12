@@ -20,8 +20,8 @@ def fetch_activities_org(request:HttpRequest) -> JsonResponse:
     for act in archived_activities_list:
         reviews = model_funcs.getApplicationsForAct(idakt=act.get('id'),finished=True,status='A')
         act['reviews'] = reviews
-    
-    return JsonResponse({'active_activities':active_activities_list,'archived_activities':archived_activities_list})
+    tip = getCurrentUser(request).tip 
+    return JsonResponse({'type':tip,'active_activities':active_activities_list,'archived_activities':archived_activities_list})
 
 
 #kosta novokmet

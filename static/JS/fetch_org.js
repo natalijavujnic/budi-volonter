@@ -3,6 +3,9 @@ function toggleRevs(id) {
   }
 function buildHTML(curr_id, id, response) {
   let acts = response["active_activities"];
+  console.log(response);
+  let type = response['type'];
+  console.log(`type is ${type}`);
   let str1 = "";
   let index = 0;
   for (let act of acts) {
@@ -75,16 +78,16 @@ function buildHTML(curr_id, id, response) {
       str1 += `
 				</div>
 				<div class="prijave d-flex justify-content-end">`;
-      if (status == "X") {
+      if (status == "X" && type == 'V' && act.brmesta > 0) {
         str1 += `
-				<a href="activity_form.html">
+				<a href="activity_form">
 				<button type="button" class="btn btn-primary btn-block btn-sm float-right">Prijavi se</button>
 				</a>`;
-      } else if (status == "A") {
+      } else if (status == "A"&& type == 'V') {
         str1 += `
 					<span> Prihavecni ste! </span>
 		  `;
-      } else if (status == "R")
+      } else if (status == "R"&& type == 'V')
         str1 += `
 					<span> Odbijeni ste! </span>
 		  `;

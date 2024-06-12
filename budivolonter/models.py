@@ -104,11 +104,12 @@ class Prijava(models.Model):
 
 
 class Pripada(models.Model):
-    idobl = models.ForeignKey(Oblast,on_delete=models.CASCADE, db_column='idObl')  # Field name made lowercase.
-    idakt = models.ForeignKey(Aktivnost,on_delete=models.CASCADE, db_column='idAkt')
+    idpri = models.AutoField(db_column='idPri', primary_key=True)  # Field name made lowercase.
+    idobl = models.ForeignKey(Oblast, models.DO_NOTHING, db_column='idObl')  # Field name made lowercase.
+    idakt = models.ForeignKey(Aktivnost, models.DO_NOTHING, db_column='idAkt')  # Field name made lowercase.
     class Meta:
-        managed         = True 
-        db_table        = 'pripada'
+        managed = True
+        db_table = 'pripada'
         unique_together = (('idakt', 'idobl'),)
 
 
@@ -123,9 +124,11 @@ class Vestina(models.Model):
 
 
 class ZanimaGa(models.Model):
-    idkor = models.ForeignKey(Korisnik,on_delete=models.CASCADE, db_column='idKor')
-    idobl = models.ForeignKey(Oblast,on_delete=models.CASCADE, db_column='idObl')  # Field name made lowercase.
+    idzan = models.AutoField(db_column='idZan', primary_key=True)  # Field name made lowercase.
+    idobl = models.ForeignKey(Oblast, models.DO_NOTHING, db_column='idObl')  # Field name made lowercase.
+    idkor = models.ForeignKey(Korisnik, models.DO_NOTHING, db_column='idKor')  # Field name made lowercase.
+
     class Meta:
-        managed         = True 
-        db_table        = 'zanima_ga'
+        managed = True
+        db_table = 'zanima_ga'
         unique_together = (('idkor', 'idobl'),)
