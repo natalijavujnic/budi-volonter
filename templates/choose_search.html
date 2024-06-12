@@ -23,7 +23,7 @@
   </head>
   <body style="background-color: #fcfdfa">
     {{navbar|safe}}
-    <div
+    <div 
       class="container-fluid d-flex"
       style="
         justify-content: center;
@@ -33,6 +33,13 @@
         margin: 0px;
       "
     >
+    <img id='watermark' src= "{% static 'resources/watermark.png' %}" style ="position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+    opacity: 0.2;"></img>
       <div>
         <h2
           style="

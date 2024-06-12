@@ -17,3 +17,12 @@
   color: #fcfdfa;
   border-radius: 20px;
 }
+#watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  opacity: 0.2; /* Optional: to make it look more like a watermark */
+}
